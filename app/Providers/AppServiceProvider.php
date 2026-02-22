@@ -5,6 +5,7 @@ namespace App\Providers;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -23,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Only serve Vite dev server assets on the dev domain.
+        if (request()->getHost() !== 'dev.tekitl.webshift.software') {
+            Vite::useHotFile(storage_path('vite.hot.disabled'));
+        }
         $this->configureDefaults();
     }
 

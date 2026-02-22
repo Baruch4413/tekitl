@@ -5,6 +5,19 @@ import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+    server: {
+        hmr: {
+            clientPort: 443,
+            host: 'dev.tekitl.webshift.software',
+            protocol: 'wss',
+            path: '@vite/hmr',
+        },
+        host: '127.0.0.1',
+        port: 5174,
+        allowedHosts: [
+            'dev.tekitl.webshift.software'
+        ],
+    },
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
