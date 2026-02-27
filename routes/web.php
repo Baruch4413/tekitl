@@ -1,17 +1,25 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
-Route::get('/', function () {
-    return Inertia::render('welcome', [
-        'canRegister' => Features::enabled(Features::registration()),
-    ]);
-})->name('home');
+Route::get('/', [PostController::class, 'index'])->name('home');
+
+Route::post('/posts', [PostController::class, 'store'])->middleware('auth')->name('posts.store');
+
+Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->middleware('auth')->name('comments.store');
+
+Route::get('/configuracion', function () {
+    return Inertia\Inertia::render('configuracion');
+})->middleware('auth')->name('configuracion');
 
 Route::get('dashboard', function () {
-    return Inertia::render('dashboard');
+    return Inertia\Inertia::render('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/auth/google/redirect', [SocialiteController::class, 'redirect'])->name('auth.google.redirect');
+Route::get('/auth/google/callback', [SocialiteController::class, 'callback'])->name('auth.google.callback');
 
 require __DIR__.'/settings.php';
