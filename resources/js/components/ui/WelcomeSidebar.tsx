@@ -130,10 +130,10 @@ export default function WelcomeSidebar({ currentPage = 'home' }: WelcomeSidebarP
                             href="#"
                             className="flex items-center gap-x-3 rounded-full px-3 py-3 transition-colors hover:bg-gray-100 dark:hover:bg-white/5"
                         >
-                            {user.avatar ? (
+                            {user.avatar_url ? (
                                 <img
                                     alt=""
-                                    src={user.avatar}
+                                    src={user.avatar_url}
                                     className="size-10 rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5 dark:bg-gray-800 dark:outline-white/10"
                                 />
                             ) : (

@@ -1,5 +1,6 @@
 import { Transition } from '@headlessui/react';
 import { Form, Head, Link, usePage } from '@inertiajs/react';
+import AvatarUpload from '@/components/ui/settings/AvatarUpload';
 import DeleteUser from '@/components/delete-user';
 import Heading from '@/components/heading';
 import InputError from '@/components/input-error';
@@ -41,6 +42,11 @@ export default function Profile({
                         variant="small"
                         title="Profile information"
                         description="Update your name and email address"
+                    />
+
+                    <AvatarUpload
+                        imageUrl={auth.user.avatar_url}
+                        name={auth.user.name}
                     />
 
                     <Form

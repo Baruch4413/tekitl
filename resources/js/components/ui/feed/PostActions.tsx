@@ -30,6 +30,7 @@ interface PostActionsProps {
     comments: number
     coins: number
     isLiked: boolean
+    isPotenciado: boolean
     processingAction: ProcessingAction
     commentsOpen: boolean
     onToggleLike: (id: number) => void
@@ -43,6 +44,7 @@ export default function PostActions({
     comments,
     coins,
     isLiked,
+    isPotenciado,
     processingAction,
     commentsOpen,
     onToggleLike,
@@ -54,7 +56,12 @@ export default function PostActions({
             <button
                 onClick={() => onPotenciar(postId)}
                 disabled={processingAction === 'potenciar'}
-                className={classNames(actionBase, 'text-gray-400 hover:text-amber-600 dark:hover:text-amber-400')}
+                className={classNames(
+                    actionBase,
+                    isPotenciado
+                        ? 'text-amber-500 dark:text-amber-400'
+                        : 'text-gray-400 hover:text-amber-600 dark:hover:text-amber-400',
+                )}
             >
                 <CoinIcon className="size-4 transition-transform group-hover:scale-110" />
                 <span className="text-xs">{formatCount(coins)}</span>

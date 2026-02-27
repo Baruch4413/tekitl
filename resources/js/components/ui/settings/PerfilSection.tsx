@@ -15,7 +15,7 @@ export default function PerfilSection() {
                 description="Esta imagen será visible públicamente en tu perfil."
             >
                 <div className="mt-6">
-                    <AvatarUpload imageUrl={user.avatar ?? null} name={user.name} />
+                    <AvatarUpload imageUrl={user.avatar_url ?? null} name={user.name} />
                 </div>
             </SettingsSection>
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Form } from '@inertiajs/react'
+import { Form, usePage } from '@inertiajs/react'
 import { store } from '@/actions/App/Http/Controllers/PostController'
 import {
   FaceFrownIcon,
@@ -35,15 +35,22 @@ function classNames(...classes: (string | false | null | undefined)[]) {
 
 export default function Textarea() {
   const [selected, setSelected] = useState(moods[5])
+  const { auth } = usePage().props
 
   return (
     <div className="flex w-full items-start space-x-4">
       <div className="shrink-0">
-        <img
-          alt=""
-          src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          className="inline-block size-10 rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5 dark:bg-gray-800 dark:outline-white/10"
-        />
+        {auth.user.avatar_url ? (
+          <img
+            alt=""
+            src={auth.user.avatar_url}
+            className="inline-block size-10 rounded-full bg-gray-100 object-cover outline -outline-offset-1 outline-black/5 dark:bg-gray-800 dark:outline-white/10"
+          />
+        ) : (
+          <span className="flex size-10 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-600 outline -outline-offset-1 outline-black/5 dark:bg-indigo-900 dark:text-indigo-300 dark:outline-white/10">
+            {auth.user.name.charAt(0).toUpperCase()}
+          </span>
+        )}
       </div>
       <div className="min-w-0 flex-1">
         <Form {...store.form()} resetOnSuccess options={{ preserveScroll: true }}>

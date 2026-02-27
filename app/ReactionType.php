@@ -10,4 +10,5 @@ enum ReactionType: string
     case Sad = 'sad';
     case Thumbsy = 'thumbsy';
     case Like = 'like';
+    case Potenciar = 'potenciar';
 }

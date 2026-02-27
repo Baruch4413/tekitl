@@ -27,10 +27,10 @@ export default function CommentForm({ postId }: CommentFormProps) {
 
     return (
         <div className="flex items-start gap-x-3">
-            {user.avatar ? (
+            {user.avatar_url ? (
                 <img
                     alt=""
-                    src={user.avatar}
+                    src={user.avatar_url}
                     className="size-8 shrink-0 rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5 dark:bg-gray-800 dark:outline-white/10"
                 />
             ) : (

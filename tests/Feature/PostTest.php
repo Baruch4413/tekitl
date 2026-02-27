@@ -14,7 +14,7 @@ test('welcome page renders with posts prop', function () {
             ->component('welcome')
             ->has('posts', 3)
             ->has('posts.0', fn ($post) => $post
-                ->hasAll(['id', 'user', 'content', 'date', 'dateTime', 'likes', 'isLiked', 'comments', 'coins', 'commentsList'])
+                ->hasAll(['id', 'user', 'content', 'date', 'dateTime', 'likes', 'isLiked', 'isPotenciado', 'comments', 'coins', 'commentsList'])
             )
         );
 });

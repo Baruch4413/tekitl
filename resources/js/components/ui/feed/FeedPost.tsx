@@ -15,6 +15,7 @@ export interface Post {
     comments: number
     coins: number
     isLiked: boolean
+    isPotenciado: boolean
     commentsList: Comment[]
 }
 
@@ -60,6 +61,7 @@ export default function FeedPost({ post, processingAction, onToggleLike, onPoten
                         comments={post.comments}
                         coins={post.coins}
                         isLiked={post.isLiked}
+                        isPotenciado={post.isPotenciado}
                         processingAction={processingAction}
                         commentsOpen={commentsOpen}
                         onToggleLike={onToggleLike}
