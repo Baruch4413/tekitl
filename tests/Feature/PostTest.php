@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Post;
+use App\Models\Reaction;
 use App\Models\User;
+use App\ReactionType;
 
 test('welcome page renders with posts prop', function () {
     Post::factory(3)->create();
@@ -12,7 +14,7 @@ test('welcome page renders with posts prop', function () {
             ->component('welcome')
             ->has('posts', 3)
             ->has('posts.0', fn ($post) => $post
-                ->hasAll(['id', 'user', 'content', 'date', 'dateTime', 'likes', 'comments', 'reposts', 'commentsList'])
+                ->hasAll(['id', 'user', 'content', 'date', 'dateTime', 'likes', 'isLiked', 'comments', 'coins', 'commentsList'])
             )
         );
 });
@@ -73,6 +75,78 @@ test('comment body is required', function () {
     $this->actingAs($user)
         ->post(route('comments.store', $post), ['body' => ''])
         ->assertInvalid(['body']);
+});
+
+test('authenticated users can potenciar a post', function () {
+    $user = User::factory()->create();
+    $post = Post::factory()->create(['coins' => 0]);
+
+    $this->actingAs($user)
+        ->post(route('posts.potenciar', $post))
+        ->assertRedirect();
+
+    expect($post->fresh()->coins)->toBe(10);
+});
+
+test('potenciar increments coins by 10 each time', function () {
+    $user = User::factory()->create();
+    $post = Post::factory()->create(['coins' => 50]);
+
+    $this->actingAs($user)
+        ->post(route('posts.potenciar', $post))
+        ->assertRedirect();
+
+    expect($post->fresh()->coins)->toBe(60);
+});
+
+test('guests cannot potenciar a post', function () {
+    $post = Post::factory()->create();
+
+    $this->post(route('posts.potenciar', $post))
+        ->assertRedirect(route('login'));
+});
+
+test('authenticated users can like a post', function () {
+    $user = User::factory()->create();
+    $post = Post::factory()->create();
+
+    $this->actingAs($user)
+        ->post(route('posts.like', $post))
+        ->assertRedirect();
+
+    expect($post->reactions()->where('user_id', $user->id)->where('type', ReactionType::Like)->exists())->toBeTrue();
+});
+
+test('liking a post twice removes the like', function () {
+    $user = User::factory()->create();
+    $post = Post::factory()->create();
+
+    $this->actingAs($user)->post(route('posts.like', $post));
+    $this->actingAs($user)->post(route('posts.like', $post));
+
+    expect($post->reactions()->where('user_id', $user->id)->where('type', ReactionType::Like)->exists())->toBeFalse();
+});
+
+test('guests cannot like a post', function () {
+    $post = Post::factory()->create();
+
+    $this->post(route('posts.like', $post))
+        ->assertRedirect(route('login'));
+});
+
+test('feed includes like count and isLiked status', function () {
+    $user = User::factory()->create();
+    $post = Post::factory()->create();
+    Reaction::factory()->create(['post_id' => $post->id, 'type' => ReactionType::Like]);
+    Reaction::factory()->create(['post_id' => $post->id, 'user_id' => $user->id, 'type' => ReactionType::Like]);
+
+    $this->actingAs($user)
+        ->get(route('home'))
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page
+            ->where('posts.0.likes', 2)
+            ->where('posts.0.isLiked', true)
+        );
 });
 
 test('posts include commentsList in the feed', function () {

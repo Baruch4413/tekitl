@@ -11,6 +11,10 @@ Route::post('/posts', [PostController::class, 'store'])->middleware('auth')->nam
 
 Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->middleware('auth')->name('comments.store');
 
+Route::post('/posts/{post}/potenciar', [PostController::class, 'potenciar'])->middleware('auth')->name('posts.potenciar');
+
+Route::post('/posts/{post}/like', [PostController::class, 'toggleLike'])->middleware('auth')->name('posts.like');
+
 Route::get('/configuracion', function () {
     return Inertia\Inertia::render('configuracion');
 })->middleware('auth')->name('configuracion');

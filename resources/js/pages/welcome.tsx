@@ -1,12 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import { router } from '@inertiajs/react'
 import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from '@headlessui/react'
 import { XMarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { Bars3Icon } from '@heroicons/react/20/solid'
 import Textarea from '@/components/ui/comments/Textarea'
 import FeedPost, { type Post } from '@/components/ui/feed/FeedPost'
 import WelcomeSidebar from '@/components/ui/WelcomeSidebar'
+import { potenciar, toggleLike } from '@/actions/App/Http/Controllers/PostController'
 
 const suggestions = [
     {
@@ -47,15 +49,23 @@ interface WelcomeProps {
 
 export default function Welcome({ posts }: WelcomeProps) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [likedPosts, setLikedPosts] = useState<Set<number>>(new Set())
+    const [processingActions, setProcessingActions] = useState<Record<number, string>>({})
     const [followedUsers, setFollowedUsers] = useState<Set<string>>(new Set(['@lwalton']))
 
-    const toggleLike = (id: number) =>
-        setLikedPosts((prev) => {
-            const next = new Set(prev)
-            next.has(id) ? next.delete(id) : next.add(id)
-            return next
+    const withProcessing = (id: number, action: string, url: string) => {
+        router.post(url, {}, {
+            preserveScroll: true,
+            onBefore: () => setProcessingActions((prev) => ({ ...prev, [id]: action })),
+            onFinish: () => setProcessingActions((prev) => {
+                const { [id]: _, ...rest } = prev
+                return rest
+            }),
         })
+    }
+
+    const handlePotenciar = (id: number) => withProcessing(id, 'potenciar', potenciar.url(id))
+
+    const handleToggleLike = (id: number) => withProcessing(id, 'like', toggleLike.url(id))
 
     const toggleFollow = (handle: string) =>
         setFollowedUsers((prev) => {
@@ -128,8 +138,9 @@ export default function Welcome({ posts }: WelcomeProps) {
                         <FeedPost
                             key={post.id}
                             post={post}
-                            isLiked={likedPosts.has(post.id)}
-                            onToggleLike={toggleLike}
+                            processingAction={(processingActions[post.id] as 'potenciar' | 'comments' | 'like' | 'share') ?? null}
+                            onToggleLike={handleToggleLike}
+                            onPotenciar={handlePotenciar}
                         />
                     ))}
                 </ul>

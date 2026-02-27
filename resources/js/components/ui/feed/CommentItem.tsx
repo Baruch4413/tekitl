@@ -15,14 +15,15 @@ interface CommentItemProps {
 
 export default function CommentItem({ comment, isLast }: CommentItemProps) {
     return (
-        <li>
-            <div className="relative pb-6">
-                {!isLast && (
-                    <span
-                        aria-hidden
-                        className="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200 dark:bg-white/10"
-                    />
-                )}
+        <li className="relative pb-6">
+            {/* Vertical trunk segment: full height for non-last, stops at avatar center for last */}
+            <div
+                className={`absolute -left-8 top-0 w-0.5 bg-gray-200 dark:bg-white/10 ${isLast ? 'h-5' : 'h-full'}`}
+            />
+            {/* Horizontal branch from trunk to comment avatar */}
+            <div className="absolute -left-8 top-5 h-0.5 w-8 bg-gray-200 dark:bg-white/10" />
+
+            <div className="relative">
                 <div className="relative flex items-start gap-x-3">
                     <div className="relative shrink-0">
                         {comment.user.imageUrl ? (
