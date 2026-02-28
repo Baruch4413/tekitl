@@ -9,6 +9,7 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 
 Route::post('/posts', [PostController::class, 'store'])->middleware('auth')->name('posts.store');
 
+Route::get('/posts/{post}/comments', [CommentController::class, 'index'])->name('comments.index');
 Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->middleware('auth')->name('comments.store');
 
 Route::post('/posts/{post}/potenciar', [PostController::class, 'potenciar'])->middleware('auth')->name('posts.potenciar');

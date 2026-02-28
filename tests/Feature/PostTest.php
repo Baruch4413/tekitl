@@ -12,9 +12,9 @@ test('welcome page renders with posts prop', function () {
         ->assertOk()
         ->assertInertia(fn ($page) => $page
             ->component('welcome')
-            ->has('posts', 3)
-            ->has('posts.0', fn ($post) => $post
-                ->hasAll(['id', 'user', 'content', 'date', 'dateTime', 'likes', 'isLiked', 'isPotenciado', 'comments', 'coins', 'commentsList'])
+            ->has('posts.data', 3)
+            ->has('posts.data.0', fn ($post) => $post
+                ->hasAll(['id', 'user', 'content', 'date', 'dateTime', 'likes', 'isLiked', 'isPoweredByCurrentUser', 'comments', 'coins'])
             )
         );
 });
@@ -144,21 +144,25 @@ test('feed includes like count and isLiked status', function () {
         ->get(route('home'))
         ->assertOk()
         ->assertInertia(fn ($page) => $page
-            ->where('posts.0.likes', 2)
-            ->where('posts.0.isLiked', true)
+            ->where('posts.data.0.likes', 2)
+            ->where('posts.data.0.isLiked', true)
         );
 });
 
-test('posts include commentsList in the feed', function () {
+test('comments endpoint returns formatted comments', function () {
     $post = Post::factory()->create();
     $post->comments()->create(['user_id' => $post->user_id, 'body' => 'A comment']);
 
-    $this->get(route('home'))
+    $this->getJson(route('comments.index', $post))
         ->assertOk()
-        ->assertInertia(fn ($page) => $page
-            ->has('posts.0.commentsList', 1)
-            ->has('posts.0.commentsList.0', fn ($c) => $c
-                ->hasAll(['id', 'user', 'body', 'date', 'dateTime'])
-            )
-        );
+        ->assertJsonCount(1)
+        ->assertJsonStructure([['id', 'user', 'body', 'date', 'dateTime']]);
+});
+
+test('comments endpoint returns empty array for post with no comments', function () {
+    $post = Post::factory()->create();
+
+    $this->getJson(route('comments.index', $post))
+        ->assertOk()
+        ->assertJsonCount(0);
 });

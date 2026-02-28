@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import PostActions from '@/components/ui/feed/PostActions'
 import PostComments, { type Comment } from '@/components/ui/feed/PostComments'
+import { index as fetchComments } from '@/actions/App/Http/Controllers/CommentController'
 
 export interface Post {
     id: number
@@ -15,8 +16,7 @@ export interface Post {
     comments: number
     coins: number
     isLiked: boolean
-    isPotenciado: boolean
-    commentsList: Comment[]
+    isPoweredByCurrentUser: boolean
 }
 
 interface FeedPostProps {
@@ -24,10 +24,35 @@ interface FeedPostProps {
     processingAction: 'potenciar' | 'comments' | 'like' | 'share' | null
     onToggleLike: (id: number) => void
     onPotenciar: (id: number) => void
+    onSetProcessing: (id: number, action: string | null) => void
 }
 
-export default function FeedPost({ post, processingAction, onToggleLike, onPotenciar }: FeedPostProps) {
+export default function FeedPost({ post, processingAction, onToggleLike, onPotenciar, onSetProcessing }: FeedPostProps) {
     const [commentsOpen, setCommentsOpen] = useState(false)
+    const [commentsList, setCommentsList] = useState<Comment[] | null>(null)
+
+    const handleToggleComments = async () => {
+        if (commentsList !== null) {
+            setCommentsOpen((prev) => !prev)
+            return
+        }
+
+        onSetProcessing(post.id, 'comments')
+        try {
+            const response = await fetch(fetchComments.url(post.id))
+            const data: Comment[] = await response.json()
+            setCommentsList(data)
+            setCommentsOpen(true)
+        } finally {
+            onSetProcessing(post.id, null)
+        }
+    }
+
+    const refreshComments = async () => {
+        const response = await fetch(fetchComments.url(post.id))
+        const data: Comment[] = await response.json()
+        setCommentsList(data)
+    }
 
     return (
         <li className="px-4 py-4 transition-colors hover:bg-gray-50 dark:hover:bg-white/[0.02]">
@@ -61,15 +86,17 @@ export default function FeedPost({ post, processingAction, onToggleLike, onPoten
                         comments={post.comments}
                         coins={post.coins}
                         isLiked={post.isLiked}
-                        isPotenciado={post.isPotenciado}
+                        isPoweredByCurrentUser={post.isPoweredByCurrentUser}
                         processingAction={processingAction}
                         commentsOpen={commentsOpen}
                         onToggleLike={onToggleLike}
-                        onToggleComments={() => setCommentsOpen((prev) => !prev)}
+                        onToggleComments={handleToggleComments}
                         onPotenciar={onPotenciar}
                     />
 
-                    {commentsOpen && <PostComments postId={post.id} comments={post.commentsList} />}
+                    {commentsOpen && commentsList && (
+                        <PostComments postId={post.id} comments={commentsList} onCommentAdded={refreshComments} />
+                    )}
                 </div>
             </div>
         </li>

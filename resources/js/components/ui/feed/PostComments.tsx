@@ -7,9 +7,10 @@ export type { Comment }
 interface PostCommentsProps {
     postId: number
     comments: Comment[]
+    onCommentAdded?: () => void
 }
 
-export default function PostComments({ postId, comments }: PostCommentsProps) {
+export default function PostComments({ postId, comments, onCommentAdded }: PostCommentsProps) {
     return (
         <div className="relative mt-4 border-t border-gray-100 pt-4 dark:border-white/5">
             {/* Connector: bridges from post avatar area down to the comment list top */}
@@ -18,7 +19,7 @@ export default function PostComments({ postId, comments }: PostCommentsProps) {
             )}
             <CommentList comments={comments} />
             <div className={comments.length > 0 ? 'mt-6' : ''}>
-                <CommentForm postId={postId} />
+                <CommentForm postId={postId} onSuccess={onCommentAdded} />
             </div>
         </div>
     )

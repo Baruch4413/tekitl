@@ -3,12 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -27,6 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'avatar',
+        'avatar_url',
         'google_id',
         'email_verified_at',
     ];
@@ -42,20 +41,6 @@ class User extends Authenticatable
         'two_factor_recovery_codes',
         'remember_token',
     ];
-
-    /** @var list<string> */
-    protected $appends = ['avatar_url'];
-
-    /**
-     * @return Attribute<string|null, never>
-     */
-    protected function avatarUrl(): Attribute
-    {
-        return Attribute::get(fn (): ?string => $this->avatar
-            ? Storage::disk('s3')->url($this->avatar)
-            : null
-        );
-    }
 
     public function posts(): HasMany
     {

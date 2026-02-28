@@ -30,7 +30,7 @@ interface PostActionsProps {
     comments: number
     coins: number
     isLiked: boolean
-    isPotenciado: boolean
+    isPoweredByCurrentUser: boolean
     processingAction: ProcessingAction
     commentsOpen: boolean
     onToggleLike: (id: number) => void
@@ -44,7 +44,7 @@ export default function PostActions({
     comments,
     coins,
     isLiked,
-    isPotenciado,
+    isPoweredByCurrentUser,
     processingAction,
     commentsOpen,
     onToggleLike,
@@ -58,7 +58,7 @@ export default function PostActions({
                 disabled={processingAction === 'potenciar'}
                 className={classNames(
                     actionBase,
-                    isPotenciado
+                    isPoweredByCurrentUser
                         ? 'text-amber-500 dark:text-amber-400'
                         : 'text-gray-400 hover:text-amber-600 dark:hover:text-amber-400',
                 )}

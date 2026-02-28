@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Observers\UserObserver;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
         if (request()->getHost() !== 'dev.tekitl.webshift.software') {
             Vite::useHotFile(storage_path('vite.hot.disabled'));
         }
+        User::observe(UserObserver::class);
         $this->configureDefaults();
     }
 

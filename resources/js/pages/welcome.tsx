@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { router } from '@inertiajs/react'
+import { InfiniteScroll, router } from '@inertiajs/react'
 import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from '@headlessui/react'
 import { XMarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { Bars3Icon } from '@heroicons/react/20/solid'
@@ -43,8 +43,12 @@ function classNames(...classes: (string | false | null | undefined)[]) {
     return classes.filter(Boolean).join(' ')
 }
 
+interface PaginatedPosts {
+    data: Post[]
+}
+
 interface WelcomeProps {
-    posts: Post[]
+    posts: PaginatedPosts
 }
 
 export default function Welcome({ posts }: WelcomeProps) {
@@ -133,17 +137,27 @@ export default function Welcome({ posts }: WelcomeProps) {
                 </div>
 
                 {/* Feed */}
-                <ul role="list" className="divide-y divide-gray-100 dark:divide-white/5">
-                    {posts.map((post) => (
+                <InfiniteScroll data="posts" onlyNext as="ul" role="list" className="divide-y divide-gray-100 dark:divide-white/5">
+                    {posts.data.map((post) => (
                         <FeedPost
                             key={post.id}
                             post={post}
                             processingAction={(processingActions[post.id] as 'potenciar' | 'comments' | 'like' | 'share') ?? null}
                             onToggleLike={handleToggleLike}
                             onPotenciar={handlePotenciar}
+                            onSetProcessing={(id: number, action: string | null) => {
+                                if (action) {
+                                    setProcessingActions((prev) => ({ ...prev, [id]: action }))
+                                } else {
+                                    setProcessingActions((prev) => {
+                                        const { [id]: _, ...rest } = prev
+                                        return rest
+                                    })
+                                }
+                            }}
                         />
                     ))}
-                </ul>
+                </InfiniteScroll>
             </div>
 
             {/* Right sidebar */}

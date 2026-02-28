@@ -4,9 +4,10 @@ import type { Auth } from '@/types/auth'
 
 interface CommentFormProps {
     postId: number
+    onSuccess?: () => void
 }
 
-export default function CommentForm({ postId }: CommentFormProps) {
+export default function CommentForm({ postId, onSuccess }: CommentFormProps) {
     const { auth } = usePage<{ auth?: Auth }>().props
 
     if (!auth?.user) {
@@ -43,7 +44,7 @@ export default function CommentForm({ postId }: CommentFormProps) {
                 action={store.url(postId)}
                 method="post"
                 resetOnSuccess
-                options={{ preserveScroll: true }}
+                options={{ preserveScroll: true, onSuccess }}
                 className="min-w-0 flex-1"
             >
                 {({ errors, processing }) => (

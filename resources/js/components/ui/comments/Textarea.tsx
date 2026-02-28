@@ -53,7 +53,7 @@ export default function Textarea() {
         )}
       </div>
       <div className="min-w-0 flex-1">
-        <Form {...store.form()} resetOnSuccess options={{ preserveScroll: true }}>
+        <Form action={store.url()} method="post" resetOnSuccess options={{ preserveScroll: true }}>
           {({ errors, processing }) => (
             <div className="relative">
               <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-white/5 dark:outline-white/10 dark:focus-within:outline-indigo-500">
