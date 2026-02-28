@@ -2,11 +2,11 @@
 
 import { useState } from 'react'
 import { InfiniteScroll, router } from '@inertiajs/react'
-import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from '@headlessui/react'
-import { XMarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { Bars3Icon } from '@heroicons/react/20/solid'
 import Textarea from '@/components/ui/comments/Textarea'
 import FeedPost, { type Post } from '@/components/ui/feed/FeedPost'
+import MobileSidebar from '@/components/ui/MobileSidebar'
 import WelcomeSidebar from '@/components/ui/WelcomeSidebar'
 import { potenciar, toggleLike } from '@/actions/App/Http/Controllers/PostController'
 
@@ -81,28 +81,7 @@ export default function Welcome({ posts }: WelcomeProps) {
     return (
         <div className="min-h-screen bg-white dark:bg-gray-950">
             {/* Mobile sidebar */}
-            <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 xl:hidden">
-                <DialogBackdrop
-                    transition
-                    className="fixed inset-0 bg-gray-950/80 transition-opacity duration-300 ease-linear data-closed:opacity-0"
-                />
-                <div className="fixed inset-0 flex">
-                    <DialogPanel
-                        transition
-                        className="relative mr-16 flex w-full max-w-xs flex-1 transform transition duration-300 ease-in-out data-closed:-translate-x-full"
-                    >
-                        <TransitionChild>
-                            <div className="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out data-closed:opacity-0">
-                                <button type="button" onClick={() => setSidebarOpen(false)} className="-m-2.5 p-2.5">
-                                    <span className="sr-only">Cerrar menú</span>
-                                    <XMarkIcon aria-hidden className="size-6 text-white" />
-                                </button>
-                            </div>
-                        </TransitionChild>
-                        <WelcomeSidebar currentPage="home" />
-                    </DialogPanel>
-                </div>
-            </Dialog>
+            <MobileSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} currentPage="home" />
 
             {/* Desktop fixed sidebar */}
             <div className="hidden xl:fixed xl:inset-y-0 xl:left-0 xl:z-50 xl:flex xl:w-72 xl:flex-col">

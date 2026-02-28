@@ -1,11 +1,15 @@
 import { useState } from 'react'
+import { Link } from '@inertiajs/react'
 import PostActions from '@/components/ui/feed/PostActions'
 import PostComments, { type Comment } from '@/components/ui/feed/PostComments'
+import UserAvatar from '@/components/ui/UserAvatar'
 import { index as fetchComments } from '@/actions/App/Http/Controllers/CommentController'
+import { show as userProfile } from '@/actions/App/Http/Controllers/UserProfileController'
 
 export interface Post {
     id: number
     user: {
+        id: number
         name: string
         imageUrl: string | null
     }
@@ -57,21 +61,13 @@ export default function FeedPost({ post, processingAction, onToggleLike, onPoten
     return (
         <li className="px-4 py-4 transition-colors hover:bg-gray-50 dark:hover:bg-white/[0.02]">
             <div className="flex gap-x-3">
-                {post.user.imageUrl ? (
-                    <img
-                        src={post.user.imageUrl}
-                        alt=""
-                        className="size-10 shrink-0 rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5 dark:bg-gray-800 dark:outline-white/10"
-                    />
-                ) : (
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-600 outline -outline-offset-1 outline-black/5 dark:bg-indigo-900 dark:text-indigo-300 dark:outline-white/10">
-                        {post.user.name.charAt(0).toUpperCase()}
-                    </span>
-                )}
+                <Link href={userProfile.url(post.user.id)}>
+                    <UserAvatar name={post.user.name} imageUrl={post.user.imageUrl} />
+                </Link>
 
                 <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-x-1.5">
-                        <span className="text-sm font-bold text-gray-900 dark:text-white">{post.user.name}</span>
+                        <Link href={userProfile.url(post.user.id)} className="text-sm font-bold text-gray-900 hover:underline dark:text-white">{post.user.name}</Link>
                         <span className="text-gray-300 dark:text-gray-600">·</span>
                         <time dateTime={post.dateTime} className="text-sm text-gray-500 dark:text-gray-400">
                             {post.date}

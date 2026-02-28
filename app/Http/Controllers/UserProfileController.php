@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
+use App\Models\User;
 use App\ReactionType;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class PostController extends Controller
+class UserProfileController extends Controller
 {
-    public function index(): Response
+    public function show(User $user): Response
     {
         $userId = Auth::id();
 
         $posts = Post::with(['user'])
+            ->where('user_id', $user->id)
             ->withCount([
                 'comments',
                 'reactions as likes_count' => fn ($q) => $q->where('type', ReactionType::Like),
@@ -41,44 +41,16 @@ class PostController extends Controller
             'comments' => $post->comments_count,
         ]);
 
-        return Inertia::render('welcome', [
+        return Inertia::render('users/show', [
+            'profileUser' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'avatarUrl' => $user->avatar_url,
+                'createdAt' => $user->created_at->translatedFormat('F Y'),
+                'postsCount' => $user->posts()->count(),
+                'coins' => $user->posts()->sum('coins'),
+            ],
             'posts' => Inertia::scroll($posts),
         ]);
-    }
-
-    public function store(StorePostRequest $request): RedirectResponse
-    {
-        $request->user()->posts()->create($request->validated());
-
-        return back();
-    }
-
-    public function potenciar(Post $post): RedirectResponse
-    {
-        $post->increment('coins', 10);
-
-        $post->reactions()->firstOrCreate([
-            'user_id' => Auth::id(),
-            'type' => ReactionType::Potenciar,
-        ]);
-
-        return back();
-    }
-
-    public function toggleLike(Post $post): RedirectResponse
-    {
-        $deleted = $post->reactions()
-            ->where('user_id', Auth::id())
-            ->where('type', ReactionType::Like)
-            ->delete();
-
-        if (! $deleted) {
-            $post->reactions()->create([
-                'user_id' => Auth::id(),
-                'type' => ReactionType::Like,
-            ]);
-        }
-
-        return back();
     }
 }

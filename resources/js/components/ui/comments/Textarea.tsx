@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Form, usePage } from '@inertiajs/react'
 import { store } from '@/actions/App/Http/Controllers/PostController'
+import UserAvatar from '@/components/ui/UserAvatar'
 import {
   FaceFrownIcon,
   FaceSmileIcon,
@@ -12,7 +13,7 @@ import {
   PaperClipIcon,
   XMarkIcon,
 } from '@heroicons/react/20/solid'
-import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
+import { ElSelect, ElOptions, ElOption } from '@tailwindplus/elements/react'
 
 const moods = [
   { name: 'Excited', value: 'excited', icon: FireIcon, iconColor: 'text-white', bgColor: 'bg-red-500' },
@@ -22,7 +23,7 @@ const moods = [
   { name: 'Thumbsy', value: 'thumbsy', icon: HandThumbUpIcon, iconColor: 'text-white', bgColor: 'bg-blue-500' },
   {
     name: 'I feel nothing',
-    value: null,
+    value: '',
     icon: XMarkIcon,
     iconColor: 'text-gray-400 dark:text-gray-500',
     bgColor: 'bg-transparent',
@@ -34,23 +35,14 @@ function classNames(...classes: (string | false | null | undefined)[]) {
 }
 
 export default function Textarea() {
-  const [selected, setSelected] = useState(moods[5])
+  const [selectedValue, setSelectedValue] = useState('')
   const { auth } = usePage().props
+  const selected = moods.find((m) => m.value === selectedValue) ?? moods[5]
 
   return (
     <div className="flex w-full items-start space-x-4">
       <div className="shrink-0">
-        {auth.user.avatar_url ? (
-          <img
-            alt=""
-            src={auth.user.avatar_url}
-            className="inline-block size-10 rounded-full bg-gray-100 object-cover outline -outline-offset-1 outline-black/5 dark:bg-gray-800 dark:outline-white/10"
-          />
-        ) : (
-          <span className="flex size-10 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-600 outline -outline-offset-1 outline-black/5 dark:bg-indigo-900 dark:text-indigo-300 dark:outline-white/10">
-            {auth.user.name.charAt(0).toUpperCase()}
-          </span>
-        )}
+        <UserAvatar name={auth.user.name} imageUrl={auth.user.avatar_url} />
       </div>
       <div className="min-w-0 flex-1">
         <Form action={store.url()} method="post" resetOnSuccess options={{ preserveScroll: true }}>
@@ -93,12 +85,19 @@ export default function Textarea() {
                     </button>
                   </div>
                   <div className="flex items-center">
-                    <Listbox value={selected} onChange={setSelected}>
-                      <Label className="sr-only">Your mood</Label>
+                    <ElSelect
+                      // @ts-expect-error — web component attributes
+                      value={selectedValue}
+                      onChange={(e: any) => setSelectedValue(e.target.value)}
+                    >
+                      <label className="sr-only">Your mood</label>
                       <div className="relative">
-                        <ListboxButton className="relative -m-2.5 flex size-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-white">
+                        <button
+                          type="button"
+                          className="relative -m-2.5 flex size-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-white"
+                        >
                           <span className="flex items-center justify-center">
-                            {selected.value === null ? (
+                            {!selected.value ? (
                               <span>
                                 <FaceSmileIcon aria-hidden="true" className="size-5 shrink-0" />
                                 <span className="sr-only">Add your mood</span>
@@ -117,16 +116,19 @@ export default function Textarea() {
                               </span>
                             )}
                           </span>
-                        </ListboxButton>
+                        </button>
 
-                        <ListboxOptions
-                          transition
-                          className="absolute z-10 mt-1 -ml-6 w-60 rounded-lg bg-white py-3 text-base shadow-sm outline-1 outline-black/5 data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:ml-auto sm:w-64 sm:text-sm dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
+                        <ElOptions
+                          // @ts-expect-error — web component attributes
+                          popover=""
+                          anchor="top start"
+                          className="z-10 w-60 rounded-lg bg-white py-3 text-base shadow-sm outline-1 outline-black/5 transition duration-100 ease-in data-closed:opacity-0 sm:w-64 sm:text-sm dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
                         >
                           {moods.map((mood) => (
-                            <ListboxOption
+                            <ElOption
                               key={mood.value}
-                              value={mood}
+                              // @ts-expect-error — web component attributes
+                              value={mood.value}
                               className="relative cursor-default bg-white px-3 py-2 text-gray-900 select-none data-focus:bg-gray-100 dark:bg-transparent dark:text-white dark:data-focus:bg-white/5"
                             >
                               <div className="flex items-center">
@@ -140,11 +142,11 @@ export default function Textarea() {
                                 </div>
                                 <span className="ml-3 block truncate font-medium">{mood.name}</span>
                               </div>
-                            </ListboxOption>
+                            </ElOption>
                           ))}
-                        </ListboxOptions>
+                        </ElOptions>
                       </div>
-                    </Listbox>
+                    </ElSelect>
                   </div>
                 </div>
                 <div className="shrink-0">

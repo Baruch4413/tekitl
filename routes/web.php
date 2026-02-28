@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
@@ -15,6 +16,8 @@ Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->midd
 Route::post('/posts/{post}/potenciar', [PostController::class, 'potenciar'])->middleware('auth')->name('posts.potenciar');
 
 Route::post('/posts/{post}/like', [PostController::class, 'toggleLike'])->middleware('auth')->name('posts.like');
+
+Route::get('/users/{user}', [UserProfileController::class, 'show'])->name('users.show');
 
 Route::get('/configuracion', function () {
     return Inertia\Inertia::render('configuracion');
