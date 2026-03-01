@@ -1,50 +1,72 @@
 'use client'
 
 import { useState } from 'react'
-import { InfiniteScroll, router } from '@inertiajs/react'
+import { usePage } from '@inertiajs/react'
 import { Bars3Icon, CalendarDaysIcon } from '@heroicons/react/20/solid'
-import { FireIcon } from '@heroicons/react/24/outline'
-import FeedPost, { type Post } from '@/components/ui/feed/FeedPost'
+import CoinIcon from '@/components/vector-graphics/CoinIcon'
+import SkillsIcon from '@/components/vector-graphics/SkillsIcon'
+import CommentsIcon from '@/components/vector-graphics/CommentsIcon'
+import InfoIcon from '@/components/vector-graphics/InfoIcon'
+import { formatCount } from '@/lib/utils'
+import { cn } from '@/lib/utils'
+import CoverPhoto from '@/components/ui/CoverPhoto'
 import MobileSidebar from '@/components/ui/MobileSidebar'
 import WelcomeSidebar from '@/components/ui/WelcomeSidebar'
 import UserAvatar from '@/components/ui/UserAvatar'
-import { potenciar, toggleLike } from '@/actions/App/Http/Controllers/PostController'
+import PostsTab from '@/components/ui/profile/PostsTab'
+import TalentosTab, { type Talent } from '@/components/ui/profile/TalentosTab'
+import InformacionTab from '@/components/ui/profile/InformacionTab'
+import type { Post } from '@/components/ui/feed/FeedPost'
+import {
+    ChatBubbleBottomCenterTextIcon,
+    InformationCircleIcon,
+} from '@heroicons/react/24/outline'
 
 interface ProfileUser {
     id: number
     name: string
     avatarUrl: string | null
+    coverPhotoUrl: string | null
+    coverPhotoPositionY: number
     createdAt: string
     postsCount: number
     coins: number
+    bio: string | null
+    locationName: string | null
+    locationPlaceId: string | null
+    locationLat: number | null
+    locationLng: number | null
+    birthdate: string | null
+    publicPhone: string | null
+    contactEmail: string | null
+    languages: string[] | null
 }
 
 interface PaginatedPosts {
     data: Post[]
 }
 
+type Tab = 'posts' | 'talentos' | 'informacion'
+
+const tabs: { id: Tab; label: string; icon: React.FC<React.SVGProps<SVGSVGElement>> }[] = [
+    { id: 'posts', label: 'Posts', icon: (props) => <CommentsIcon {...props} /> },
+    { id: 'talentos', label: 'Talentos', icon: (props) => <SkillsIcon {...props} /> },
+    { id: 'informacion', label: 'Información', icon: (props) => <InfoIcon {...props} /> },
+]
+
 interface UserShowProps {
     profileUser: ProfileUser
     posts: PaginatedPosts
+    talents: Talent[]
+    occupations?: string[]
+    googleMapsApiKey: string | null
 }
 
-export default function UserShow({ profileUser, posts }: UserShowProps) {
+export default function UserShow({ profileUser, posts, talents, occupations, googleMapsApiKey }: UserShowProps) {
+    const { auth } = usePage<{ auth: { user?: { id: number } } }>().props
+    const isOwner = auth.user?.id === profileUser.id
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [processingActions, setProcessingActions] = useState<Record<number, string>>({})
-
-    const withProcessing = (id: number, action: string, url: string) => {
-        router.post(url, {}, {
-            preserveScroll: true,
-            onBefore: () => setProcessingActions((prev) => ({ ...prev, [id]: action })),
-            onFinish: () => setProcessingActions((prev) => {
-                const { [id]: _, ...rest } = prev
-                return rest
-            }),
-        })
-    }
-
-    const handlePotenciar = (id: number) => withProcessing(id, 'potenciar', potenciar.url(id))
-    const handleToggleLike = (id: number) => withProcessing(id, 'like', toggleLike.url(id))
+    const [activeTab, setActiveTab] = useState<Tab>('posts')
 
     return (
         <div className="min-h-screen bg-white dark:bg-gray-950">
@@ -72,8 +94,12 @@ export default function UserShow({ profileUser, posts }: UserShowProps) {
 
                 {/* Profile heading */}
                 <div>
-                    <div className="h-32 w-full bg-gradient-to-r from-indigo-500 to-purple-600 lg:h-48" />
-                    <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+                    <CoverPhoto
+                        imageUrl={profileUser.coverPhotoUrl}
+                        positionY={profileUser.coverPhotoPositionY}
+                        isOwner={isOwner}
+                    />
+                    <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
                         <div className="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
                             <div className="flex">
                                 <UserAvatar
@@ -96,42 +122,61 @@ export default function UserShow({ profileUser, posts }: UserShowProps) {
                                 Miembro desde {profileUser.createdAt}
                             </span>
                             <span className="flex items-center gap-x-1.5">
-                                <FireIcon className="size-4" />
-                                {profileUser.coins} coins
+                                <CoinIcon className="size-4" />
+                                {formatCount(profileUser.coins)} coins
                             </span>
                             <span>{profileUser.postsCount} {profileUser.postsCount === 1 ? 'post' : 'posts'}</span>
                         </div>
                     </div>
                 </div>
 
-                {/* Posts feed */}
-                <div className="mt-6 border-t border-gray-200 dark:border-white/5">
-                    <InfiniteScroll data="posts" onlyNext as="ul" role="list" className="divide-y divide-gray-100 dark:divide-white/5">
-                        {posts.data.map((post) => (
-                            <FeedPost
-                                key={post.id}
-                                post={post}
-                                processingAction={(processingActions[post.id] as 'potenciar' | 'comments' | 'like' | 'share') ?? null}
-                                onToggleLike={handleToggleLike}
-                                onPotenciar={handlePotenciar}
-                                onSetProcessing={(id: number, action: string | null) => {
-                                    if (action) {
-                                        setProcessingActions((prev) => ({ ...prev, [id]: action }))
-                                    } else {
-                                        setProcessingActions((prev) => {
-                                            const { [id]: _, ...rest } = prev
-                                            return rest
-                                        })
-                                    }
-                                }}
-                            />
-                        ))}
-                    </InfiniteScroll>
+                {/* Tab navigation */}
+                <div className="mt-6 border-b border-gray-200 dark:border-white/10">
+                    <nav className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+                        <ul role="list" className="flex gap-x-1">
+                            {tabs.map((tab) => (
+                                <li key={tab.id}>
+                                    <button
+                                        type="button"
+                                        onClick={() => setActiveTab(tab.id)}
+                                        className={cn(
+                                            tab.id === activeTab
+                                                ? 'border-b-2 border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-indigo-400'
+                                                : 'border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200',
+                                            'flex items-center gap-x-2 whitespace-nowrap px-1 py-4 text-sm font-semibold transition-colors',
+                                        )}
+                                    >
+                                        <tab.icon aria-hidden className="size-4 shrink-0" />
+                                        {tab.label}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                </div>
 
-                    {posts.data.length === 0 && (
-                        <div className="px-4 py-12 text-center text-sm text-gray-500 dark:text-gray-400">
-                            Este usuario aún no ha publicado nada.
-                        </div>
+                {/* Tab content */}
+                <div className="mx-auto max-w-5xl">
+                    {activeTab === 'posts' && <PostsTab posts={posts} />}
+                    {activeTab === 'talentos' && (
+                        <TalentosTab talents={talents} occupations={occupations} isOwner={isOwner} />
+                    )}
+                    {activeTab === 'informacion' && (
+                        <InformacionTab
+                            profileInfo={{
+                                bio: profileUser.bio,
+                                locationName: profileUser.locationName,
+                                locationPlaceId: profileUser.locationPlaceId,
+                                locationLat: profileUser.locationLat,
+                                locationLng: profileUser.locationLng,
+                                birthdate: profileUser.birthdate,
+                                publicPhone: profileUser.publicPhone,
+                                contactEmail: profileUser.contactEmail,
+                                languages: profileUser.languages,
+                            }}
+                            isOwner={isOwner}
+                            googleMapsApiKey={googleMapsApiKey}
+                        />
                     )}
                 </div>
             </div>

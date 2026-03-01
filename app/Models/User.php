@@ -28,6 +28,18 @@ class User extends Authenticatable
         'avatar_url',
         'google_id',
         'email_verified_at',
+        'cover_photo',
+        'cover_photo_url',
+        'cover_photo_position_y',
+        'bio',
+        'location_name',
+        'location_place_id',
+        'location_lat',
+        'location_lng',
+        'birthdate',
+        'public_phone',
+        'contact_email',
+        'languages',
     ];
 
     /**
@@ -47,6 +59,11 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function talents(): HasMany
+    {
+        return $this->hasMany(UserTalent::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -58,6 +75,8 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
+            'birthdate' => 'date',
+            'languages' => 'array',
         ];
     }
 }

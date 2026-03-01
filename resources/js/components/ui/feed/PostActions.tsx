@@ -5,19 +5,10 @@ import {
 } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid'
 import CoinIcon from '@/components/vector-graphics/CoinIcon'
+import { formatCount } from '@/lib/utils'
 
 function classNames(...classes: (string | false | null | undefined)[]) {
     return classes.filter(Boolean).join(' ')
-}
-
-function formatCount(count: number): string {
-    if (count >= 1_000_000) {
-        return `${(count / 1_000_000).toFixed(count % 1_000_000 === 0 ? 0 : 1)}M`
-    }
-    if (count >= 1_000) {
-        return `${(count / 1_000).toFixed(count % 1_000 === 0 ? 0 : 1)}K`
-    }
-    return count.toString()
 }
 
 const actionBase = 'group flex items-center gap-x-1.5 transition-all active:scale-95 disabled:pointer-events-none disabled:opacity-50'

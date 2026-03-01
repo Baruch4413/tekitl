@@ -74,7 +74,7 @@ export default function FeedPost({ post, processingAction, onToggleLike, onPoten
                         </time>
                     </div>
 
-                    <p className="mt-1 text-sm text-gray-900 dark:text-gray-100">{post.content}</p>
+                    <p className="mt-1 text-[2rem]/snug text-gray-900 dark:text-gray-100">{post.content}</p>
 
                     <PostActions
                         postId={post.id}

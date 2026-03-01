@@ -1,0 +1,70 @@
+Abogado
+Administrador de sistemas
+Analista financiero
+Arquitecto
+Asistente administrativo
+Barbero
+Bioquímico
+Biólogo
+Bombero
+Cajero
+Camarógrafo
+Carpintero
+Chef
+Científico de datos
+Cirujano
+Consultor
+Consultor de negocios
+Contador
+Dentista
+Desarrollador de aplicaciones
+Desarrollador web
+Director de cine
+Director de marketing
+Diseñador de interiores
+Diseñador de modas
+Diseñador de videojuegos
+Diseñador gráfico
+Doctor
+Economista
+Editor
+Electricista
+Enfermero
+Escritor
+Especialista en ciberseguridad
+Especialista en marketing digital
+Farmacéutico
+Fotógrafo
+Gerente de recursos humanos
+Gerente de ventas
+Ingeniero
+Ingeniero ambiental
+Ingeniero civil
+Ingeniero de software
+Ingeniero de telecomunicaciones
+Ingeniero en mecatrónica
+Ingeniero industrial
+Investigador científico
+Jardinero
+Maestro
+Mecánico
+Mesero
+Operador de máquinas
+Peluquero
+Piloto
+Policía
+Profesor universitario
+Programador
+Psicoterapeuta
+Psicólogo
+Publicista
+Químico
+Recepcionista
+Redactor
+Soldador
+Traductor
+Técnico de laboratorio
+Técnico en redes
+Técnico informático
+Veterinario
+Vigilante

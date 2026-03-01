@@ -14,5 +14,11 @@ class UserObserver
                 ? Storage::disk('s3')->url($user->avatar)
                 : null;
         }
+
+        if ($user->isDirty('cover_photo')) {
+            $user->cover_photo_url = $user->cover_photo
+                ? Storage::disk('s3')->url($user->cover_photo)
+                : null;
+        }
     }
 }
