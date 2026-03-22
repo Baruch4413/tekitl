@@ -11,13 +11,13 @@ class UserObserver
     {
         if ($user->isDirty('avatar')) {
             $user->avatar_url = $user->avatar
-                ? Storage::disk('s3')->url($user->avatar)
+                ? Storage::disk('s3')->url($user->avatar.'-medium.webp')
                 : null;
         }
 
         if ($user->isDirty('cover_photo')) {
             $user->cover_photo_url = $user->cover_photo
-                ? Storage::disk('s3')->url($user->cover_photo)
+                ? Storage::disk('s3')->url($user->cover_photo.'-medium.webp')
                 : null;
         }
     }

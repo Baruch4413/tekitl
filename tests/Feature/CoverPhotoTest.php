@@ -1,5 +1,6 @@
 <?php
 
+use App\CoverPhotoSize;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -27,7 +28,10 @@ test('authenticated users can upload a cover photo', function () {
 
     expect($user->cover_photo)->not->toBeNull();
     expect($user->cover_photo_position_y)->toBe(50);
-    Storage::disk('s3')->assertExists($user->cover_photo);
+
+    foreach (CoverPhotoSize::cases() as $size) {
+        Storage::disk('s3')->assertExists("{$user->cover_photo}-{$size->value}.webp");
+    }
 });
 
 test('cover photo must be an image', function () {
@@ -40,12 +44,12 @@ test('cover photo must be an image', function () {
         ->assertInvalid(['cover_photo']);
 });
 
-test('cover photo must not exceed 3MB', function () {
+test('cover photo must not exceed 4MB', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
         ->post(route('users.cover-photo.upload'), [
-            'cover_photo' => UploadedFile::fake()->image('cover.jpg')->size(4096),
+            'cover_photo' => UploadedFile::fake()->image('cover.jpg')->size(5120),
         ])
         ->assertInvalid(['cover_photo']);
 });
@@ -58,8 +62,11 @@ test('uploading a new cover photo deletes the old one', function () {
             'cover_photo' => UploadedFile::fake()->image('old.jpg', 1200, 400),
         ]);
 
-    $oldPath = $user->refresh()->cover_photo;
-    Storage::disk('s3')->assertExists($oldPath);
+    $oldBasePath = $user->refresh()->cover_photo;
+
+    foreach (CoverPhotoSize::cases() as $size) {
+        Storage::disk('s3')->assertExists("{$oldBasePath}-{$size->value}.webp");
+    }
 
     $this->actingAs($user)
         ->post(route('users.cover-photo.upload'), [
@@ -68,9 +75,12 @@ test('uploading a new cover photo deletes the old one', function () {
 
     $user->refresh();
 
-    Storage::disk('s3')->assertMissing($oldPath);
-    Storage::disk('s3')->assertExists($user->cover_photo);
-    expect($user->cover_photo)->not->toBe($oldPath);
+    foreach (CoverPhotoSize::cases() as $size) {
+        Storage::disk('s3')->assertMissing("{$oldBasePath}-{$size->value}.webp");
+        Storage::disk('s3')->assertExists("{$user->cover_photo}-{$size->value}.webp");
+    }
+
+    expect($user->cover_photo)->not->toBe($oldBasePath);
 });
 
 test('guests cannot update cover photo position', function () {
@@ -109,7 +119,7 @@ test('cover photo position must be between 0 and 100', function () {
 
 test('profile page returns cover photo data', function () {
     $user = User::factory()->create([
-        'cover_photo' => 'covers/test.jpg',
+        'cover_photo' => 'covers/test123',
         'cover_photo_position_y' => 30,
     ]);
 
@@ -118,6 +128,20 @@ test('profile page returns cover photo data', function () {
         ->assertInertia(fn ($page) => $page
             ->component('users/show')
             ->where('profileUser.coverPhotoPositionY', 30)
-            ->where('profileUser.coverPhotoUrl', fn ($value) => str_contains($value, 'covers/test.jpg'))
+            ->where('profileUser.coverPhotoUrl', fn ($value) => str_contains($value, 'covers/test123-medium.webp'))
+            ->where('profileUser.coverPhotoBaseUrl', fn ($value) => str_contains($value, 'covers/test123')
+                && ! str_contains($value, '-medium')
+                && ! str_contains($value, '.webp'))
+        );
+});
+
+test('profile page returns null cover photo base url when no cover photo', function () {
+    $user = User::factory()->create(['cover_photo' => null]);
+
+    $this->get(route('users.show', $user))
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page
+            ->component('users/show')
+            ->where('profileUser.coverPhotoBaseUrl', null)
         );
 });

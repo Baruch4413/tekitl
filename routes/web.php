@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserProfileInfoController;
 use App\Http\Controllers\UserTalentController;
@@ -18,6 +19,12 @@ Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->midd
 Route::post('/posts/{post}/potenciar', [PostController::class, 'potenciar'])->middleware('auth')->name('posts.potenciar');
 
 Route::post('/posts/{post}/like', [PostController::class, 'toggleLike'])->middleware('auth')->name('posts.like');
+
+Route::get('/proyectos/{post}', [ProjectController::class, 'show'])->middleware('auth')->name('proyectos.show');
+Route::patch('/proyectos/{project}', [ProjectController::class, 'update'])->middleware('auth')->name('proyectos.update');
+Route::post('/proyectos/{project}/images', [ProjectController::class, 'uploadImage'])->middleware('auth')->name('proyectos.images.upload');
+Route::patch('/proyectos/{project}/images/{image}', [ProjectController::class, 'updateImage'])->middleware('auth')->name('proyectos.images.update');
+Route::delete('/proyectos/{project}/images/{image}', [ProjectController::class, 'deleteImage'])->middleware('auth')->name('proyectos.images.delete');
 
 Route::get('/users/{user}', [UserProfileController::class, 'show'])->name('users.show');
 Route::post('/users/cover-photo', [UserProfileController::class, 'uploadCoverPhoto'])->middleware('auth')->name('users.cover-photo.upload');

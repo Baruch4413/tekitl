@@ -16,7 +16,7 @@ class PostController extends Controller
     {
         $userId = Auth::id();
 
-        $posts = Post::with(['user'])
+        $posts = Post::with(['user', 'project:id,post_id'])
             ->withCount([
                 'comments',
                 'reactions as likes_count' => fn ($q) => $q->where('type', ReactionType::Like),
@@ -39,6 +39,8 @@ class PostController extends Controller
             'isLiked' => (bool) $post->is_liked,
             'isPoweredByCurrentUser' => (bool) $post->is_powered_by_current_user,
             'comments' => $post->comments_count,
+            'hasProject' => $post->project !== null,
+            'isOwner' => $userId && $userId === $post->user_id,
         ]);
 
         return Inertia::render('welcome', [

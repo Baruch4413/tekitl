@@ -22,7 +22,7 @@ export default function ExperienceSlider({ value, onChange }: ExperienceSliderPr
                 {/* Track line */}
                 <div className="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-gray-200 dark:bg-white/10" />
                 <div
-                    className="absolute top-1/2 h-0.5 -translate-y-1/2 bg-indigo-600 transition-all dark:bg-indigo-400"
+                    className="absolute top-1/2 h-0.5 -translate-y-1/2 bg-indigo-500 transition-all"
                     style={{ width: `${(activeIndex / (stops.length - 1)) * 100}%` }}
                 />
 
@@ -34,7 +34,7 @@ export default function ExperienceSlider({ value, onChange }: ExperienceSliderPr
                         className={cn(
                             'relative z-10 size-4 rounded-full border-2 transition-colors',
                             index <= activeIndex
-                                ? 'border-indigo-600 bg-indigo-600 dark:border-indigo-400 dark:bg-indigo-400'
+                                ? 'border-indigo-500 bg-indigo-500'
                                 : 'border-gray-300 bg-white dark:border-white/20 dark:bg-gray-900',
                         )}
                     >

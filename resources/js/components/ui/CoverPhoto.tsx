@@ -1,19 +1,22 @@
 import { router } from '@inertiajs/react'
 import { useCallback, useRef, useState } from 'react'
+import { toast } from 'sonner'
 import { uploadCoverPhoto, updateCoverPhotoPosition } from '@/actions/App/Http/Controllers/UserProfileController'
 
 interface CoverPhotoProps {
     imageUrl: string | null
+    baseUrl: string | null
     positionY: number
     isOwner: boolean
 }
 
-export default function CoverPhoto({ imageUrl, positionY, isOwner }: CoverPhotoProps) {
+export default function CoverPhoto({ imageUrl, baseUrl, positionY, isOwner }: CoverPhotoProps) {
     const [repositioning, setRepositioning] = useState(false)
     const [localPositionY, setLocalPositionY] = useState(positionY)
     const [uploading, setUploading] = useState(false)
     const [saving, setSaving] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
+    const imgRef = useRef<HTMLImageElement>(null)
     const dragStartRef = useRef<{ startY: number; startPosition: number } | null>(null)
     const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -26,6 +29,11 @@ export default function CoverPhoto({ imageUrl, positionY, isOwner }: CoverPhotoP
             preserveScroll: true,
             onFinish: () => {
                 setUploading(false)
+                setLocalPositionY(50)
+                setRepositioning(true)
+            },
+            onError: (errors) => {
+                Object.values(errors).forEach((msg) => toast.error(msg))
             },
         })
 
@@ -40,11 +48,15 @@ export default function CoverPhoto({ imageUrl, positionY, isOwner }: CoverPhotoP
     }, [repositioning, localPositionY])
 
     const handlePointerMove = useCallback((e: React.PointerEvent) => {
-        if (!dragStartRef.current || !containerRef.current) return
-        const containerHeight = containerRef.current.getBoundingClientRect().height
+        if (!dragStartRef.current || !containerRef.current || !imgRef.current) return
+        const container = containerRef.current.getBoundingClientRect()
+        const img = imgRef.current
+        const scale = Math.max(container.width / img.naturalWidth, container.height / img.naturalHeight)
+        const overflow = img.naturalHeight * scale - container.height
+        if (overflow <= 0) return
         const deltaY = e.clientY - dragStartRef.current.startY
-        const deltaPercent = (deltaY / containerHeight) * 100
-        const newPosition = Math.max(0, Math.min(100, dragStartRef.current.startPosition + deltaPercent))
+        const deltaPercent = (deltaY / overflow) * 100
+        const newPosition = Math.max(0, Math.min(100, dragStartRef.current.startPosition - deltaPercent))
         setLocalPositionY(newPosition)
     }, [])
 
@@ -59,6 +71,9 @@ export default function CoverPhoto({ imageUrl, positionY, isOwner }: CoverPhotoP
             onFinish: () => {
                 setSaving(false)
                 setRepositioning(false)
+            },
+            onError: (errors) => {
+                Object.values(errors).forEach((msg) => toast.error(msg))
             },
         })
     }, [localPositionY])
@@ -78,7 +93,10 @@ export default function CoverPhoto({ imageUrl, positionY, isOwner }: CoverPhotoP
         >
             {imageUrl ? (
                 <img
+                    ref={imgRef}
                     src={imageUrl}
+                    srcSet={baseUrl ? `${baseUrl}-thumbnail.webp 400w, ${baseUrl}-medium.webp 900w, ${baseUrl}-large.webp 1600w` : undefined}
+                    sizes={baseUrl ? '100vw' : undefined}
                     alt=""
                     className={`h-full w-full object-cover ${repositioning ? 'cursor-grab active:cursor-grabbing' : ''}`}
                     style={{ objectPosition: `center ${repositioning ? localPositionY : positionY}%` }}
@@ -97,7 +115,7 @@ export default function CoverPhoto({ imageUrl, positionY, isOwner }: CoverPhotoP
                                 setLocalPositionY(positionY)
                                 setRepositioning(true)
                             }}
-                            className="rounded-md bg-black/50 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm hover:bg-black/70"
+                            className="rounded-full bg-black/50 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm hover:bg-black/70"
                         >
                             Reposicionar
                         </button>
@@ -106,7 +124,7 @@ export default function CoverPhoto({ imageUrl, positionY, isOwner }: CoverPhotoP
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
                         disabled={uploading}
-                        className="rounded-md bg-black/50 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm hover:bg-black/70 disabled:opacity-50"
+                        className="rounded-full bg-black/50 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm hover:bg-black/70 disabled:opacity-50"
                     >
                         {uploading ? 'Subiendo...' : 'Editar portada'}
                     </button>
@@ -119,7 +137,7 @@ export default function CoverPhoto({ imageUrl, positionY, isOwner }: CoverPhotoP
                         type="button"
                         onClick={handleCancelReposition}
                         disabled={saving}
-                        className="rounded-md bg-white/90 px-3 py-1.5 text-xs font-medium text-gray-900 backdrop-blur-sm hover:bg-white disabled:opacity-50"
+                        className="rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium text-gray-900 backdrop-blur-sm hover:bg-white disabled:opacity-50"
                     >
                         Cancelar
                     </button>
@@ -127,7 +145,7 @@ export default function CoverPhoto({ imageUrl, positionY, isOwner }: CoverPhotoP
                         type="button"
                         onClick={handleSavePosition}
                         disabled={saving}
-                        className="rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm hover:bg-indigo-500 disabled:opacity-50"
+                        className="rounded-full bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm hover:bg-indigo-500 disabled:opacity-50"
                     >
                         {saving ? 'Guardando...' : 'Guardar'}
                     </button>
@@ -135,7 +153,7 @@ export default function CoverPhoto({ imageUrl, positionY, isOwner }: CoverPhotoP
             )}
 
             {isOwner && repositioning && (
-                <div className="absolute top-4 left-1/2 z-20 -translate-x-1/2 rounded-md bg-black/50 px-3 py-1.5 text-xs text-white backdrop-blur-sm">
+                <div className="absolute top-4 left-1/2 z-20 -translate-x-1/2 rounded-full bg-black/50 px-3 py-1.5 text-xs text-white backdrop-blur-sm">
                     Arrastra para reposicionar
                 </div>
             )}

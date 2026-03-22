@@ -22,7 +22,7 @@ class CoverPhotoUploadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cover_photo' => ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:3072'],
+            'cover_photo' => ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:4096'],
         ];
     }
 }

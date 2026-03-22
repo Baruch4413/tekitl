@@ -111,7 +111,7 @@ function DialogContent({
             <ElDialogPanel
                 data-slot="dialog-content"
                 className={cn(
-                    'bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg transition duration-200 ease-out data-closed:scale-95 data-closed:opacity-0 sm:max-w-lg',
+                    'bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-2xl border border-gray-200 p-6 shadow-lg transition duration-200 ease-out data-closed:scale-95 data-closed:opacity-0 dark:border-white/[0.06] sm:max-w-lg',
                     className,
                 )}
                 {...props}

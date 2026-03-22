@@ -2,7 +2,9 @@
 
 import { useState } from 'react'
 import { InfiniteScroll, router } from '@inertiajs/react'
+import { toast } from 'sonner'
 import FeedPost, { type Post } from '@/components/ui/feed/FeedPost'
+import CommentsIcon from '@/components/vector-graphics/CommentsIcon'
 import { potenciar, toggleLike } from '@/actions/App/Http/Controllers/PostController'
 
 interface PaginatedPosts {
@@ -24,6 +26,9 @@ export default function PostsTab({ posts }: PostsTabProps) {
                 const { [id]: _, ...rest } = prev
                 return rest
             }),
+            onError: (errors) => {
+                Object.values(errors).forEach((msg) => toast.error(msg))
+            },
         })
     }
 
@@ -55,8 +60,16 @@ export default function PostsTab({ posts }: PostsTabProps) {
             </InfiniteScroll>
 
             {posts.data.length === 0 && (
-                <div className="px-4 py-12 text-center text-sm text-gray-500 dark:text-gray-400">
-                    Este usuario aún no ha publicado nada.
+                <div className="px-4 py-6 sm:px-6 lg:px-8">
+                    <div className="rounded-2xl border border-gray-200 bg-white px-6 py-16 text-center dark:border-white/[0.06] dark:bg-white/[0.02]">
+                        <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-gray-100 dark:bg-white/5">
+                            <CommentsIcon className="size-6 text-gray-400" />
+                        </div>
+                        <h3 className="mt-4 text-sm font-semibold text-gray-900 dark:text-white">Sin publicaciones</h3>
+                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                            Este usuario aún no ha publicado nada.
+                        </p>
+                    </div>
                 </div>
             )}
         </div>

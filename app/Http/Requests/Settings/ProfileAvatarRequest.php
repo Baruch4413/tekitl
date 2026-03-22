@@ -23,7 +23,7 @@ class ProfileAvatarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'avatar' => ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:1024'],
+            'avatar' => ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:4096'],
         ];
     }
 }

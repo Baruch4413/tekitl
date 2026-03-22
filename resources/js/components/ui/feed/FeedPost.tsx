@@ -21,6 +21,8 @@ export interface Post {
     coins: number
     isLiked: boolean
     isPoweredByCurrentUser: boolean
+    hasProject?: boolean
+    isOwner?: boolean
 }
 
 interface FeedPostProps {
@@ -74,7 +76,7 @@ export default function FeedPost({ post, processingAction, onToggleLike, onPoten
                         </time>
                     </div>
 
-                    <p className="mt-1 text-[2rem]/snug text-gray-900 dark:text-gray-100">{post.content}</p>
+                    <p className="mt-1 text-[2rem]/snug text-gray-800 dark:text-gray-100">{post.content}</p>
 
                     <PostActions
                         postId={post.id}
@@ -88,6 +90,8 @@ export default function FeedPost({ post, processingAction, onToggleLike, onPoten
                         onToggleLike={onToggleLike}
                         onToggleComments={handleToggleComments}
                         onPotenciar={onPotenciar}
+                        hasProject={post.hasProject}
+                        isOwner={post.isOwner}
                     />
 
                     {commentsOpen && commentsList && (

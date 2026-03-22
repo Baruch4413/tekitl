@@ -1,9 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { InfiniteScroll, router } from '@inertiajs/react'
+import { InfiniteScroll, router, usePage } from '@inertiajs/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { Bars3Icon } from '@heroicons/react/20/solid'
+import { toast } from 'sonner'
 import Textarea from '@/components/ui/comments/Textarea'
 import FeedPost, { type Post } from '@/components/ui/feed/FeedPost'
 import MobileSidebar from '@/components/ui/MobileSidebar'
@@ -52,6 +53,7 @@ interface WelcomeProps {
 }
 
 export default function Welcome({ posts }: WelcomeProps) {
+    const { auth } = usePage().props
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [processingActions, setProcessingActions] = useState<Record<number, string>>({})
     const [followedUsers, setFollowedUsers] = useState<Set<string>>(new Set(['@lwalton']))
@@ -64,6 +66,9 @@ export default function Welcome({ posts }: WelcomeProps) {
                 const { [id]: _, ...rest } = prev
                 return rest
             }),
+            onError: (errors) => {
+                Object.values(errors).forEach((msg) => toast.error(msg))
+            },
         })
     }
 
@@ -111,9 +116,11 @@ export default function Welcome({ posts }: WelcomeProps) {
                 </div>
 
                 {/* Composer */}
-                <div className="flex gap-x-3 border-b border-gray-200 px-4 py-4 dark:border-white/5">
-                    <Textarea />
-                </div>
+                {auth.user && (
+                    <div className="flex gap-x-3 border-b border-gray-200 px-4 py-4 dark:border-white/5">
+                        <Textarea />
+                    </div>
+                )}
 
                 {/* Feed */}
                 <InfiniteScroll data="posts" onlyNext as="ul" role="list" className="divide-y divide-gray-100 dark:divide-white/5">

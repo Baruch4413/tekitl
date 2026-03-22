@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\AvatarSize;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileAvatarRequest;
 use App\Http\Requests\Settings\ProfileDeleteRequest;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
+use App\Services\ImageService;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -46,17 +47,17 @@ class ProfileController extends Controller
     /**
      * Update the user's avatar.
      */
-    public function updateAvatar(ProfileAvatarRequest $request): RedirectResponse
+    public function updateAvatar(ProfileAvatarRequest $request, ImageService $imageService): RedirectResponse
     {
         $user = $request->user();
 
         if ($user->avatar) {
-            Storage::disk('s3')->delete($user->avatar);
+            $imageService->deleteVariants($user->avatar, array_column(AvatarSize::cases(), 'value'));
         }
 
-        $path = $request->file('avatar')->store('avatars', 's3');
+        $basePath = $imageService->processAvatar($request->file('avatar'));
 
-        $user->update(['avatar' => $path]);
+        $user->update(['avatar' => $basePath]);
 
         return back();
     }

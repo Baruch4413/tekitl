@@ -12,21 +12,20 @@ import { cn } from '@/lib/utils'
 import CoverPhoto from '@/components/ui/CoverPhoto'
 import MobileSidebar from '@/components/ui/MobileSidebar'
 import WelcomeSidebar from '@/components/ui/WelcomeSidebar'
-import UserAvatar from '@/components/ui/UserAvatar'
+import ProfileAvatar from '@/components/ui/profile/ProfileAvatar'
 import PostsTab from '@/components/ui/profile/PostsTab'
 import TalentosTab, { type Talent } from '@/components/ui/profile/TalentosTab'
 import InformacionTab from '@/components/ui/profile/InformacionTab'
 import type { Post } from '@/components/ui/feed/FeedPost'
-import {
-    ChatBubbleBottomCenterTextIcon,
-    InformationCircleIcon,
-} from '@heroicons/react/24/outline'
 
 interface ProfileUser {
     id: number
     name: string
     avatarUrl: string | null
+    avatarBaseUrl: string | null
+    avatarOriginalUrl: string | null
     coverPhotoUrl: string | null
+    coverPhotoBaseUrl: string | null
     coverPhotoPositionY: number
     createdAt: string
     postsCount: number
@@ -96,17 +95,19 @@ export default function UserShow({ profileUser, posts, talents, occupations, goo
                 <div>
                     <CoverPhoto
                         imageUrl={profileUser.coverPhotoUrl}
+                        baseUrl={profileUser.coverPhotoBaseUrl}
                         positionY={profileUser.coverPhotoPositionY}
                         isOwner={isOwner}
                     />
                     <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
                         <div className="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
                             <div className="flex">
-                                <UserAvatar
+                                <ProfileAvatar
                                     name={profileUser.name}
                                     imageUrl={profileUser.avatarUrl}
-                                    size="lg"
-                                    className="ring-4 ring-white dark:ring-gray-950"
+                                    baseUrl={profileUser.avatarBaseUrl}
+                                    originalUrl={profileUser.avatarOriginalUrl}
+                                    isOwner={isOwner}
                                 />
                             </div>
                             <div className="mt-6 sm:flex sm:min-w-0 sm:flex-1 sm:items-center sm:justify-end sm:pb-1">
@@ -131,9 +132,9 @@ export default function UserShow({ profileUser, posts, talents, occupations, goo
                 </div>
 
                 {/* Tab navigation */}
-                <div className="mt-6 border-b border-gray-200 dark:border-white/10">
+                <div className="mt-8 border-b border-gray-200 dark:border-white/10">
                     <nav className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-                        <ul role="list" className="flex gap-x-1">
+                        <ul role="list" className="-mb-px flex gap-x-6">
                             {tabs.map((tab) => (
                                 <li key={tab.id}>
                                     <button
@@ -141,9 +142,9 @@ export default function UserShow({ profileUser, posts, talents, occupations, goo
                                         onClick={() => setActiveTab(tab.id)}
                                         className={cn(
                                             tab.id === activeTab
-                                                ? 'border-b-2 border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-indigo-400'
-                                                : 'border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200',
-                                            'flex items-center gap-x-2 whitespace-nowrap px-1 py-4 text-sm font-semibold transition-colors',
+                                                ? 'border-indigo-600 text-indigo-600 dark:border-indigo-500 dark:text-indigo-400'
+                                                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-200',
+                                            'flex items-center gap-x-2 whitespace-nowrap border-b-2 px-1 py-3 text-sm font-semibold transition-colors',
                                         )}
                                     >
                                         <tab.icon aria-hidden className="size-4 shrink-0" />

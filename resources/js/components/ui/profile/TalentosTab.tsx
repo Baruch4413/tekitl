@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { router } from '@inertiajs/react'
 import { PlusIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/20/solid'
+import { toast } from 'sonner'
+import SkillsIcon from '@/components/vector-graphics/SkillsIcon'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog'
 import ExperienceSlider from '@/components/ui/profile/ExperienceSlider'
 import { store, update, destroy } from '@/actions/App/Http/Controllers/UserTalentController'
@@ -102,7 +104,10 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
             preserveScroll: true,
             only: ['talents'],
             onSuccess: () => closeDialog(),
-            onError: (errs: Record<string, string>) => setErrors(errs),
+            onError: (errs: Record<string, string>) => {
+                setErrors(errs)
+                Object.values(errs).forEach((msg) => toast.error(msg))
+            },
             onFinish: () => setProcessing(false),
         }
 
@@ -114,7 +119,13 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
     }
 
     const handleDelete = (talent: Talent) => {
-        router.delete(destroy.url(talent.id), { preserveScroll: true, only: ['talents'] })
+        router.delete(destroy.url(talent.id), {
+            preserveScroll: true,
+            only: ['talents'],
+            onError: (errors) => {
+                Object.values(errors).forEach((msg) => toast.error(msg))
+            },
+        })
     }
 
     const filteredOccupations = (occupations ?? []).filter(
@@ -129,12 +140,12 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
 
     return (
         <div className="px-4 py-6 sm:px-6 lg:px-8">
-            {isOwner && (
+            {isOwner && talents.length > 0 && (
                 <div className="mb-6">
                     <button
                         type="button"
                         onClick={() => openDialog()}
-                        className="inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400"
+                        className="inline-flex items-center gap-x-1.5 rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                         <PlusIcon className="-ml-0.5 size-5" />
                         Agregar talento
@@ -143,8 +154,26 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
             )}
 
             {talents.length === 0 && (
-                <div className="py-12 text-center text-sm text-gray-500 dark:text-gray-400">
-                    {isOwner ? 'Agrega tus talentos para que otros los conozcan.' : 'Este usuario aún no ha agregado talentos.'}
+                <div className="rounded-2xl border border-gray-200 bg-white px-6 py-16 text-center dark:border-white/[0.06] dark:bg-white/[0.02]">
+                    <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-gray-100 dark:bg-white/5">
+                        <SkillsIcon className="size-6 text-gray-400" />
+                    </div>
+                    <h3 className="mt-4 text-sm font-semibold text-gray-900 dark:text-white">Sin talentos</h3>
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                        {isOwner ? 'Agrega tus talentos para que otros los conozcan.' : 'Este usuario aún no ha agregado talentos.'}
+                    </p>
+                    {isOwner && (
+                        <div className="mt-6">
+                            <button
+                                type="button"
+                                onClick={() => openDialog()}
+                                className="inline-flex items-center gap-x-1.5 rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500"
+                            >
+                                <PlusIcon className="-ml-0.5 size-5" />
+                                Agregar talento
+                            </button>
+                        </div>
+                    )}
                 </div>
             )}
 
@@ -153,40 +182,33 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
                     {talents.map((talent) => {
                         const level = confidenceLevels.find((l) => l.value === talent.confidenceLevel)
                         return (
-                            <div
-                                key={talent.id}
-                                className="relative rounded-lg border border-gray-200 bg-white p-4 shadow-xs dark:border-white/10 dark:bg-white/5"
-                            >
+                            <div key={talent.id} className="rounded-2xl border border-gray-200 bg-white px-5 py-5 dark:border-white/[0.06] dark:bg-white/[0.02]">
                                 <div className="flex items-start justify-between gap-2">
-                                    <div className="min-w-0">
-                                        <h3 className="truncate text-sm font-semibold text-gray-900 dark:text-white">
-                                            {talent.occupation}
-                                        </h3>
-                                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                            {experienceLabels[talent.experienceYears] ?? ''}
-                                        </p>
-                                    </div>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">{talent.occupation}</p>
                                     {isOwner && (
                                         <div className="flex shrink-0 gap-1">
                                             <button
                                                 type="button"
                                                 onClick={() => openDialog(talent)}
-                                                className="rounded p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                                                className="rounded p-1 text-gray-400 hover:text-gray-600 dark:text-gray-600 dark:hover:text-gray-300"
                                             >
-                                                <PencilSquareIcon className="size-4" />
+                                                <PencilSquareIcon className="size-3.5" />
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => handleDelete(talent)}
-                                                className="rounded p-1 text-gray-400 hover:text-red-600 dark:hover:text-red-400"
+                                                className="rounded p-1 text-gray-600 hover:text-red-400"
                                             >
-                                                <TrashIcon className="size-4" />
+                                                <TrashIcon className="size-3.5" />
                                             </button>
                                         </div>
                                     )}
                                 </div>
+                                <p className="mt-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                    {experienceLabels[talent.experienceYears] ?? ''}
+                                </p>
                                 {level && (
-                                    <span className={`mt-3 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${level.color}`}>
+                                    <span className={`mt-3 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${level.color}`}>
                                         {level.label}
                                     </span>
                                 )}
@@ -209,7 +231,7 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                 Ocupación
                             </label>
-                            <div className="relative mt-1">
+                            <div className="relative mt-1.5">
                                 <input
                                     ref={inputRef}
                                     type="text"
@@ -221,18 +243,18 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
                                     }}
                                     onFocus={() => setShowSuggestions(true)}
                                     placeholder="Buscar ocupación..."
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
+                                    className="block w-full rounded-md bg-white px-3 py-2 text-sm text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
                                 />
                                 {showSuggestions && filteredOccupations.length > 0 && (
                                     <ul
                                         ref={suggestionsRef}
-                                        className="absolute z-50 mt-1 max-h-48 w-full overflow-auto rounded-md bg-white py-1 text-sm shadow-lg ring-1 ring-black/5 dark:bg-gray-800 dark:ring-white/10"
+                                        className="absolute z-50 mt-1 max-h-48 w-full overflow-auto rounded-md bg-white py-1 text-sm shadow-lg ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-white/10"
                                     >
                                         {filteredOccupations.map((occ) => (
                                             <li
                                                 key={occ}
                                                 onClick={() => selectOccupation(occ)}
-                                                className="cursor-default px-3 py-2 text-gray-900 select-none hover:bg-indigo-600 hover:text-white dark:text-white dark:hover:bg-indigo-500"
+                                                className="cursor-default px-3 py-2 text-gray-900 select-none hover:bg-indigo-500 hover:text-white dark:text-white"
                                             >
                                                 {occ}
                                             </li>
@@ -256,9 +278,9 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
                                         key={level.value}
                                         type="button"
                                         onClick={() => setConfidenceLevel(level.value)}
-                                        className={`flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                                        className={`flex-1 rounded-full px-3 py-2 text-sm font-medium transition-colors ${
                                             confidenceLevel === level.value
-                                                ? 'bg-indigo-600 text-white dark:bg-indigo-500'
+                                                ? 'bg-indigo-600 text-white'
                                                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10'
                                         }`}
                                     >
@@ -288,7 +310,7 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
                     <DialogFooter>
                         <DialogClose
                             onClick={closeDialog}
-                            className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:hover:bg-white/10"
+                            className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-200 hover:bg-gray-200 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:hover:bg-white/10"
                         >
                             Cancelar
                         </DialogClose>
@@ -296,7 +318,7 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
                             type="button"
                             onClick={handleSubmit}
                             disabled={processing}
-                            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 disabled:opacity-50 dark:bg-indigo-500 dark:hover:bg-indigo-400"
+                            className="rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 disabled:opacity-50"
                         >
                             {processing ? 'Guardando...' : editing ? 'Guardar' : 'Agregar'}
                         </button>

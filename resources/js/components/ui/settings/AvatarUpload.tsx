@@ -1,6 +1,7 @@
 import { router, usePage } from '@inertiajs/react';
 import { useCallback, useRef, useState } from 'react';
 import ReactCrop, { type Crop, centerCrop, makeAspectCrop } from 'react-image-crop';
+import { toast } from 'sonner';
 import 'react-image-crop/dist/ReactCrop.css';
 import { Button } from '@/components/ui/button';
 import {
@@ -104,6 +105,9 @@ export default function AvatarUpload({ imageUrl, name }: AvatarUploadProps) {
                         setOpen(false);
                         setImgSrc('');
                     },
+                    onError: (errors) => {
+                        Object.values(errors).forEach((msg) => toast.error(msg));
+                    },
                 });
             },
             'image/jpeg',
@@ -139,7 +143,7 @@ export default function AvatarUpload({ imageUrl, name }: AvatarUploadProps) {
                         Cambiar foto
                     </button>
                     <p className="mt-2 text-xs/5 text-gray-500 dark:text-gray-400">
-                        JPG, GIF o PNG. 1MB max.
+                        JPG, GIF o PNG. 4MB max.
                     </p>
                 </div>
                 <input

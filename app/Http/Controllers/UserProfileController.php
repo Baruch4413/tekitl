@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\CoverPhotoSize;
 use App\Http\Requests\Settings\CoverPhotoPositionRequest;
 use App\Http\Requests\Settings\CoverPhotoUploadRequest;
 use App\Models\Post;
 use App\Models\User;
 use App\ReactionType;
+use App\Services\ImageService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -19,7 +21,7 @@ class UserProfileController extends Controller
     {
         $userId = Auth::id();
 
-        $posts = Post::with(['user'])
+        $posts = Post::with(['user', 'project:id,post_id'])
             ->where('user_id', $user->id)
             ->withCount([
                 'comments',
@@ -43,6 +45,8 @@ class UserProfileController extends Controller
             'isLiked' => (bool) $post->is_liked,
             'isPoweredByCurrentUser' => (bool) $post->is_powered_by_current_user,
             'comments' => $post->comments_count,
+            'hasProject' => $post->project !== null,
+            'isOwner' => $userId && $userId === $post->user_id,
         ]);
 
         $isOwner = $userId && $userId === $user->id;
@@ -52,7 +56,16 @@ class UserProfileController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'avatarUrl' => $user->avatar_url,
+                'avatarBaseUrl' => $user->avatar
+                    ? Storage::disk('s3')->url($user->avatar)
+                    : null,
+                'avatarOriginalUrl' => $user->avatar
+                    ? Storage::disk('s3')->url($user->avatar.'-original.webp')
+                    : null,
                 'coverPhotoUrl' => $user->cover_photo_url,
+                'coverPhotoBaseUrl' => $user->cover_photo
+                    ? Storage::disk('s3')->url($user->cover_photo)
+                    : null,
                 'coverPhotoPositionY' => $user->cover_photo_position_y,
                 'createdAt' => $user->created_at->locale('es')->translatedFormat('F Y'),
                 'postsCount' => $user->posts()->count(),
@@ -79,18 +92,18 @@ class UserProfileController extends Controller
         ]);
     }
 
-    public function uploadCoverPhoto(CoverPhotoUploadRequest $request): RedirectResponse
+    public function uploadCoverPhoto(CoverPhotoUploadRequest $request, ImageService $imageService): RedirectResponse
     {
         $user = $request->user();
 
         if ($user->cover_photo) {
-            Storage::disk('s3')->delete($user->cover_photo);
+            $imageService->deleteVariants($user->cover_photo, array_column(CoverPhotoSize::cases(), 'value'));
         }
 
-        $path = $request->file('cover_photo')->store('covers', 's3');
+        $basePath = $imageService->processCoverPhoto($request->file('cover_photo'));
 
         $user->update([
-            'cover_photo' => $path,
+            'cover_photo' => $basePath,
             'cover_photo_position_y' => 50,
         ]);
 
