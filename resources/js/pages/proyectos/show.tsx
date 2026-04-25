@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { router, usePage } from '@inertiajs/react'
+import { usePage } from '@inertiajs/react'
 import { Bars3Icon } from '@heroicons/react/20/solid'
 import { Button } from '@/components/ui/button'
 import MobileSidebar from '@/components/ui/MobileSidebar'
