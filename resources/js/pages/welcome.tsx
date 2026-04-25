@@ -63,8 +63,9 @@ export default function Welcome({ posts }: WelcomeProps) {
             preserveScroll: true,
             onBefore: () => setProcessingActions((prev) => ({ ...prev, [id]: action })),
             onFinish: () => setProcessingActions((prev) => {
-                const { [id]: _, ...rest } = prev
-                return rest
+                const next = { ...prev }
+                delete next[id]
+                return next
             }),
             onError: (errors) => {
                 Object.values(errors).forEach((msg) => toast.error(msg))
@@ -79,7 +80,11 @@ export default function Welcome({ posts }: WelcomeProps) {
     const toggleFollow = (handle: string) =>
         setFollowedUsers((prev) => {
             const next = new Set(prev)
-            next.has(handle) ? next.delete(handle) : next.add(handle)
+            if (next.has(handle)) {
+                next.delete(handle)
+            } else {
+                next.add(handle)
+            }
             return next
         })
 
@@ -136,8 +141,9 @@ export default function Welcome({ posts }: WelcomeProps) {
                                     setProcessingActions((prev) => ({ ...prev, [id]: action }))
                                 } else {
                                     setProcessingActions((prev) => {
-                                        const { [id]: _, ...rest } = prev
-                                        return rest
+                                        const next = { ...prev }
+                                        delete next[id]
+                                        return next
                                     })
                                 }
                             }}
