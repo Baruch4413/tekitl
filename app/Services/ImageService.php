@@ -18,7 +18,7 @@ class ImageService
 
     public function __construct()
     {
-        $this->manager = ImageManager::imagick();
+        $this->manager = ImageManager::imagick(strip: true);
     }
 
     /**

@@ -7,12 +7,15 @@ use App\Http\Requests\UploadProjectImageRequest;
 use App\Models\Post;
 use App\Models\Project;
 use App\Models\ProjectImage;
+use App\Models\ProjectRole;
+use App\Models\ProjectVolunteer;
 use App\ProjectImageSize;
 use App\ReactionType;
 use App\Services\ImageService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -25,31 +28,39 @@ class ProjectController extends Controller
         $project = $post->project;
 
         if (! $project) {
-            abort_unless($post->user_id === $userId, 403);
+            abort_unless($userId && $post->user_id === $userId, 404);
 
             $project = Project::query()->create([
                 'post_id' => $post->id,
                 'user_id' => $userId,
-                'title' => null,
+                'title' => Str::limit($post->body, 252),
                 'description' => null,
                 'goal' => 100,
             ]);
         }
 
-        $project->load('images');
-        $post->load('user');
+        $isOwner = $userId && $userId === $project->user_id;
 
-        $post->loadCount([
-            'comments',
-            'reactions as likes_count' => fn ($q) => $q->where('type', ReactionType::Like),
+        $project->load([
+            'images',
+            'roles.activeVolunteers.user',
+            'roles.pendingVolunteers.user',
         ]);
+        $post->load('user');
 
         if ($userId) {
             $post->loadExists([
-                'reactions as is_liked' => fn ($q) => $q->where('user_id', $userId)->where('type', ReactionType::Like),
                 'reactions as is_powered_by_current_user' => fn ($q) => $q->where('user_id', $userId)->where('type', ReactionType::Potenciar),
             ]);
         }
+
+        $currentUserApplication = $userId
+            ? ProjectVolunteer::query()
+                ->whereIn('project_role_id', $project->roles->pluck('id'))
+                ->where('user_id', $userId)
+                ->whereIn('status', ['pending', 'active'])
+                ->first()
+            : null;
 
         $s3 = Storage::disk('s3');
 
@@ -59,6 +70,28 @@ class ProjectController extends Controller
                 'title' => $project->title,
                 'description' => $project->description,
                 'goal' => $project->goal,
+                'roles' => $project->roles->map(fn (ProjectRole $role) => [
+                    'id' => $role->id,
+                    'title' => $role->title,
+                    'description' => $role->description,
+                    'slots' => $role->slots,
+                    'hoursEstimated' => $role->hours_estimated,
+                    'filledSlots' => $role->activeVolunteers->count(),
+                    'volunteers' => $role->activeVolunteers->map(fn (ProjectVolunteer $v) => [
+                        'id' => $v->id,
+                        'userId' => $v->user_id,
+                        'name' => $v->user->name,
+                        'avatarUrl' => $v->user->avatar_url,
+                    ]),
+                    'pendingApplicants' => $isOwner
+                        ? $role->pendingVolunteers->map(fn (ProjectVolunteer $v) => [
+                            'id' => $v->id,
+                            'userId' => $v->user_id,
+                            'name' => $v->user->name,
+                            'avatarUrl' => $v->user->avatar_url,
+                        ])
+                        : [],
+                ]),
                 'images' => $project->images->map(fn (ProjectImage $image) => [
                     'id' => $image->id,
                     'title' => $image->title,
@@ -79,12 +112,14 @@ class ProjectController extends Controller
                 'date' => $post->created_at->diffForHumans(),
                 'dateTime' => $post->created_at->toIso8601String(),
                 'coins' => $post->coins,
-                'likes' => $post->likes_count,
-                'isLiked' => (bool) ($post->is_liked ?? false),
                 'isPoweredByCurrentUser' => (bool) ($post->is_powered_by_current_user ?? false),
-                'comments' => $post->comments_count,
             ],
-            'isOwner' => $userId && $userId === $project->user_id,
+            'isOwner' => $isOwner,
+            'currentUserApplication' => $currentUserApplication ? [
+                'id' => $currentUserApplication->id,
+                'roleId' => $currentUserApplication->project_role_id,
+                'status' => $currentUserApplication->status,
+            ] : null,
         ]);
     }
 

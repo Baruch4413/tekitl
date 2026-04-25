@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Post;
 use App\Models\User;
+use App\ProjectStage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,8 +13,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class ProjectFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
      * @return array<string, mixed>
      */
     public function definition(): array
@@ -24,6 +23,7 @@ class ProjectFactory extends Factory
             'title' => fake()->sentence(),
             'description' => fake()->paragraph(),
             'goal' => fake()->numberBetween(100, 10000),
+            'stage' => ProjectStage::Planning,
         ];
     }
 }

@@ -1,54 +1,39 @@
 import CoinIcon from '@/components/vector-graphics/CoinIcon'
 import { formatCount } from '@/lib/utils'
+import { type ProjectRole } from '@/components/ui/proyectos/ProjectRoles'
 
 interface CrowdfundingProgressProps {
     coins: number
-    goal: number
-    onPotenciar: () => void
-    processing: boolean
-    isPoweredByCurrentUser: boolean
+    roles: ProjectRole[]
 }
 
-export default function CrowdfundingProgress({
-    coins,
-    goal,
-    onPotenciar,
-    processing,
-    isPoweredByCurrentUser,
-}: CrowdfundingProgressProps) {
-    const percentage = Math.min(Math.round((coins / goal) * 100), 100)
+export default function CrowdfundingProgress({ coins, roles }: CrowdfundingProgressProps) {
+    const totalSlots = roles.reduce((sum, r) => sum + r.slots, 0)
+    const filledSlots = roles.reduce((sum, r) => sum + r.filledSlots, 0)
+    const percentage = totalSlots > 0 ? Math.min(Math.round((filledSlots / totalSlots) * 100), 100) : 0
 
     return (
         <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-white/5">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-x-2">
-                    <CoinIcon className="size-5" />
-                    <span className="text-sm font-bold text-gray-900 dark:text-white">
-                        {formatCount(coins)} / {formatCount(goal)} coins
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                        {filledSlots} / {totalSlots} voluntarios
                     </span>
                 </div>
-                <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">{percentage}%</span>
+                <div className="flex items-center gap-x-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 dark:border-amber-500/20 dark:bg-amber-500/10">
+                    <CoinIcon className="size-3.5" />
+                    <span className="text-xs font-semibold text-amber-700 dark:text-amber-400">{formatCount(coins)}</span>
+                </div>
             </div>
             <div className="mt-2 h-2.5 overflow-hidden rounded-full bg-gray-200 dark:bg-white/10">
                 <div
-                    className="h-full rounded-full bg-amber-500 transition-all duration-500"
+                    className="h-full rounded-full bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-500"
                     style={{ width: `${percentage}%` }}
                 />
             </div>
-            <div className="mt-3">
-                <button
-                    onClick={onPotenciar}
-                    disabled={processing}
-                    className={`flex items-center gap-x-1.5 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
-                        isPoweredByCurrentUser
-                            ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
-                            : 'bg-amber-500 text-white hover:bg-amber-600 dark:hover:bg-amber-400'
-                    } disabled:opacity-50`}
-                >
-                    <CoinIcon className="size-4" />
-                    Potenciar
-                </button>
-            </div>
+            {totalSlots > 0 && (
+                <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">{percentage}% completo</p>
+            )}
         </div>
     )
 }

@@ -2,6 +2,7 @@ import { useRef, useState, type DragEvent } from 'react'
 import { router } from '@inertiajs/react'
 import { CameraIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import InlineSaveButton from '@/components/ui/InlineSaveButton'
 import { uploadImage, deleteImage, updateImage } from '@/actions/App/Http/Controllers/ProjectController'
 
@@ -157,13 +158,14 @@ function BentoImageCard({
                     className="h-52 w-full object-cover"
                 />
                 {isOwner && (
-                    <button
+                    <Button
                         type="button"
                         onClick={handleDelete}
-                        className="absolute top-3 right-3 hidden rounded-full bg-black/60 p-1.5 text-white transition-colors hover:bg-black/80 group-hover:block"
+                        size="icon"
+                        className="absolute top-3 right-3 hidden size-8 bg-black/60 text-white hover:bg-black/80 group-hover:block"
                     >
                         <XMarkIcon className="size-4" />
-                    </button>
+                    </Button>
                 )}
                 <div className="absolute inset-x-0 bottom-0 bg-black/50 p-6 backdrop-blur-xs opacity-0 transition-opacity group-hover:opacity-100">
                     {/* Title */}

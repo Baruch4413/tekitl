@@ -1,24 +1,25 @@
-import { Form, Link, usePage } from '@inertiajs/react'
-import { store } from '@/actions/App/Http/Controllers/CommentController'
+import { Form, usePage } from '@inertiajs/react'
+import { Button } from '@/components/ui/button'
 import type { Auth } from '@/types/auth'
 
 interface CommentFormProps {
-    postId: number
+    storeUrl: string
     onSuccess?: () => void
 }
 
-export default function CommentForm({ postId, onSuccess }: CommentFormProps) {
+export default function CommentForm({ storeUrl, onSuccess }: CommentFormProps) {
     const { auth } = usePage<{ auth?: Auth }>().props
 
     if (!auth?.user) {
         return (
             <p className="text-sm text-gray-500 dark:text-gray-400">
-                <Link
-                    href="/auth/login"
-                    className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400"
+                <Button
+                    variant="link"
+                    className="h-auto p-0"
+                    onClick={() => window.dispatchEvent(new CustomEvent('login-required'))}
                 >
                     Inicia sesión
-                </Link>{' '}
+                </Button>{' '}
                 para comentar.
             </p>
         )
@@ -41,7 +42,7 @@ export default function CommentForm({ postId, onSuccess }: CommentFormProps) {
             )}
 
             <Form
-                action={store.url(postId)}
+                action={storeUrl}
                 method="post"
                 resetOnSuccess
                 options={{ preserveScroll: true, onSuccess }}
@@ -58,13 +59,14 @@ export default function CommentForm({ postId, onSuccess }: CommentFormProps) {
                                     className="w-full bg-transparent text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none dark:text-white dark:placeholder:text-gray-500"
                                 />
                             </div>
-                            <button
+                            <Button
                                 type="submit"
                                 disabled={processing}
-                                className="shrink-0 text-sm font-semibold text-indigo-600 hover:text-indigo-500 disabled:opacity-50 dark:text-indigo-400 dark:hover:text-indigo-300"
+                                size="sm"
+                                className="shrink-0"
                             >
                                 Publicar
-                            </button>
+                            </Button>
                         </div>
                         {errors.body && (
                             <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.body}</p>

@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -25,19 +26,32 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
-            if ($request->header('X-Inertia') && in_array($response->getStatusCode(), [500, 503, 403, 413])) {
-                $message = match ($response->getStatusCode()) {
-                    413 => 'El archivo es demasiado grande.',
-                    403 => 'No tienes permiso para realizar esta acción.',
-                    503 => 'El servicio no está disponible, intenta más tarde.',
-                    default => 'Ocurrió un error inesperado, intenta de nuevo.',
-                };
+        $exceptions->render(function (AuthenticationException $e, Request $request) {
+            if ($request->header('X-Inertia')) {
+                return back()->with('loginRequired', true);
+            }
+        });
 
-                return back()->with('error', $message);
+        $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
+            $status = $response->getStatusCode();
+
+            if ($request->header('X-Inertia')) {
+                if ($status === 403) {
+                    return back()->with('loginRequired', true);
+                }
+
+                if (in_array($status, [500, 503, 413])) {
+                    $message = match ($status) {
+                        413 => 'El archivo es demasiado grande.',
+                        503 => 'El servicio no está disponible, intenta más tarde.',
+                        default => 'Ocurrió un error inesperado, intenta de nuevo.',
+                    };
+
+                    return back()->with('error', $message);
+                }
             }
 
-            if ($response->getStatusCode() === 419) {
+            if ($status === 419) {
                 return back()->with('error', 'La página expiró, intenta de nuevo.');
             }
 

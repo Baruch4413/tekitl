@@ -19,7 +19,8 @@ class CommentFactory extends Factory
     public function definition(): array
     {
         return [
-            'post_id' => Post::factory(),
+            'commentable_type' => Post::class,
+            'commentable_id' => Post::factory(),
             'user_id' => User::factory(),
             'body' => fake()->sentence(),
         ];

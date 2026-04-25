@@ -6,7 +6,7 @@ import { ElDialog, ElDialogBackdrop, ElDialogPanel } from '@tailwindplus/element
 
 import { cn } from '@/lib/utils';
 
-const DialogContext = createContext<string>('');
+const DialogContext = createContext<{ id: string; close: () => void }>({ id: '', close: () => {} });
 
 function Dialog({
     children,
@@ -50,8 +50,12 @@ function Dialog({
         };
     }, [onOpenChange]);
 
+    const close = React.useCallback(() => {
+        ref.current?.hasAttribute('open') && (ref.current as any).hide();
+    }, []);
+
     return (
-        <DialogContext.Provider value={dialogId}>
+        <DialogContext.Provider value={{ id: dialogId, close }}>
             <ElDialog ref={ref} id={dialogId} data-slot="dialog" {...props}>
                 {children}
             </ElDialog>
@@ -67,7 +71,7 @@ function DialogTrigger({
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
     asChild?: boolean;
 }) {
-    const dialogId = useContext(DialogContext);
+    const { id: dialogId } = useContext(DialogContext);
     const Comp = asChild ? Slot : 'button';
 
     return (
@@ -105,6 +109,8 @@ function DialogContent({
     children,
     ...props
 }: React.HTMLAttributes<HTMLElement> & { children?: React.ReactNode }) {
+    const { close } = useContext(DialogContext);
+
     return (
         <dialog>
             <DialogOverlay />
@@ -119,7 +125,7 @@ function DialogContent({
                 {children}
                 <button
                     type="button"
-                    command="close"
+                    onClick={close}
                     className="ring-offset-background focus:ring-ring absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
                 >
                     <XIcon />
@@ -191,15 +197,20 @@ function DialogClose({
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
     asChild?: boolean;
 }) {
+    const { close } = useContext(DialogContext);
     const Comp = asChild ? Slot : 'button';
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        close();
+        onClick?.(e);
+    };
 
     return (
         <Comp
             type="button"
-            command="close"
             data-slot="dialog-close"
             className={className}
-            onClick={onClick}
+            onClick={handleClick}
             {...props}
         >
             {children}

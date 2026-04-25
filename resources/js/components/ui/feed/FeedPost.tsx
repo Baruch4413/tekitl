@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react'
 import PostActions from '@/components/ui/feed/PostActions'
 import PostComments, { type Comment } from '@/components/ui/feed/PostComments'
 import UserAvatar from '@/components/ui/UserAvatar'
-import { index as fetchComments } from '@/actions/App/Http/Controllers/CommentController'
+import { postIndex as fetchComments, postStore } from '@/actions/App/Http/Controllers/CommentController'
 import { show as userProfile } from '@/actions/App/Http/Controllers/UserProfileController'
 
 export interface Post {
@@ -95,7 +95,7 @@ export default function FeedPost({ post, processingAction, onToggleLike, onPoten
                     />
 
                     {commentsOpen && commentsList && (
-                        <PostComments postId={post.id} comments={commentsList} onCommentAdded={refreshComments} />
+                        <PostComments storeUrl={postStore.url(post.id)} comments={commentsList} onCommentAdded={refreshComments} />
                     )}
                 </div>
             </div>

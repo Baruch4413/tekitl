@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 interface InlineSaveButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -6,15 +7,12 @@ interface InlineSaveButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEle
 
 export default function InlineSaveButton({ children = 'Guardar', className, ...props }: InlineSaveButtonProps) {
     return (
-        <button
+        <Button
             type="button"
-            className={cn(
-                'h-9 shrink-0 rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white hover:bg-indigo-500 disabled:opacity-50',
-                className,
-            )}
+            className={cn('h-9 shrink-0', className)}
             {...props}
         >
             {children}
-        </button>
+        </Button>
     )
 }

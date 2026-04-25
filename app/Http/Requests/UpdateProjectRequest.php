@@ -22,9 +22,9 @@ class UpdateProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:5000'],
-            'goal' => ['required', 'integer', 'min:10'],
+            'title' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'description' => ['sometimes', 'nullable', 'string', 'max:5000'],
+            'goal' => ['sometimes', 'integer', 'min:10'],
         ];
     }
 }

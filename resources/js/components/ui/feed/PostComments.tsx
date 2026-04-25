@@ -5,12 +5,12 @@ import type { Comment } from '@/components/ui/feed/CommentItem'
 export type { Comment }
 
 interface PostCommentsProps {
-    postId: number
+    storeUrl: string
     comments: Comment[]
     onCommentAdded?: () => void
 }
 
-export default function PostComments({ postId, comments, onCommentAdded }: PostCommentsProps) {
+export default function PostComments({ storeUrl, comments, onCommentAdded }: PostCommentsProps) {
     return (
         <div className="relative mt-4 border-t border-gray-100 pt-4 dark:border-white/5">
             {/* Connector: bridges from post avatar area down to the comment list top */}
@@ -19,7 +19,7 @@ export default function PostComments({ postId, comments, onCommentAdded }: PostC
             )}
             <CommentList comments={comments} />
             <div className={comments.length > 0 ? 'mt-6' : ''}>
-                <CommentForm postId={postId} onSuccess={onCommentAdded} />
+                <CommentForm storeUrl={storeUrl} onSuccess={onCommentAdded} />
             </div>
         </div>
     )

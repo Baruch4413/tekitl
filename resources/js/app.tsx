@@ -3,13 +3,17 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { toast, Toaster } from 'sonner';
+import LoginModal from '@/components/ui/LoginModal';
 import '../css/app.css';
 import { initializeTheme } from './hooks/use-appearance';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 router.on('navigate', (event) => {
-    const flash = event.detail.page.props.flash as { success?: string; error?: string } | undefined;
+    const flash = event.detail.page.props.flash as { success?: string; error?: string; loginRequired?: boolean } | undefined;
+    if (flash?.loginRequired) {
+        window.dispatchEvent(new CustomEvent('login-required'));
+    }
     if (flash?.success) {
         toast.success(flash.success);
     }
@@ -31,12 +35,13 @@ createInertiaApp({
         root.render(
             <StrictMode>
                 <App {...props} />
+                <LoginModal />
                 <Toaster position="bottom-right" richColors />
             </StrictMode>,
         );
     },
     progress: {
-        color: '#4B5563',
+        showSpinner: false,
     },
 });
 

@@ -4,14 +4,36 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCommentRequest;
 use App\Models\Post;
+use App\Models\Project;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 
 class CommentController extends Controller
 {
-    public function index(Post $post): JsonResponse
+    public function postIndex(Post $post): JsonResponse
     {
-        $comments = $post->comments()->with('user')->oldest()->get();
+        return $this->indexFor($post);
+    }
+
+    public function postStore(StoreCommentRequest $request, Post $post): RedirectResponse
+    {
+        return $this->storeFor($request, $post);
+    }
+
+    public function projectIndex(Project $project): JsonResponse
+    {
+        return $this->indexFor($project);
+    }
+
+    public function projectStore(StoreCommentRequest $request, Project $project): RedirectResponse
+    {
+        return $this->storeFor($request, $project);
+    }
+
+    private function indexFor(Model $commentable): JsonResponse
+    {
+        $comments = $commentable->comments()->with('user')->oldest()->get();
 
         return response()->json($comments->map(fn ($comment) => [
             'id' => $comment->id,
@@ -22,9 +44,9 @@ class CommentController extends Controller
         ]));
     }
 
-    public function store(StoreCommentRequest $request, Post $post): RedirectResponse
+    private function storeFor(StoreCommentRequest $request, Model $commentable): RedirectResponse
     {
-        $post->comments()->create([
+        $commentable->comments()->create([
             'user_id' => $request->user()->id,
             'body' => $request->validated('body'),
         ]);

@@ -24,8 +24,7 @@ export default function ProjectHeader({ projectId, title, description, user, dat
 
     const saveField = (field: 'title' | 'description') => {
         router.patch(updateProject.url(projectId), {
-            title: field === 'title' ? titleValue : (title ?? ''),
-            description: field === 'description' ? descriptionValue : (description ?? ''),
+            [field]: field === 'title' ? titleValue : descriptionValue,
         }, {
             preserveScroll: true,
             onSuccess: () => {
