@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { type ChangeEvent, useState } from 'react'
 import { Form, usePage } from '@inertiajs/react'
 import { store } from '@/actions/App/Http/Controllers/PostController'
 import UserAvatar from '@/components/ui/UserAvatar'
@@ -88,7 +88,7 @@ export default function Textarea() {
                     <ElSelect
                       // @ts-expect-error — web component attributes
                       value={selectedValue}
-                      onChange={(e: any) => setSelectedValue(e.target.value)}
+                      onChange={(e: ChangeEvent<HTMLSelectElement>) => setSelectedValue(e.target.value)}
                     >
                       <label className="sr-only">Your mood</label>
                       <div className="relative">

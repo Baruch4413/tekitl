@@ -3,6 +3,8 @@ import { ElDialog, ElDialogBackdrop, ElDialogPanel } from '@tailwindplus/element
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import WelcomeSidebar from '@/components/ui/WelcomeSidebar';
 
+type ShowHideElement = HTMLElement & { show(): void; hide(): void };
+
 interface MobileSidebarProps {
     open: boolean;
     onClose: () => void;
@@ -18,11 +20,11 @@ export default function MobileSidebar({ open, onClose, currentPage }: MobileSide
 
         if (open) {
             if (!el.hasAttribute('open')) {
-                (el as any).show();
+                (el as ShowHideElement).show();
             }
         } else {
             if (el.hasAttribute('open')) {
-                (el as any).hide();
+                (el as ShowHideElement).hide();
             }
         }
     }, [open]);

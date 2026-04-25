@@ -6,6 +6,8 @@ import { ElDialog, ElDialogBackdrop, ElDialogPanel } from '@tailwindplus/element
 
 import { cn } from '@/lib/utils';
 
+type ShowHideElement = HTMLElement & { show(): void; hide(): void };
+
 const DialogContext = createContext<{ id: string; close: () => void }>({ id: '', close: () => {} });
 
 function Dialog({
@@ -27,11 +29,11 @@ function Dialog({
 
         if (open) {
             if (!el.hasAttribute('open')) {
-                (el as any).show();
+                (el as ShowHideElement).show();
             }
         } else {
             if (el.hasAttribute('open')) {
-                (el as any).hide();
+                (el as ShowHideElement).hide();
             }
         }
     }, [open]);
@@ -51,7 +53,9 @@ function Dialog({
     }, [onOpenChange]);
 
     const close = React.useCallback(() => {
-        ref.current?.hasAttribute('open') && (ref.current as any).hide();
+        if (ref.current?.hasAttribute('open')) {
+            (ref.current as ShowHideElement).hide();
+        }
     }, []);
 
     return (

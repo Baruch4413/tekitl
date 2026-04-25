@@ -2,7 +2,7 @@ import type { SVGProps } from 'react'
 
 export default function BirthDate(props: SVGProps<SVGSVGElement>) {
     return (
-        <svg
+        <svg {...props}
           id="fi_5562255"
           enableBackground="new 0 0 64 64"
           height={44}

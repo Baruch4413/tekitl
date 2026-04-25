@@ -2,7 +2,7 @@ import type { SVGProps } from 'react'
 
 export default function LocationIcon(props: SVGProps<SVGSVGElement>) {
     return (
-        <svg
+        <svg {...props}
           id="fi_2991231"
           enableBackground="new 0 0 512 512"
           height={44}

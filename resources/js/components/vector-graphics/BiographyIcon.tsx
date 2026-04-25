@@ -2,7 +2,7 @@ import type { SVGProps } from 'react'
 
 export default function BiographyIcon(props: SVGProps<SVGSVGElement>) {
     return (
-        <svg
+        <svg {...props}
           version="1.1"
           id="fi_744418"
           xmlns="http://www.w3.org/2000/svg"

@@ -2,7 +2,7 @@ import type { SVGProps } from 'react'
 
 export default function UserLanguages(props: SVGProps<SVGSVGElement>) {
     return (
-        <svg
+        <svg {...props}
           id="fi_3898150"
           enableBackground="new 0 0 497 497"
           height={44}

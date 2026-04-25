@@ -2,7 +2,7 @@ import type { SVGProps } from 'react'
 
 export default function ContactPhone(props: SVGProps<SVGSVGElement>) {
     return (
-        <svg
+        <svg {...props}
           id="fi_16076069"
           enableBackground="new 0 0 133 133"
           viewBox="0 0 133 133"

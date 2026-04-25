@@ -23,8 +23,9 @@ export default function PostsTab({ posts }: PostsTabProps) {
             preserveScroll: true,
             onBefore: () => setProcessingActions((prev) => ({ ...prev, [id]: action })),
             onFinish: () => setProcessingActions((prev) => {
-                const { [id]: _, ...rest } = prev
-                return rest
+                const next = { ...prev }
+                delete next[id]
+                return next
             }),
             onError: (errors) => {
                 Object.values(errors).forEach((msg) => toast.error(msg))
@@ -50,8 +51,9 @@ export default function PostsTab({ posts }: PostsTabProps) {
                                 setProcessingActions((prev) => ({ ...prev, [id]: action }))
                             } else {
                                 setProcessingActions((prev) => {
-                                    const { [id]: _, ...rest } = prev
-                                    return rest
+                                    const next = { ...prev }
+                                    delete next[id]
+                                    return next
                                 })
                             }
                         }}

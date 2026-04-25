@@ -6,6 +6,8 @@ import { ElDialog, ElDialogBackdrop, ElDialogPanel } from '@tailwindplus/element
 
 import { cn } from '@/lib/utils';
 
+type ShowHideElement = HTMLElement & { show(): void; hide(): void };
+
 const SheetContext = createContext<string>('');
 
 function Sheet({
@@ -27,11 +29,11 @@ function Sheet({
 
         if (open) {
             if (!el.hasAttribute('open')) {
-                (el as any).show();
+                (el as ShowHideElement).show();
             }
         } else {
             if (el.hasAttribute('open')) {
-                (el as any).hide();
+                (el as ShowHideElement).hide();
             }
         }
     }, [open]);

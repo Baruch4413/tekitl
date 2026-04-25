@@ -2,7 +2,7 @@ import type { SVGProps } from 'react'
 
 export default function CoinIcon(props: SVGProps<SVGSVGElement>) {
     return (
-        <svg
+        <svg {...props}
             version="1.1"
             id="fi_1041916"
             xmlns="http://www.w3.org/2000/svg"
