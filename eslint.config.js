@@ -9,7 +9,13 @@ import typescript from 'typescript-eslint';
 /** @type {import('eslint').Linter.Config[]} */
 export default [
     js.configs.recommended,
-    reactHooks.configs.flat.recommended,
+    {
+        plugins: { 'react-hooks': reactHooks },
+        rules: {
+            'react-hooks/rules-of-hooks': 'error',
+            'react-hooks/exhaustive-deps': 'warn',
+        },
+    },
     ...typescript.configs.recommended,
     {
         ...react.configs.flat.recommended,
