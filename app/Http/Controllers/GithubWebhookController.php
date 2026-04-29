@@ -33,57 +33,10 @@ class GithubWebhookController extends Controller
             return response('No new commits', 200);
         }
 
-        if (! $this->ciPassed($after)) {
-            Log::info("GitHub webhook: CI not yet passing for {$after}, skipping deploy");
+        Log::info("GitHub webhook: queuing CI poll for commit {$after}");
 
-            return response('CI not passing', 200);
-        }
+        shell_exec('nohup php /var/www/html/tekitl/poll-deploy.php '.escapeshellarg($after).' > /dev/null 2>&1 &');
 
-        Log::info("GitHub webhook: deploying commit {$after}");
-
-        shell_exec('nohup sudo /var/www/html/tekitl/deploy.sh > /dev/null 2>&1 &');
-
-        return response('Deploy triggered', 200);
-    }
-
-    private function ciPassed(string $sha): bool
-    {
-        $token = config('services.github.token');
-        $repo = config('services.github.repo');
-
-        $url = "https://api.github.com/repos/{$repo}/actions/runs?head_sha={$sha}&per_page=20";
-
-        $context = stream_context_create([
-            'http' => [
-                'header' => implode("\r\n", [
-                    "Authorization: Bearer {$token}",
-                    'Accept: application/vnd.github+json',
-                    'User-Agent: tekitl-webhook/1.0',
-                    'X-GitHub-Api-Version: 2022-11-28',
-                ]),
-                'ignore_errors' => true,
-            ],
-        ]);
-
-        $json = @file_get_contents($url, false, $context);
-
-        if ($json === false) {
-            Log::error('GitHub webhook: failed to fetch workflow runs from API');
-
-            return false;
-        }
-
-        $data = json_decode($json, true);
-        $runs = $data['workflow_runs'] ?? [];
-
-        foreach ($runs as $run) {
-            if ($run['name'] === 'tests' && $run['head_sha'] === $sha) {
-                return $run['status'] === 'completed' && $run['conclusion'] === 'success';
-            }
-        }
-
-        Log::info("GitHub webhook: no 'tests' run found for SHA {$sha}");
-
-        return false;
+        return response('Polling CI', 200);
     }
 }
