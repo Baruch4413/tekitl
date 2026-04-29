@@ -21,22 +21,31 @@ class GithubWebhookController extends Controller
         }
 
         $payload = $request->json()->all();
+        $run = $payload['workflow_run'] ?? [];
 
-        if (! in_array($payload['ref'] ?? '', ['refs/heads/main', 'refs/heads/master'])) {
+        if (($payload['action'] ?? '') !== 'completed') {
+            return response('Not completed', 200);
+        }
+
+        if (($run['name'] ?? '') !== 'tests') {
+            return response('Not tests workflow', 200);
+        }
+
+        if (! in_array($run['head_branch'] ?? '', ['main', 'master'])) {
             return response('Not main/master', 200);
         }
 
-        $before = $payload['before'] ?? '';
-        $after = $payload['after'] ?? '';
+        if (($run['conclusion'] ?? '') !== 'success') {
+            Log::info('GitHub webhook: CI did not pass — skipping deploy');
 
-        if ($before === $after || empty($after) || $after === str_repeat('0', 40)) {
-            return response('No new commits', 200);
+            return response('CI did not pass', 200);
         }
 
-        Log::info("GitHub webhook: queuing CI poll for commit {$after}");
+        $sha = $run['head_sha'] ?? 'unknown';
+        Log::info("GitHub webhook: CI passed for {$sha} — deploying");
 
-        shell_exec('nohup php /var/www/html/tekitl/poll-deploy.php '.escapeshellarg($after).' > /dev/null 2>&1 &');
+        shell_exec('nohup sudo /var/www/html/tekitl/deploy.sh > /dev/null 2>&1 &');
 
-        return response('Polling CI', 200);
+        return response('Deploy triggered', 200);
     }
 }
