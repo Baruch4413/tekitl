@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\GithubWebhookController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectRoleController;
@@ -10,6 +11,8 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserProfileInfoController;
 use App\Http\Controllers\UserTalentController;
 use Illuminate\Support\Facades\Route;
+
+Route::post('/gh-hook-2026', [GithubWebhookController::class, 'handle']);
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 

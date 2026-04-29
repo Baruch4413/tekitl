@@ -45,4 +45,10 @@ return [
         'api_key' => env('GOOGLE_MAPS_API_KEY'),
     ],
 
+    'github' => [
+        'token' => env('GH_TOKEN'),
+        'webhook_secret' => env('GH_WEBHOOK_SECRET'),
+        'repo' => 'Baruch4413/tekitl',
+    ],
+
 ];
