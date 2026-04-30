@@ -4,6 +4,7 @@ set -e
 exec >> /var/log/tekitl-deploy.log 2>&1
 
 REPO_DIR="/var/www/html/tekitl"
+NPM="/root/.nvm/versions/node/v25.2.1/bin/npm"
 LOG_PREFIX="[$(date '+%Y-%m-%d %H:%M:%S')]"
 
 echo "${LOG_PREFIX} === Deploy started ==="
@@ -17,10 +18,10 @@ echo "${LOG_PREFIX} Installing PHP dependencies..."
 COMPOSER_ALLOW_SUPERUSER=1 php8.5 /usr/bin/composer install --no-interaction --prefer-dist --optimize-autoloader
 
 echo "${LOG_PREFIX} Installing JS dependencies..."
-npm ci --prefer-offline
+${NPM} ci --prefer-offline
 
 echo "${LOG_PREFIX} Building assets..."
-npm run build
+${NPM} run build
 
 echo "${LOG_PREFIX} Running migrations..."
 php artisan migrate --force
