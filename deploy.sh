@@ -14,7 +14,7 @@ echo "${LOG_PREFIX} Pulling latest code..."
 git pull origin main
 
 echo "${LOG_PREFIX} Installing PHP dependencies..."
-composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
+COMPOSER_ALLOW_SUPERUSER=1 composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
 
 echo "${LOG_PREFIX} Installing JS dependencies..."
 npm ci --prefer-offline
