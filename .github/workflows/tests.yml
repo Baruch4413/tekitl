@@ -69,5 +69,8 @@ jobs:
       - name: Build Assets
         run: npm run build
 
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
       - name: Tests
         run: ./vendor/bin/pest
