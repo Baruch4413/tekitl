@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateProjectVolunteerRequest;
 use App\Models\Project;
 use App\Models\ProjectRole;
 use App\Models\ProjectVolunteer;
+use App\ProjectStage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,6 +15,12 @@ class ProjectVolunteerController extends Controller
 {
     public function store(StoreProjectVolunteerRequest $request, Project $project, ProjectRole $role): RedirectResponse
     {
+        abort_if(
+            ! in_array($project->stage, [ProjectStage::Planning, ProjectStage::InExecution], true),
+            403,
+            'No se aceptan postulaciones en este momento.',
+        );
+
         $role->volunteers()->create([
             'user_id' => Auth::id(),
             'status' => 'pending',

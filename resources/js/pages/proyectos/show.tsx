@@ -10,7 +10,11 @@ import ProjectHeader from '@/components/ui/proyectos/ProjectHeader'
 import ImageGallery from '@/components/ui/proyectos/ImageGallery'
 import CrowdfundingProgress from '@/components/ui/proyectos/CrowdfundingProgress'
 import ProjectRoles, { type ProjectRole } from '@/components/ui/proyectos/ProjectRoles'
+import ProjectStageActions, { type AllowedTransition } from '@/components/ui/proyectos/ProjectStageActions'
+import { type ProjectStageValue } from '@/components/ui/proyectos/ProjectStageBadge'
 import ProjectTeam from '@/components/ui/proyectos/ProjectTeam'
+import ProjectTimeline from '@/components/ui/proyectos/ProjectTimeline'
+import { type TimelineEntry } from '@/components/ui/proyectos/ProjectTimelineEntry'
 import PostComments, { type Comment } from '@/components/ui/feed/PostComments'
 import { projectIndex as fetchComments, projectStore } from '@/actions/App/Http/Controllers/CommentController'
 
@@ -34,6 +38,9 @@ interface ProjectData {
     title: string | null
     description: string | null
     goal: number
+    stage: ProjectStageValue
+    stageLabel: string
+    allowedTransitions: AllowedTransition[]
     roles: ProjectRole[]
     images: ProjectImage[]
 }
@@ -52,14 +59,20 @@ interface PostData {
     isPoweredByCurrentUser: boolean
 }
 
+interface TimelineData {
+    entries: TimelineEntry[]
+    nextCursor: string | null
+}
+
 interface ProyectoShowProps {
     project: ProjectData
     post: PostData
     isOwner: boolean
     currentUserApplication: CurrentUserApplication | null
+    timeline: TimelineData
 }
 
-export default function ProyectoShow({ project, post, isOwner, currentUserApplication }: ProyectoShowProps) {
+export default function ProyectoShow({ project, post, isOwner, currentUserApplication, timeline }: ProyectoShowProps) {
     const { auth } = usePage<{ auth: { user: { id: number } | null } }>().props
     const isAuthenticated = !!auth?.user
 
@@ -123,7 +136,17 @@ loadComments()
                         date={post.date}
                         dateTime={post.dateTime}
                         isOwner={isOwner}
+                        stage={project.stage}
+                        stageLabel={project.stageLabel}
                     />
+
+                    {/* Stage transition actions (owner only) */}
+                    {isOwner && project.allowedTransitions.length > 0 && (
+                        <ProjectStageActions
+                            projectId={project.id}
+                            allowedTransitions={project.allowedTransitions}
+                        />
+                    )}
 
                     {/* Image gallery */}
                     <ImageGallery images={project.images} isOwner={isOwner} projectId={project.id} />
@@ -136,6 +159,7 @@ loadComments()
                     {/* Roles */}
                     <ProjectRoles
                         projectId={project.id}
+                        projectStage={project.stage}
                         roles={project.roles}
                         isOwner={isOwner}
                         isAuthenticated={isAuthenticated}
@@ -144,6 +168,17 @@ loadComments()
 
                     {/* Team */}
                     <ProjectTeam roles={project.roles} />
+
+                    {/* Timeline */}
+                    <div className="mt-6 border-t border-gray-200 pt-6 dark:border-white/10">
+                        <h2 className="text-sm font-semibold text-gray-900 dark:text-white">Actividad del proyecto</h2>
+                        <ProjectTimeline
+                            projectId={project.id}
+                            initialEntries={timeline.entries}
+                            initialNextCursor={timeline.nextCursor}
+                            isOwner={isOwner}
+                        />
+                    </div>
 
                     {/* Comments */}
                     <div className="mt-6 border-t border-gray-200 pt-6 dark:border-white/10">

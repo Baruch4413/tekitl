@@ -61,6 +61,14 @@ class Project extends Model
         return $this->hasMany(ProjectTimelineEvent::class)->orderBy('created_at');
     }
 
+    public function recentTimelineEvents(): HasMany
+    {
+        return $this->hasMany(ProjectTimelineEvent::class)
+            ->orderByDesc('created_at')
+            ->orderByDesc('id')
+            ->limit(20);
+    }
+
     // -------------------------------------------------------------------------
     // State machine
     // -------------------------------------------------------------------------

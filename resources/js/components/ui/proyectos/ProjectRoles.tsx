@@ -42,6 +42,7 @@ interface CurrentUserApplication {
 
 interface ProjectRolesProps {
     projectId: number
+    projectStage: 'planning' | 'in_execution' | 'completed' | 'aborted'
     roles: ProjectRole[]
     isOwner: boolean
     isAuthenticated: boolean
@@ -209,11 +210,13 @@ function ApplicantReviewModal({
 
 export default function ProjectRoles({
     projectId,
+    projectStage,
     roles,
     isOwner,
     isAuthenticated,
     currentUserApplication,
 }: ProjectRolesProps) {
+    const acceptingApplications = projectStage === 'planning' || projectStage === 'in_execution'
     const [adding, setAdding] = useState(false)
     const [editingId, setEditingId] = useState<number | null>(null)
     const [processing, setProcessing] = useState(false)
@@ -290,7 +293,7 @@ export default function ProjectRoles({
         )
     }
 
-    const canApply = isAuthenticated && !isOwner && !currentUserApplication
+    const canApply = isAuthenticated && !isOwner && !currentUserApplication && acceptingApplications
 
     return (
         <>

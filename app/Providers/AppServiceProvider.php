@@ -2,7 +2,15 @@
 
 namespace App\Providers;
 
+use App\Models\ProjectImage;
+use App\Models\ProjectRole;
+use App\Models\ProjectVolunteer;
+use App\Models\Reaction;
 use App\Models\User;
+use App\Observers\ProjectImageObserver;
+use App\Observers\ProjectRoleObserver;
+use App\Observers\ProjectVolunteerObserver;
+use App\Observers\ReactionObserver;
 use App\Observers\UserObserver;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
@@ -31,6 +39,10 @@ class AppServiceProvider extends ServiceProvider
             Vite::useHotFile(storage_path('vite.hot.disabled'));
         }
         User::observe(UserObserver::class);
+        ProjectRole::observe(ProjectRoleObserver::class);
+        ProjectVolunteer::observe(ProjectVolunteerObserver::class);
+        ProjectImage::observe(ProjectImageObserver::class);
+        Reaction::observe(ReactionObserver::class);
         $this->configureDefaults();
     }
 
