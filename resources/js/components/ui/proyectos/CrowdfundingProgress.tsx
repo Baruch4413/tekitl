@@ -1,3 +1,4 @@
+import { type ReactNode } from 'react'
 import CoinIcon from '@/components/vector-graphics/CoinIcon'
 import { formatCount } from '@/lib/utils'
 import { type ProjectRole } from '@/components/ui/proyectos/ProjectRoles'
@@ -5,9 +6,10 @@ import { type ProjectRole } from '@/components/ui/proyectos/ProjectRoles'
 interface CrowdfundingProgressProps {
     coins: number
     roles: ProjectRole[]
+    children?: ReactNode
 }
 
-export default function CrowdfundingProgress({ coins, roles }: CrowdfundingProgressProps) {
+export default function CrowdfundingProgress({ coins, roles, children }: CrowdfundingProgressProps) {
     const totalSlots = roles.reduce((sum, r) => sum + r.slots, 0)
     const filledSlots = roles.reduce((sum, r) => sum + r.filledSlots, 0)
     const percentage = totalSlots > 0 ? Math.min(Math.round((filledSlots / totalSlots) * 100), 100) : 0
@@ -34,6 +36,7 @@ export default function CrowdfundingProgress({ coins, roles }: CrowdfundingProgr
             {totalSlots > 0 && (
                 <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">{percentage}% completo</p>
             )}
+            {children}
         </div>
     )
 }
