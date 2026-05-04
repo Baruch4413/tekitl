@@ -34,7 +34,7 @@ La mayoría de las herramientas para "construir en público" están pensadas par
 
 ## Estructura del proyecto
 
-```
+```text
 app/
   Models/                # Post, Project, ProjectRole, ProjectVolunteer,
                          # ProjectTimelineEvent, Reaction, User, UserTalent…

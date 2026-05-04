@@ -1,11 +1,11 @@
-import { useState } from 'react'
 import { Link, router } from '@inertiajs/react'
+import { useState } from 'react'
 import { toast } from 'sonner'
-import InlineSaveButton from '@/components/ui/InlineSaveButton'
-import UserAvatar from '@/components/ui/UserAvatar'
-import ProjectStageBadge, { type ProjectStageValue } from '@/components/ui/proyectos/ProjectStageBadge'
-import { show as userProfile } from '@/actions/App/Http/Controllers/UserProfileController'
 import { update as updateProject } from '@/actions/App/Http/Controllers/ProjectController'
+import { show as userProfile } from '@/actions/App/Http/Controllers/UserProfileController'
+import InlineSaveButton from '@/components/ui/InlineSaveButton'
+import ProjectStageBadge, { type ProjectStageValue } from '@/components/ui/proyectos/ProjectStageBadge'
+import UserAvatar from '@/components/ui/UserAvatar'
 
 interface ProjectHeaderProps {
     projectId: number

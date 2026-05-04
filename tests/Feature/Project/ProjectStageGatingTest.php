@@ -39,6 +39,11 @@ test('applications are rejected on aborted projects with 403', function () {
     $this->actingAs($applicant)
         ->post(route('proyectos.volunteers.store', [$project, $role]))
         ->assertForbidden();
+
+    $this->assertDatabaseMissing('project_volunteers', [
+        'project_role_id' => $role->id,
+        'user_id' => $applicant->id,
+    ]);
 });
 
 test('applications are accepted on in_execution projects', function () {

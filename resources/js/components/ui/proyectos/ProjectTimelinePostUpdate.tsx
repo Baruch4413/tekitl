@@ -1,10 +1,10 @@
-import { FormEvent, useState } from 'react'
 import { useForm } from '@inertiajs/react'
-import { Button } from '@/components/ui/button'
+import { useState, type FormEvent } from 'react'
 import {
     storeMilestone,
     storeStatusUpdate,
 } from '@/actions/App/Http/Controllers/ProjectTimelineController'
+import { Button } from '@/components/ui/button'
 
 interface ProjectTimelinePostUpdateProps {
     projectId: number

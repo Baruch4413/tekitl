@@ -64,6 +64,22 @@ class ProjectTimelineEventFactory extends Factory
         ]);
     }
 
+    public function volunteerAutoRejected(): static
+    {
+        return $this->state(fn (): array => [
+            'user_id' => null,
+            'type' => ProjectTimelineEventType::VolunteerBailed,
+            'data' => [
+                'role_id' => 1,
+                'role_title' => fake()->jobTitle(),
+                'volunteer_id' => 1,
+                'volunteer_user_id' => 1,
+                'volunteer_name' => fake()->name(),
+                'reason' => 'auto_rejected_terminal_stage',
+            ],
+        ]);
+    }
+
     public function volunteerExhausted(): static
     {
         return $this->state(fn (): array => [
@@ -105,6 +121,7 @@ class ProjectTimelineEventFactory extends Factory
     public function coinsReceived(): static
     {
         return $this->state(fn (): array => [
+            'user_id' => null,
             'type' => ProjectTimelineEventType::CoinsReceived,
             'data' => [
                 'coins' => fake()->numberBetween(1, 100),
