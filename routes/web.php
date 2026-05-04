@@ -6,6 +6,8 @@ use App\Http\Controllers\GithubWebhookController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectRoleController;
+use App\Http\Controllers\ProjectStageController;
+use App\Http\Controllers\ProjectTimelineController;
 use App\Http\Controllers\ProjectVolunteerController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserProfileInfoController;
@@ -33,6 +35,12 @@ Route::delete('/proyectos/{project}/images/{image}', [ProjectController::class, 
 Route::post('/proyectos/{project}/roles', [ProjectRoleController::class, 'store'])->middleware('auth')->name('proyectos.roles.store');
 Route::patch('/proyectos/{project}/roles/{role}', [ProjectRoleController::class, 'update'])->middleware('auth')->name('proyectos.roles.update');
 Route::delete('/proyectos/{project}/roles/{role}', [ProjectRoleController::class, 'destroy'])->middleware('auth')->name('proyectos.roles.destroy');
+
+Route::post('/proyectos/{project}/stage', [ProjectStageController::class, 'store'])->middleware('auth')->name('proyectos.stage.store');
+
+Route::get('/proyectos/{project}/timeline', [ProjectTimelineController::class, 'index'])->name('proyectos.timeline.index');
+Route::post('/proyectos/{project}/timeline/milestones', [ProjectTimelineController::class, 'storeMilestone'])->middleware('auth')->name('proyectos.timeline.milestones.store');
+Route::post('/proyectos/{project}/timeline/status-updates', [ProjectTimelineController::class, 'storeStatusUpdate'])->middleware('auth')->name('proyectos.timeline.status-updates.store');
 
 Route::post('/proyectos/{project}/roles/{role}/volunteers', [ProjectVolunteerController::class, 'store'])->middleware('auth')->name('proyectos.volunteers.store');
 Route::patch('/proyectos/{project}/volunteers/{volunteer}', [ProjectVolunteerController::class, 'update'])->middleware('auth')->name('proyectos.volunteers.update');

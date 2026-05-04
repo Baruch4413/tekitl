@@ -8,8 +8,10 @@ use App\Models\Post;
 use App\Models\Project;
 use App\Models\ProjectImage;
 use App\Models\ProjectRole;
+use App\Models\ProjectTimelineEvent;
 use App\Models\ProjectVolunteer;
 use App\ProjectImageSize;
+use App\ProjectStage;
 use App\ReactionType;
 use App\Services\ImageService;
 use Illuminate\Http\RedirectResponse;
@@ -36,6 +38,7 @@ class ProjectController extends Controller
                 'title' => Str::limit($post->body, 252),
                 'description' => null,
                 'goal' => 100,
+                'stage' => ProjectStage::Planning,
             ]);
         }
 
@@ -45,6 +48,7 @@ class ProjectController extends Controller
             'images',
             'roles.activeVolunteers.user',
             'roles.pendingVolunteers.user',
+            'recentTimelineEvents.user',
         ]);
         $post->load('user');
 
@@ -64,12 +68,26 @@ class ProjectController extends Controller
 
         $s3 = Storage::disk('s3');
 
+        $allowedTransitions = $isOwner
+            ? array_map(
+                fn ($stage) => [
+                    'to' => $stage->value,
+                    'label' => $stage->label(),
+                    'isTerminal' => $stage->allowedTransitions() === [],
+                ],
+                $project->stage->allowedTransitions(),
+            )
+            : [];
+
         return Inertia::render('proyectos/show', [
             'project' => [
                 'id' => $project->id,
                 'title' => $project->title,
                 'description' => $project->description,
                 'goal' => $project->goal,
+                'stage' => $project->stage->value,
+                'stageLabel' => $project->stage->label(),
+                'allowedTransitions' => $allowedTransitions,
                 'roles' => $project->roles->map(fn (ProjectRole $role) => [
                     'id' => $role->id,
                     'title' => $role->title,
@@ -120,6 +138,23 @@ class ProjectController extends Controller
                 'roleId' => $currentUserApplication->project_role_id,
                 'status' => $currentUserApplication->status,
             ] : null,
+            'timeline' => [
+                'entries' => $project->recentTimelineEvents->map(fn (ProjectTimelineEvent $e) => [
+                    'id' => $e->id,
+                    'type' => $e->type->value,
+                    'data' => $e->data,
+                    'createdAt' => $e->created_at->toIso8601String(),
+                    'createdAtRelative' => $e->created_at->diffForHumans(),
+                    'actor' => $e->user ? [
+                        'id' => $e->user->id,
+                        'name' => $e->user->name,
+                        'avatarUrl' => $e->user->avatar_url,
+                    ] : null,
+                ])->values(),
+                'nextCursor' => $project->recentTimelineEvents->count() === 20
+                    ? $project->recentTimelineEvents->last()->created_at->toIso8601String().'|'.$project->recentTimelineEvents->last()->id
+                    : null,
+            ],
         ]);
     }
 

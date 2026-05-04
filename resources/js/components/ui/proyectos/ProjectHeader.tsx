@@ -1,10 +1,11 @@
-import { useState } from 'react'
 import { Link, router } from '@inertiajs/react'
+import { useState } from 'react'
 import { toast } from 'sonner'
-import InlineSaveButton from '@/components/ui/InlineSaveButton'
-import UserAvatar from '@/components/ui/UserAvatar'
-import { show as userProfile } from '@/actions/App/Http/Controllers/UserProfileController'
 import { update as updateProject } from '@/actions/App/Http/Controllers/ProjectController'
+import { show as userProfile } from '@/actions/App/Http/Controllers/UserProfileController'
+import InlineSaveButton from '@/components/ui/InlineSaveButton'
+import ProjectStageBadge, { type ProjectStageValue } from '@/components/ui/proyectos/ProjectStageBadge'
+import UserAvatar from '@/components/ui/UserAvatar'
 
 interface ProjectHeaderProps {
     projectId: number
@@ -14,9 +15,11 @@ interface ProjectHeaderProps {
     date: string
     dateTime: string
     isOwner: boolean
+    stage: ProjectStageValue
+    stageLabel: string
 }
 
-export default function ProjectHeader({ projectId, title, description, user, date, dateTime, isOwner }: ProjectHeaderProps) {
+export default function ProjectHeader({ projectId, title, description, user, date, dateTime, isOwner, stage, stageLabel }: ProjectHeaderProps) {
     const [editingTitle, setEditingTitle] = useState(false)
     const [editingDescription, setEditingDescription] = useState(false)
     const [titleValue, setTitleValue] = useState(title ?? '')
@@ -69,12 +72,24 @@ export default function ProjectHeader({ projectId, title, description, user, dat
                     <InlineSaveButton onClick={() => saveField('title')} />
                 </div>
             ) : (
-                <h1
-                    onClick={() => isOwner && setEditingTitle(true)}
-                    className={`text-2xl font-bold text-gray-900 dark:text-white px-3 ${isOwner ? 'cursor-pointer rounded-xl pr-3 py-2 transition-colors hover:bg-gray-100 dark:hover:bg-white/5' : ''}`}
-                >
-                    {title || (isOwner ? 'Haz clic para agregar un título' : 'Sin título')}
-                </h1>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                    <h1
+                        role={isOwner ? 'button' : undefined}
+                        tabIndex={isOwner ? 0 : undefined}
+                        onClick={() => isOwner && setEditingTitle(true)}
+                        onKeyDown={(event) => {
+                            if (!isOwner) return
+                            if (event.key === 'Enter' || event.key === ' ') {
+                                event.preventDefault()
+                                setEditingTitle(true)
+                            }
+                        }}
+                        className={`text-2xl font-bold text-gray-900 dark:text-white px-3 ${isOwner ? 'cursor-pointer rounded-xl pr-3 py-2 transition-colors hover:bg-gray-100 dark:hover:bg-white/5' : ''}`}
+                    >
+                        {title || (isOwner ? 'Haz clic para agregar un título' : 'Sin título')}
+                    </h1>
+                    <ProjectStageBadge stage={stage} stageLabel={stageLabel} />
+                </div>
             )}
 
             {/* User info */}

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\ProjectTimelineEventType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,6 +22,7 @@ class ProjectTimelineEvent extends Model
     protected function casts(): array
     {
         return [
+            'type' => ProjectTimelineEventType::class,
             'data' => 'array',
         ];
     }

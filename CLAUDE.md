@@ -9,7 +9,7 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
-- php - 8.5.0
+- php - 8.5.5
 - inertiajs/inertia-laravel (INERTIA) - v2
 - laravel/fortify (FORTIFY) - v1
 - laravel/framework (LARAVEL) - v12
@@ -293,6 +293,6 @@ Wayfinder generates TypeScript functions for Laravel routes. Import from `@/acti
 </laravel-boost-guidelines>
 
 <!-- SPECKIT START -->
-For additional context about technologies to be used, project structure,
-shell commands, and other important information, read the current plan
+Active feature plan: [specs/001-project-lifecycle-timeline/plan.md](specs/001-project-lifecycle-timeline/plan.md)
+Read the plan for technical context, project structure, and constitutional compliance for the in-flight feature.
 <!-- SPECKIT END -->
