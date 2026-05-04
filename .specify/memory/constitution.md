@@ -1,31 +1,32 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: (uninitialized template) → 1.0.0
-Bump rationale: Initial ratification of the project constitution. MAJOR per
-semver convention for the first stable governance document.
+Version change: 1.0.0 → 1.1.0
+Bump rationale: Added a new core principle (VI. Code Hygiene: DRY, SOLID,
+KISS). MINOR per semver convention for additive, backward-compatible
+governance changes.
 
 Modified principles:
-  - [PRINCIPLE_1_NAME] → I. Community-First Design
-  - [PRINCIPLE_2_NAME] → II. Test-First (NON-NEGOTIABLE)
-  - [PRINCIPLE_3_NAME] → III. Laravel-Native, Convention Over Custom
-  - [PRINCIPLE_4_NAME] → IV. Typed End-to-End
-  - [PRINCIPLE_5_NAME] → V. Accessibility & Privacy by Default
+  - I. Community-First Design (unchanged)
+  - II. Test-First (NON-NEGOTIABLE) (unchanged)
+  - III. Laravel-Native, Convention Over Custom (unchanged)
+  - IV. Typed End-to-End (unchanged)
+  - V. Accessibility & Privacy by Default (unchanged)
+  - VI. Code Hygiene: DRY, SOLID, KISS (new)
 
 Added sections:
-  - Technology Constraints (Section 2)
-  - Development Workflow (Section 3)
-  - Governance
+  - Core Principles → VI. Code Hygiene: DRY, SOLID, KISS
 
 Removed sections: none
 
 Templates requiring updates:
-  - ✅ .specify/templates/plan-template.md (Constitution Check section already
-    references constitution generically; no rewrite required)
+  - ✅ .specify/templates/plan-template.md (Constitution Check section
+    references constitution generically; will pick up the new principle on
+    next plan run; no template rewrite required)
   - ✅ .specify/templates/spec-template.md (no constitution-specific gates;
     aligned)
-  - ✅ .specify/templates/tasks-template.md (no constitution-specific
-    categorization required by current principles)
+  - ✅ .specify/templates/tasks-template.md (no per-principle categorization
+    required)
   - ⚠ pending: CLAUDE.md / docs — runtime guidance does not yet cite the
     constitution explicitly; may be cross-linked in a future amendment
 
@@ -93,6 +94,52 @@ Rationale: non-profits handle sensitive constituent and donor data; defaults
 that protect users and organizations are non-negotiable for the trust the
 platform requires.
 
+### VI. Code Hygiene: DRY, SOLID, KISS
+
+All production code MUST observe the following design discipline; reviewers
+and `/speckit-plan` Constitution Check MUST flag deviations.
+
+**DRY (Don't Repeat Yourself).** Domain knowledge MUST have a single
+authoritative representation. Duplicated logic across controllers, services,
+or React components MUST be extracted (Eloquent scopes, Form Requests,
+Action classes, custom hooks, shared TS types from Wayfinder) once it
+recurs a third time or once divergence would create a correctness risk.
+Copy-paste across modules without an extraction plan is prohibited.
+Configuration values MUST live in `config/` and be read via `config()`;
+literal duplication of strings, magic numbers, or URLs across files is a
+violation. Note: premature abstraction is itself a DRY violation —
+extraction MUST follow real duplication, not anticipated duplication.
+
+**SOLID.** New classes and modules MUST respect:
+- *Single Responsibility*: a class/function does one thing; controllers
+  delegate to services, jobs, or actions rather than absorbing business
+  logic. Fat controllers and god models are prohibited.
+- *Open/Closed*: extension via composition, policies, events, or strategy
+  classes is preferred over editing stable shared code paths.
+- *Liskov Substitution*: subclasses and trait users MUST honor the parent
+  contract; no surprise behavior changes when substituted.
+- *Interface Segregation*: prefer small, focused interfaces over wide ones;
+  consumers MUST NOT depend on methods they do not use.
+- *Dependency Inversion*: depend on abstractions (interfaces, contracts,
+  the service container) rather than concrete classes; resolve through
+  Laravel's container, not via `new` for services with collaborators.
+
+**KISS (Keep It Simple).** The simplest design that satisfies the spec wins.
+Speculative configurability, plugin systems, and abstraction layers added
+"for the future" are prohibited; build them when a second concrete
+caller materializes. Cyclomatic complexity, deep inheritance, and clever
+one-liners that obscure intent MUST be refactored in favor of straight-line
+code with descriptive names. When two designs are equivalent, prefer fewer
+files, fewer indirections, and framework-native primitives (per Principle
+III).
+
+Rationale: a small team maintaining a multi-tenant collaboration platform
+cannot afford the maintenance tax of duplicated logic, tangled
+responsibilities, or speculative complexity. These three principles are the
+floor of professional code quality and the lens through which `/speckit-plan`
+and reviewers MUST evaluate every change. Justified deviations MUST be
+recorded in the plan's Complexity Tracking section.
+
 ## Technology Constraints
 
 The supported stack is PHP 8.5, Laravel 12, Inertia.js v2, React 19,
@@ -142,4 +189,4 @@ is the primary enforcement point for new feature work; reviewers are the
 enforcement point for ad-hoc changes. Complexity that violates a principle
 MUST be justified in writing or removed.
 
-**Version**: 1.0.0 | **Ratified**: 2026-05-01 | **Last Amended**: 2026-05-01
+**Version**: 1.1.0 | **Ratified**: 2026-05-01 | **Last Amended**: 2026-05-04
