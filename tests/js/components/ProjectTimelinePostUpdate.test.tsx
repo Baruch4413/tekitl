@@ -2,10 +2,12 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import ProjectTimelinePostUpdate from '@/components/ui/proyectos/ProjectTimelinePostUpdate'
 
+type RouteDef = { url: string; method: string }
+
 type FormState<T> = {
     data: T
     setData: (key: keyof T, value: string) => void
-    post: (url: string, options?: { onSuccess?: () => void }) => void
+    submit: (route: RouteDef, options?: { onSuccess?: () => void }) => void
     reset: () => void
     processing: boolean
     errors: Partial<Record<keyof T, string>>
@@ -17,7 +19,7 @@ const createFormStub = <T extends Record<string, string>>(initial: T): FormState
         setData: (key, value) => {
             state.data = { ...state.data, [key]: value }
         },
-        post: vi.fn((_url, options) => {
+        submit: vi.fn((_route, options) => {
             options?.onSuccess?.()
         }),
         reset: vi.fn(() => {
@@ -42,8 +44,14 @@ vi.mock('@inertiajs/react', () => ({
 }))
 
 vi.mock('@/actions/App/Http/Controllers/ProjectTimelineController', () => ({
-    storeMilestone: { url: (id: number) => `/proyectos/${id}/timeline/milestones` },
-    storeStatusUpdate: { url: (id: number) => `/proyectos/${id}/timeline/status-updates` },
+    storeMilestone: (id: number) => ({
+        url: `/proyectos/${id}/timeline/milestones`,
+        method: 'post',
+    }),
+    storeStatusUpdate: (id: number) => ({
+        url: `/proyectos/${id}/timeline/status-updates`,
+        method: 'post',
+    }),
 }))
 
 describe('ProjectTimelinePostUpdate', () => {
@@ -73,8 +81,8 @@ describe('ProjectTimelinePostUpdate', () => {
         const form = screen.getByRole('button', { name: /Publicar/i }).closest('form')!
         fireEvent.submit(form)
 
-        expect(milestoneStub.post).toHaveBeenCalledWith(
-            '/proyectos/1/timeline/milestones',
+        expect(milestoneStub.submit).toHaveBeenCalledWith(
+            expect.objectContaining({ url: '/proyectos/1/timeline/milestones', method: 'post' }),
             expect.objectContaining({ preserveScroll: true }),
         )
         expect(milestoneStub.reset).toHaveBeenCalled()
@@ -91,8 +99,8 @@ describe('ProjectTimelinePostUpdate', () => {
         const form = screen.getByRole('button', { name: /Publicar/i }).closest('form')!
         fireEvent.submit(form)
 
-        expect(statusStub.post).toHaveBeenCalledWith(
-            '/proyectos/1/timeline/status-updates',
+        expect(statusStub.submit).toHaveBeenCalledWith(
+            expect.objectContaining({ url: '/proyectos/1/timeline/status-updates', method: 'post' }),
             expect.objectContaining({ preserveScroll: true }),
         )
         expect(statusStub.reset).toHaveBeenCalled()

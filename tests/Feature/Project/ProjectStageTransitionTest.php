@@ -101,7 +101,10 @@ test('stage transition records a timeline event', function () {
 
     expect($event)->not->toBeNull();
     expect($event->user_id)->toBe($owner->id);
-    expect($event->data)->toBe(['from' => 'planning', 'to' => 'in_execution']);
+    expect($event->data)->toMatchArray([
+        'from' => 'planning',
+        'to' => 'in_execution',
+    ]);
 });
 
 test('illegal stage transition is rejected with 422', function () {

@@ -31,7 +31,14 @@ class ProjectTimelineController extends Controller
             ->orderByDesc('id');
 
         if ($cursor = $request->string('cursor')->toString()) {
-            $query->where('created_at', '<', CarbonImmutable::parse($cursor));
+            [$cursorTs, $cursorId] = $this->parseCursor($cursor);
+            $query->where(function ($q) use ($cursorTs, $cursorId): void {
+                $q->where('created_at', '<', $cursorTs)
+                    ->orWhere(function ($q) use ($cursorTs, $cursorId): void {
+                        $q->where('created_at', '=', $cursorTs)
+                            ->where('id', '<', $cursorId);
+                    });
+            });
         }
 
         $entries = $query->limit($limit + 1)->get();
@@ -40,7 +47,7 @@ class ProjectTimelineController extends Controller
         $page = $entries->take($limit);
 
         $nextCursor = $hasMore && $page->isNotEmpty()
-            ? $page->last()->created_at->toIso8601String()
+            ? $page->last()->created_at->toIso8601String().'|'.$page->last()->id
             : null;
 
         return response()->json([
@@ -71,6 +78,16 @@ class ProjectTimelineController extends Controller
         ]);
 
         return back();
+    }
+
+    /**
+     * @return array{0: CarbonImmutable, 1: int}
+     */
+    private function parseCursor(string $cursor): array
+    {
+        [$ts, $id] = array_pad(explode('|', $cursor, 2), 2, '');
+
+        return [CarbonImmutable::parse($ts), (int) $id];
     }
 
     /**

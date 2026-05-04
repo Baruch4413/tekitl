@@ -28,7 +28,7 @@ export default function ProjectTimelinePostUpdate({
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (tab === 'milestone') {
-            milestoneForm.post(storeMilestone.url(projectId), {
+            milestoneForm.submit(storeMilestone(projectId), {
                 preserveScroll: true,
                 onSuccess: () => {
                     milestoneForm.reset()
@@ -36,7 +36,7 @@ export default function ProjectTimelinePostUpdate({
                 },
             })
         } else {
-            statusForm.post(storeStatusUpdate.url(projectId), {
+            statusForm.submit(storeStatusUpdate(projectId), {
                 preserveScroll: true,
                 onSuccess: () => {
                     statusForm.reset()
@@ -72,7 +72,11 @@ export default function ProjectTimelinePostUpdate({
             <form onSubmit={handleSubmit} className="space-y-2">
                 {tab === 'milestone' ? (
                     <>
+                        <label htmlFor="milestone-title" className="sr-only">
+                            Título del hito
+                        </label>
                         <input
+                            id="milestone-title"
                             type="text"
                             name="title"
                             maxLength={MILESTONE_LIMIT}
@@ -94,7 +98,11 @@ export default function ProjectTimelinePostUpdate({
                     </>
                 ) : (
                     <>
+                        <label htmlFor="status-body" className="sr-only">
+                            Cuerpo de la actualización
+                        </label>
                         <textarea
+                            id="status-body"
                             name="body"
                             maxLength={STATUS_LIMIT}
                             rows={4}

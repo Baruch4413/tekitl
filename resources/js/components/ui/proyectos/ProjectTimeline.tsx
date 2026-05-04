@@ -41,7 +41,7 @@ export default function ProjectTimeline({
             const url = fetchTimeline.url(projectId, { query: { cursor: nextCursor } })
             const response = await fetch(url, { headers: { Accept: 'application/json' } })
             if (!response.ok) {
-                throw new Error('Network error')
+                throw new Error('Error de red')
             }
             const data: TimelinePageResponse = await response.json()
             setEntries((prev) => [...prev, ...data.entries])

@@ -152,7 +152,7 @@ class ProjectController extends Controller
                     ] : null,
                 ])->values(),
                 'nextCursor' => $project->recentTimelineEvents->count() === 20
-                    ? $project->recentTimelineEvents->last()->created_at->toIso8601String()
+                    ? $project->recentTimelineEvents->last()->created_at->toIso8601String().'|'.$project->recentTimelineEvents->last()->id
                     : null,
             ],
         ]);

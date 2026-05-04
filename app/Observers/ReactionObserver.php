@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class ReactionObserver
 {
-    private const COINS_PER_POTENCIAR = 10;
+    private const COINS_PER_ENDORSEMENT = 10;
 
     private const AGGREGATION_WINDOW_MINUTES = 60;
 
@@ -37,7 +37,7 @@ class ReactionObserver
 
             if ($existing) {
                 $data = $existing->data;
-                $data['coins'] = ($data['coins'] ?? 0) + self::COINS_PER_POTENCIAR;
+                $data['coins'] = ($data['coins'] ?? 0) + self::COINS_PER_ENDORSEMENT;
                 $existing->update(['data' => $data]);
 
                 return;
@@ -48,7 +48,7 @@ class ReactionObserver
                 'user_id' => null,
                 'type' => ProjectTimelineEventType::CoinsReceived,
                 'data' => [
-                    'coins' => self::COINS_PER_POTENCIAR,
+                    'coins' => self::COINS_PER_ENDORSEMENT,
                     'window_started_at' => now()->toIso8601String(),
                 ],
             ]);
