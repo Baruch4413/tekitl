@@ -155,5 +155,6 @@ test('timeline entries expose actor name and avatar', function () {
         ->assertOk()
         ->assertInertia(fn ($page) => $page
             ->where('timeline.entries.0.actor.name', 'Alice Owner')
+            ->where('timeline.entries.0.actor.avatarUrl', $owner->avatar_url)
         );
 });

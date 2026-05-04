@@ -45,7 +45,7 @@ POST /proyectos/{project}/stage
 3. Within a single DB transaction:
    - `Project::transitionTo($to)` — persists the new stage.
    - Insert `ProjectTimelineEvent { type: 'stage_transition', user_id: <actor>, data: { from, to } }`.
-   - If `to ∈ {completed, aborted}`: bulk-update all `ProjectVolunteer` rows where `project_role.project_id = $project->id AND status = 'pending'` to `status = 'bailed'`. For each, insert `ProjectTimelineEvent { type: 'volunteer_bailed', user_id: null, data: {…, reason: 'auto_rejected_terminal_stage'} }`.
+   - If `to ∈ {completed, aborted}`: load pending `ProjectVolunteer` rows for the project and update each model instance to `status = 'bailed'` inside the same transaction, allowing observers to emit `ProjectTimelineEvent { type: 'volunteer_bailed', user_id: null, data: {…, reason: 'auto_rejected_terminal_stage'} }` per row.
 4. Return `back()` (Inertia redirect).
 
 ### Errors

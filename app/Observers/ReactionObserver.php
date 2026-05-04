@@ -2,11 +2,11 @@
 
 namespace App\Observers;
 
+use App\Models\Project;
 use App\Models\ProjectTimelineEvent;
 use App\Models\Reaction;
 use App\ProjectTimelineEventType;
 use App\ReactionType;
-use Illuminate\Support\Facades\DB;
 
 class ReactionObserver
 {
@@ -26,7 +26,12 @@ class ReactionObserver
             return;
         }
 
-        DB::transaction(function () use ($project): void {
+        ProjectTimelineEvent::query()->getConnection()->transaction(function () use ($project): void {
+            Project::query()
+                ->whereKey($project->id)
+                ->lockForUpdate()
+                ->first();
+
             $existing = ProjectTimelineEvent::query()
                 ->where('project_id', $project->id)
                 ->where('type', ProjectTimelineEventType::CoinsReceived)

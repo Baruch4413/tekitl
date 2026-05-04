@@ -74,7 +74,16 @@ export default function ProjectHeader({ projectId, title, description, user, dat
             ) : (
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                     <h1
+                        role={isOwner ? 'button' : undefined}
+                        tabIndex={isOwner ? 0 : undefined}
                         onClick={() => isOwner && setEditingTitle(true)}
+                        onKeyDown={(event) => {
+                            if (!isOwner) return
+                            if (event.key === 'Enter' || event.key === ' ') {
+                                event.preventDefault()
+                                setEditingTitle(true)
+                            }
+                        }}
                         className={`text-2xl font-bold text-gray-900 dark:text-white px-3 ${isOwner ? 'cursor-pointer rounded-xl pr-3 py-2 transition-colors hover:bg-gray-100 dark:hover:bg-white/5' : ''}`}
                     >
                         {title || (isOwner ? 'Haz clic para agregar un título' : 'Sin título')}

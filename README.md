@@ -22,7 +22,7 @@ La mayoría de las herramientas para "construir en público" están pensadas par
 
 ## Stack técnico
 
-- **PHP 8.5** · **Laravel 12** (estructura simplificada `bootstrap/app.php`)
+- **PHP 8.2+** · **Laravel 12** (estructura simplificada `bootstrap/app.php`)
 - **Inertia.js v2** + **React 19** + **TypeScript**
 - **Tailwind CSS v4**
 - **MySQL** (sesiones, proyectos, eventos de timeline, ledger de coins)

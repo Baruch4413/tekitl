@@ -51,7 +51,7 @@ A manual smoke test to exercise the feature end-to-end after implementation land
     - Existing active volunteers still appear in the team section.
 
 12. **Auto-rejection on terminal transition (FR-025)**
-    Re-create the conditions: have a pending application on a project, then transition to "Aborted" or "Completed". Confirm:
+    Re-create the conditions: have a pending application on a project, then transition to "Abortado" or "Completado". Confirm:
     - The pending application is now `bailed`.
     - A `volunteer_bailed` timeline entry exists with `reason: auto_rejected_terminal_stage`.
     - Per Q3 of clarifications, the affected applicant sees no special status on the project page beyond what the timeline shows (silent rejection).
