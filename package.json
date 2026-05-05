@@ -9,6 +9,7 @@
         "format": "prettier --write resources/",
         "format:check": "prettier --check resources/",
         "lint": "eslint . --fix",
+        "prepare": "git config --local core.hooksPath .githooks 2>/dev/null || true",
         "test:js": "vitest run",
         "types": "tsc --noEmit"
     },

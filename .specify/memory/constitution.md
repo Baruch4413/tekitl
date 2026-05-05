@@ -1,28 +1,34 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: 1.0.0 → 1.1.0
-Bump rationale: Added a new core principle (VI. Code Hygiene: DRY, SOLID,
-KISS). MINOR per semver convention for additive, backward-compatible
-governance changes.
+Version change: 1.1.0 → 1.2.0
+Bump rationale: Reframed Principle II from "Test-First" to explicit
+"Test-Driven Development (TDD) (NON-NEGOTIABLE)" with the Red-Green-
+Refactor cycle and frontend Vitest coverage; added an automated lint gate
+(pre-commit hook) to the Development Workflow. MINOR per semver convention
+because the existing Test-First obligation already covered the new TDD
+requirements — this amendment expands and clarifies rather than redefines.
 
 Modified principles:
   - I. Community-First Design (unchanged)
-  - II. Test-First (NON-NEGOTIABLE) (unchanged)
+  - II. Test-First → II. Test-Driven Development (NON-NEGOTIABLE)
+    (renamed and expanded to mandate Red-Green-Refactor cycle and to cover
+    frontend Vitest tests in addition to Pest)
   - III. Laravel-Native, Convention Over Custom (unchanged)
   - IV. Typed End-to-End (unchanged)
   - V. Accessibility & Privacy by Default (unchanged)
-  - VI. Code Hygiene: DRY, SOLID, KISS (new)
+  - VI. Code Hygiene: DRY, SOLID, KISS (unchanged)
 
 Added sections:
-  - Core Principles → VI. Code Hygiene: DRY, SOLID, KISS
+  - Development Workflow → "Automated Lint Gate" subsection mandating the
+    `.githooks/pre-commit` ESLint hook activated via `core.hooksPath`.
 
 Removed sections: none
 
 Templates requiring updates:
   - ✅ .specify/templates/plan-template.md (Constitution Check section
-    references constitution generically; will pick up the new principle on
-    next plan run; no template rewrite required)
+    references constitution generically; will pick up the renamed
+    principle and lint gate on next plan run; no template rewrite required)
   - ✅ .specify/templates/spec-template.md (no constitution-specific gates;
     aligned)
   - ✅ .specify/templates/tasks-template.md (no per-principle categorization
@@ -50,15 +56,34 @@ wellbeing wins. Rationale: Tekitl exists for the people and organizations it
 serves, not for the platform itself; this principle is the lens for every
 product decision.
 
-### II. Test-First (NON-NEGOTIABLE)
+### II. Test-Driven Development (NON-NEGOTIABLE)
 
-Pest feature and unit tests MUST be written and demonstrated failing before
-the implementation that satisfies them. Every change MUST be programmatically
-tested via a new or updated test. `php artisan test --compact` MUST pass
-locally and in CI before merge. Verification scripts and manual tinker checks
-MUST NOT replace tests when tests are feasible. Rationale: prevents
-regressions in a multi-tenant collaboration platform where data correctness
-between organizations is critical.
+All production code MUST be produced via the Red-Green-Refactor cycle:
+
+1. **Red.** Write a failing Pest (backend) or Vitest (frontend) test that
+   captures the next slice of behavior. Run it and observe it fail with a
+   meaningful assertion error — not a syntax or import error. Failing-by-
+   construction MUST be demonstrated before any production code is written.
+2. **Green.** Write the minimum production code required to make the new
+   test pass. No speculative branches, no extra features, no premature
+   abstraction (this also enforces Principles VI/KISS).
+3. **Refactor.** With the suite green, improve names, structure, and
+   duplication; rerun tests after each refactor step. Refactors that change
+   behavior require a new Red step, not edits to the existing test.
+
+Every change — backend or frontend — MUST be programmatically covered. For
+backend work, `php artisan test --compact` MUST pass locally and in CI
+before merge. For frontend work, `bun run test:js` (Vitest) MUST pass; UI
+that crosses the page boundary additionally requires a Pest browser test.
+Verification scripts and manual tinker checks MUST NOT replace tests when
+tests are feasible. Pull requests that introduce production code without
+the corresponding test commit history (or a test added in the same PR with
+a credible Red-Green narrative) MUST be rejected.
+
+Rationale: TDD prevents regressions in a multi-tenant collaboration
+platform where data correctness between organizations is critical, keeps
+the design pressure on small testable units (reinforcing Principle VI),
+and produces an executable specification of behavior alongside the code.
 
 ### III. Laravel-Native, Convention Over Custom
 
@@ -167,10 +192,32 @@ the feature's `specs/<dir>/` directory.
 record any deviations in the plan's Complexity Tracking section with explicit
 justification. Unjustified violations block the plan.
 
-Pull requests MUST: (a) include or update Pest tests for changed behavior,
-(b) pass `php artisan test --compact`, (c) pass Pint, and (d) reference the
-relevant spec directory. Reviews MUST verify constitutional compliance in
-addition to correctness.
+Pull requests MUST: (a) include or update Pest and/or Vitest tests for
+changed behavior, (b) pass `php artisan test --compact`, (c) pass
+`bun run test:js` when frontend code is changed, (d) pass Pint, (e) pass
+ESLint with no errors, and (f) reference the relevant spec directory.
+Reviews MUST verify constitutional compliance in addition to correctness.
+
+### Automated Lint Gate
+
+The repository ships a tracked `.githooks/pre-commit` hook that runs ESLint
+against the staged JavaScript and TypeScript files and aborts the commit on
+any error. The hook is activated automatically by the `prepare` npm script,
+which sets `core.hooksPath` to `.githooks` after dependency install; it is
+also enforceable manually via `git config --local core.hooksPath .githooks`.
+
+- The hook MUST NOT be bypassed with `--no-verify` except for emergency
+  hotfixes that are followed by a corrective commit on the same branch.
+- ESLint configuration changes MUST be reviewed under the same standard as
+  any other code change; weakening rules to silence violations is
+  prohibited unless the rule itself is justified-as-incorrect in the PR.
+- Removing, disabling, or short-circuiting the hook is a constitutional
+  change and requires a constitution amendment, not a silent edit.
+
+Rationale: putting the lint gate at the commit boundary catches violations
+before they reach review or CI, keeps the trunk green, and reinforces
+Principle VI (code hygiene) automatically rather than relying on reviewer
+vigilance.
 
 ## Governance
 
@@ -189,4 +236,4 @@ is the primary enforcement point for new feature work; reviewers are the
 enforcement point for ad-hoc changes. Complexity that violates a principle
 MUST be justified in writing or removed.
 
-**Version**: 1.1.0 | **Ratified**: 2026-05-01 | **Last Amended**: 2026-05-04
+**Version**: 1.2.0 | **Ratified**: 2026-05-01 | **Last Amended**: 2026-05-05

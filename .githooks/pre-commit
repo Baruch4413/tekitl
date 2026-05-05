@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Tekitl pre-commit hook
+# Blocks commits whose staged JS/TS changes fail ESLint. Honors Constitution
+# (Principle VI Code Hygiene + Development Workflow lint gate).
+#
+# Activated automatically by the `prepare` npm script which sets
+# `git config core.hooksPath .githooks` after dependency install.
+
+set -euo pipefail
+
+# Collect staged JS/TS files (Added, Copied, Modified, Renamed).
+mapfile -t staged < <(git diff --cached --name-only --diff-filter=ACMR \
+    -- '*.js' '*.jsx' '*.ts' '*.tsx' '*.cjs' '*.mjs')
+
+if [ "${#staged[@]}" -eq 0 ]; then
+    exit 0
+fi
+
+echo "[pre-commit] Running ESLint on ${#staged[@]} staged file(s)..."
+
+if command -v bun >/dev/null 2>&1; then
+    bun x eslint --no-warn-ignored "${staged[@]}"
+elif command -v npx >/dev/null 2>&1; then
+    npx --no-install eslint --no-warn-ignored "${staged[@]}"
+else
+    echo "[pre-commit] ERROR: neither 'bun' nor 'npx' found in PATH." >&2
+    echo "[pre-commit] Install Bun or Node.js and run 'bun install' (or 'npm install')." >&2
+    exit 1
+fi
