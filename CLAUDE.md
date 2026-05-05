@@ -293,6 +293,6 @@ Wayfinder generates TypeScript functions for Laravel routes. Import from `@/acti
 </laravel-boost-guidelines>
 
 <!-- SPECKIT START -->
-Active feature plan: [specs/001-project-lifecycle-timeline/plan.md](specs/001-project-lifecycle-timeline/plan.md)
+Active feature plan: [specs/002-i18n-spanish-baseline/plan.md](specs/002-i18n-spanish-baseline/plan.md)
 Read the plan for technical context, project structure, and constitutional compliance for the in-flight feature.
 <!-- SPECKIT END -->
