@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
+import { type ProjectRole } from '@/components/ui/proyectos/ProjectRoles'
 import CoinIcon from '@/components/vector-graphics/CoinIcon'
 import { formatCount } from '@/lib/utils'
-import { type ProjectRole } from '@/components/ui/proyectos/ProjectRoles'
 
 interface CrowdfundingProgressProps {
     coins: number

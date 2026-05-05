@@ -99,7 +99,10 @@ export default function ProyectoShow({ project, post, isOwner, currentUserApplic
     }
 
     useEffect(() => {
-loadComments()
+        loadComments().catch(() => {
+            setCommentsLoading(false)
+            setCommentsList([])
+        })
     }, [])
 
     return (
