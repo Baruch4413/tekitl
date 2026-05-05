@@ -99,7 +99,10 @@ export default function ProyectoShow({ project, post, isOwner, currentUserApplic
     }
 
     useEffect(() => {
-loadComments()
+        loadComments().catch(() => {
+            setCommentsLoading(false)
+            setCommentsList([])
+        })
     }, [])
 
     return (
@@ -140,20 +143,19 @@ loadComments()
                         stageLabel={project.stageLabel}
                     />
 
-                    {/* Stage transition actions (owner only) */}
-                    {isOwner && project.allowedTransitions.length > 0 && (
-                        <ProjectStageActions
-                            projectId={project.id}
-                            allowedTransitions={project.allowedTransitions}
-                        />
-                    )}
-
                     {/* Image gallery */}
                     <ImageGallery images={project.images} isOwner={isOwner} projectId={project.id} />
 
-                    {/* Progress */}
+                    {/* Progress (with stage transition actions for owner) */}
                     <div className="mt-6">
-                        <CrowdfundingProgress coins={post.coins} roles={project.roles} />
+                        <CrowdfundingProgress coins={post.coins} roles={project.roles}>
+                            {isOwner && project.allowedTransitions.length > 0 && (
+                                <ProjectStageActions
+                                    projectId={project.id}
+                                    allowedTransitions={project.allowedTransitions}
+                                />
+                            )}
+                        </CrowdfundingProgress>
                     </div>
 
                     {/* Roles */}

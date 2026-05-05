@@ -9,6 +9,7 @@
         "format": "prettier --write resources/",
         "format:check": "prettier --check resources/",
         "lint": "eslint . --fix",
+        "prepare": "git config --local core.hooksPath .githooks || echo \"[prepare] WARNING: could not set core.hooksPath=.githooks; activate it manually with 'git config --local core.hooksPath .githooks'.\"",
         "test:js": "vitest run",
         "types": "tsc --noEmit"
     },

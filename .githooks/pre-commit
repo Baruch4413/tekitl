@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Tekitl pre-commit hook
+# Blocks commits whose staged JS/TS changes fail ESLint. Honors Constitution
+# (Principle VI Code Hygiene + Development Workflow lint gate).
+#
+# Activated automatically by the `prepare` npm script which sets
+# `git config core.hooksPath .githooks` after dependency install.
+
+set -euo pipefail
+
+# Collect staged JS/TS files (Added, Copied, Modified, Renamed).
+mapfile -t staged < <(git diff --cached --name-only --diff-filter=ACMR \
+    -- '*.js' '*.jsx' '*.ts' '*.tsx' '*.cjs' '*.mjs')
+
+if [ "${#staged[@]}" -eq 0 ]; then
+    exit 0
+fi
+
+# Reject partially staged JS/TS files: ESLint reads the working tree, so
+# linting partially staged content would produce a false pass or fail and
+# undermine the staged-content gate. Force the developer to stage the full
+# file (or stash unstaged hunks) so the lint result matches what is committed.
+if ! git diff --quiet -- "${staged[@]}"; then
+    echo "[pre-commit] ERROR: partially staged JS/TS files detected." >&2
+    echo "[pre-commit] Stage full files (or stash unstaged hunks) before commit." >&2
+    exit 1
+fi
+
+echo "[pre-commit] Running ESLint on ${#staged[@]} staged file(s)..."
+
+# `--` terminates option parsing so a filename starting with `-` cannot be
+# misread as an ESLint flag.
+if command -v bun >/dev/null 2>&1; then
+    bun x eslint --no-warn-ignored -- "${staged[@]}"
+elif command -v npx >/dev/null 2>&1; then
+    npx --no-install eslint --no-warn-ignored -- "${staged[@]}"
+else
+    echo "[pre-commit] ERROR: neither 'bun' nor 'npx' found in PATH." >&2
+    echo "[pre-commit] Install Bun or Node.js and run 'bun install' (or 'npm install')." >&2
+    exit 1
+fi
