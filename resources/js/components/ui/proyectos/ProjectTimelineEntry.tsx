@@ -10,6 +10,7 @@ import {
     UserMinusIcon,
     UserPlusIcon,
 } from '@heroicons/react/24/outline'
+import { t } from '@/lib/i18n'
 
 export type TimelineEventType =
     | 'role_created'
@@ -120,13 +121,13 @@ function describe(entry: TimelineEntry): React.ReactNode {
         case 'milestone':
             return (
                 <span>
-                    <strong>Hito:</strong> {asString(data.title)}
+                    <strong>{t('projects.timeline_entry.milestone')}</strong> {asString(data.title)}
                 </span>
             )
         case 'status_update':
             return (
                 <span>
-                    <strong>Actualización:</strong> {asString(data.body)}
+                    <strong>{t('projects.timeline_entry.status_update')}</strong> {asString(data.body)}
                 </span>
             )
         case 'photo_uploaded':
@@ -142,7 +143,7 @@ function describe(entry: TimelineEntry): React.ReactNode {
             const to = stageLabels[asString(data.to)] ?? asString(data.to)
             return (
                 <span>
-                    {actorName} cambió la etapa de <strong>{from}</strong> a <strong>{to}</strong>.
+                    {actorName} cambió la etapa de <strong>{from}</strong> {t('projects.timeline_entry.stage_transition_separator')} <strong>{to}</strong>.
                 </span>
             )
         }

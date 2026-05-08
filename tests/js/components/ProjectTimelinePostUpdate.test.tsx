@@ -41,15 +41,28 @@ vi.mock('@inertiajs/react', () => ({
         }
         return statusStub
     }),
+    usePage: () => ({
+        props: {
+            locale: 'es',
+            translations: {
+                projects: {
+                    timeline_post_update: {
+                        milestone_placeholder: '¿Qué hito alcanzaron?',
+                        status_placeholder: 'Compartí una actualización con la comunidad…',
+                    },
+                },
+            },
+        },
+    }),
 }))
 
 vi.mock('@/actions/App/Http/Controllers/ProjectTimelineController', () => ({
     storeMilestone: (id: number) => ({
-        url: `/proyectos/${id}/timeline/milestones`,
+        url: `/projects/${id}/timeline/milestones`,
         method: 'post',
     }),
     storeStatusUpdate: (id: number) => ({
-        url: `/proyectos/${id}/timeline/status-updates`,
+        url: `/projects/${id}/timeline/status-updates`,
         method: 'post',
     }),
 }))
@@ -82,7 +95,7 @@ describe('ProjectTimelinePostUpdate', () => {
         fireEvent.submit(form)
 
         expect(milestoneStub.submit).toHaveBeenCalledWith(
-            expect.objectContaining({ url: '/proyectos/1/timeline/milestones', method: 'post' }),
+            expect.objectContaining({ url: '/projects/1/timeline/milestones', method: 'post' }),
             expect.objectContaining({ preserveScroll: true }),
         )
         expect(milestoneStub.reset).toHaveBeenCalled()
@@ -100,7 +113,7 @@ describe('ProjectTimelinePostUpdate', () => {
         fireEvent.submit(form)
 
         expect(statusStub.submit).toHaveBeenCalledWith(
-            expect.objectContaining({ url: '/proyectos/1/timeline/status-updates', method: 'post' }),
+            expect.objectContaining({ url: '/projects/1/timeline/status-updates', method: 'post' }),
             expect.objectContaining({ preserveScroll: true }),
         )
         expect(statusStub.reset).toHaveBeenCalled()

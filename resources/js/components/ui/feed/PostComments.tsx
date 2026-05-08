@@ -1,6 +1,6 @@
-import CommentList from '@/components/ui/feed/CommentList'
 import CommentForm from '@/components/ui/feed/CommentForm'
 import type { Comment } from '@/components/ui/feed/CommentItem'
+import CommentList from '@/components/ui/feed/CommentList'
 
 export type { Comment }
 

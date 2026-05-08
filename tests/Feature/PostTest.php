@@ -14,7 +14,7 @@ test('welcome page renders with posts prop', function () {
             ->component('welcome')
             ->has('posts.data', 3)
             ->has('posts.data.0', fn ($post) => $post
-                ->hasAll(['id', 'user', 'content', 'date', 'dateTime', 'likes', 'isLiked', 'isPoweredByCurrentUser', 'comments', 'coins', 'hasProject', 'isOwner'])
+                ->hasAll(['id', 'user', 'content', 'date', 'dateTime', 'likes', 'isLiked', 'isEndorsedByCurrentUser', 'comments', 'coins', 'hasProject', 'isOwner'])
             )
         );
 });
@@ -77,32 +77,32 @@ test('comment body is required', function () {
         ->assertInvalid(['body']);
 });
 
-test('authenticated users can potenciar a post', function () {
+test('authenticated users can endorse a post', function () {
     $user = User::factory()->create();
     $post = Post::factory()->create(['coins' => 0]);
 
     $this->actingAs($user)
-        ->post(route('posts.potenciar', $post))
+        ->post(route('posts.endorse', $post))
         ->assertRedirect();
 
     expect($post->fresh()->coins)->toBe(10);
 });
 
-test('potenciar increments coins by 10 each time', function () {
+test('endorse increments coins by 10 each time', function () {
     $user = User::factory()->create();
     $post = Post::factory()->create(['coins' => 50]);
 
     $this->actingAs($user)
-        ->post(route('posts.potenciar', $post))
+        ->post(route('posts.endorse', $post))
         ->assertRedirect();
 
     expect($post->fresh()->coins)->toBe(60);
 });
 
-test('guests cannot potenciar a post', function () {
+test('guests cannot endorse a post', function () {
     $post = Post::factory()->create();
 
-    $this->post(route('posts.potenciar', $post))
+    $this->post(route('posts.endorse', $post))
         ->assertRedirect(route('login'));
 });
 

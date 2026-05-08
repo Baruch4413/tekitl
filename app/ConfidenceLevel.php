@@ -4,7 +4,7 @@ namespace App;
 
 enum ConfidenceLevel: string
 {
-    case Aprendiz = 'aprendiz';
-    case Autosuficiente = 'autosuficiente';
-    case Maestro = 'maestro';
+    case Apprentice = 'aprendiz';
+    case SelfSufficient = 'autosuficiente';
+    case Master = 'maestro';
 }

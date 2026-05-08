@@ -54,7 +54,7 @@ class ProjectController extends Controller
 
         if ($userId) {
             $post->loadExists([
-                'reactions as is_powered_by_current_user' => fn ($q) => $q->where('user_id', $userId)->where('type', ReactionType::Potenciar),
+                'reactions as is_endorsed_by_current_user' => fn ($q) => $q->where('user_id', $userId)->where('type', ReactionType::Endorse),
             ]);
         }
 
@@ -130,7 +130,7 @@ class ProjectController extends Controller
                 'date' => $post->created_at->diffForHumans(),
                 'dateTime' => $post->created_at->toIso8601String(),
                 'coins' => $post->coins,
-                'isPoweredByCurrentUser' => (bool) ($post->is_powered_by_current_user ?? false),
+                'isEndorsedByCurrentUser' => (bool) ($post->is_endorsed_by_current_user ?? false),
             ],
             'isOwner' => $isOwner,
             'currentUserApplication' => $currentUserApplication ? [

@@ -1,0 +1,184 @@
+[
+  {
+    "path": "resources/js/components/examples/bento.tsx",
+    "line": 19,
+    "column": 90,
+    "surface": "jsx-child",
+    "literal": "Releases"
+  },
+  {
+    "path": "resources/js/components/examples/bento.tsx",
+    "line": 20,
+    "column": 102,
+    "surface": "jsx-child",
+    "literal": "Push to deploy"
+  },
+  {
+    "path": "resources/js/components/examples/bento.tsx",
+    "line": 41,
+    "column": 90,
+    "surface": "jsx-child",
+    "literal": "Integrations"
+  },
+  {
+    "path": "resources/js/components/examples/bento.tsx",
+    "line": 64,
+    "column": 90,
+    "surface": "jsx-child",
+    "literal": "Security"
+  },
+  {
+    "path": "resources/js/components/examples/bento.tsx",
+    "line": 87,
+    "column": 90,
+    "surface": "jsx-child",
+    "literal": "Performance"
+  },
+  {
+    "path": "resources/js/components/examples/ComboBox.tsx",
+    "line": 32,
+    "column": 84,
+    "surface": "jsx-child",
+    "literal": "Assigned to"
+  },
+  {
+    "path": "resources/js/components/examples/profile-heading.tsx",
+    "line": 45,
+    "column": 23,
+    "surface": "jsx-child",
+    "literal": "Message"
+  },
+  {
+    "path": "resources/js/components/examples/profile-heading.tsx",
+    "line": 52,
+    "column": 23,
+    "surface": "jsx-child",
+    "literal": "Call"
+  },
+  {
+    "path": "resources/js/components/nav-main.tsx",
+    "line": 17,
+    "column": 32,
+    "surface": "jsx-child",
+    "literal": "Platform"
+  },
+  {
+    "path": "resources/js/components/ui/breadcrumb.tsx",
+    "line": 8,
+    "column": 15,
+    "surface": "jsx-attr:aria-label",
+    "literal": "breadcrumb"
+  },
+  {
+    "path": "resources/js/components/ui/breadcrumb.tsx",
+    "line": 96,
+    "column": 33,
+    "surface": "jsx-child",
+    "literal": "More"
+  },
+  {
+    "path": "resources/js/components/ui/dialog.tsx",
+    "line": 136,
+    "column": 47,
+    "surface": "jsx-child",
+    "literal": "Close"
+  },
+  {
+    "path": "resources/js/components/ui/MobileSidebar.tsx",
+    "line": 54,
+    "column": 59,
+    "surface": "jsx-child",
+    "literal": "Cerrar menú"
+  },
+  {
+    "path": "resources/js/components/ui/sheet.tsx",
+    "line": 145,
+    "column": 47,
+    "surface": "jsx-child",
+    "literal": "Close"
+  },
+  {
+    "path": "resources/js/components/ui/sidebar.tsx",
+    "line": 186,
+    "column": 23,
+    "surface": "jsx-child",
+    "literal": "Sidebar"
+  },
+  {
+    "path": "resources/js/components/ui/sidebar.tsx",
+    "line": 187,
+    "column": 29,
+    "surface": "jsx-child",
+    "literal": "Displays the mobile sidebar."
+  },
+  {
+    "path": "resources/js/components/ui/sidebar.tsx",
+    "line": 273,
+    "column": 33,
+    "surface": "jsx-child",
+    "literal": "Toggle Sidebar"
+  },
+  {
+    "path": "resources/js/components/ui/sidebar.tsx",
+    "line": 285,
+    "column": 7,
+    "surface": "jsx-attr:aria-label",
+    "literal": "Toggle Sidebar"
+  },
+  {
+    "path": "resources/js/components/ui/sidebar.tsx",
+    "line": 288,
+    "column": 7,
+    "surface": "jsx-attr:title",
+    "literal": "Toggle Sidebar"
+  },
+  {
+    "path": "resources/js/components/ui/spinner.tsx",
+    "line": 9,
+    "column": 7,
+    "surface": "jsx-attr:aria-label",
+    "literal": "Loading"
+  },
+  {
+    "path": "resources/js/layouts/constrained-three-column.tsx",
+    "line": 18,
+    "column": 15,
+    "surface": "jsx-attr:alt",
+    "literal": "Your Company"
+  },
+  {
+    "path": "resources/js/layouts/constrained-three-column.tsx",
+    "line": 24,
+    "column": 43,
+    "surface": "jsx-child",
+    "literal": "View notifications"
+  },
+  {
+    "path": "resources/js/layouts/constrained-three-column.tsx",
+    "line": 28,
+    "column": 43,
+    "surface": "jsx-child",
+    "literal": "Your profile"
+  },
+  {
+    "path": "resources/js/layouts/settings/layout.tsx",
+    "line": 48,
+    "column": 17,
+    "surface": "jsx-attr:title",
+    "literal": "Settings"
+  },
+  {
+    "path": "resources/js/layouts/settings/layout.tsx",
+    "line": 49,
+    "column": 17,
+    "surface": "jsx-attr:description",
+    "literal": "Manage your profile and account settings"
+  },
+  {
+    "path": "resources/js/layouts/settings/layout.tsx",
+    "line": 56,
+    "column": 25,
+    "surface": "jsx-attr:aria-label",
+    "literal": "Settings"
+  }
+]

@@ -1,5 +1,6 @@
 import { Form, usePage } from '@inertiajs/react'
 import { Button } from '@/components/ui/button'
+import { t } from '@/lib/i18n'
 import type { Auth } from '@/types/auth'
 
 interface CommentFormProps {
@@ -18,9 +19,9 @@ export default function CommentForm({ storeUrl, onSuccess }: CommentFormProps) {
                     className="h-auto p-0"
                     onClick={() => window.dispatchEvent(new CustomEvent('login-required'))}
                 >
-                    Inicia sesión
+                    {t('projects.comment_form.login_cta')}
                 </Button>{' '}
-                para comentar.
+                {t('projects.comment_form.login_suffix')}
             </p>
         )
     }
@@ -55,7 +56,7 @@ export default function CommentForm({ storeUrl, onSuccess }: CommentFormProps) {
                                 <input
                                     type="text"
                                     name="body"
-                                    placeholder="Escribe un comentario..."
+                                    placeholder={t('projects.comment_form.body_placeholder')}
                                     className="w-full bg-transparent text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none dark:text-white dark:placeholder:text-gray-500"
                                 />
                             </div>
@@ -65,7 +66,7 @@ export default function CommentForm({ storeUrl, onSuccess }: CommentFormProps) {
                                 size="sm"
                                 className="shrink-0"
                             >
-                                Publicar
+                                {t('projects.comment_form.publish')}
                             </Button>
                         </div>
                         {errors.body && (

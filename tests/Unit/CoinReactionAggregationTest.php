@@ -29,7 +29,7 @@ test('first potenciar reaction inserts a coins_received row', function () {
     Reaction::query()->create([
         'post_id' => $post->id,
         'user_id' => $reactor->id,
-        'type' => ReactionType::Potenciar,
+        'type' => ReactionType::Endorse,
     ]);
 
     $events = ProjectTimelineEvent::query()
@@ -51,7 +51,7 @@ test('second potenciar within 1 hour increments existing rows coins', function (
     Reaction::query()->create([
         'post_id' => $post->id,
         'user_id' => $reactorA->id,
-        'type' => ReactionType::Potenciar,
+        'type' => ReactionType::Endorse,
     ]);
 
     CarbonImmutable::setTestNow(CarbonImmutable::parse('2026-05-04 12:30:00'));
@@ -59,7 +59,7 @@ test('second potenciar within 1 hour increments existing rows coins', function (
     Reaction::query()->create([
         'post_id' => $post->id,
         'user_id' => $reactorB->id,
-        'type' => ReactionType::Potenciar,
+        'type' => ReactionType::Endorse,
     ]);
 
     $events = ProjectTimelineEvent::query()
@@ -81,7 +81,7 @@ test('reaction after 1 hour window opens a new coins_received row', function () 
     Reaction::query()->create([
         'post_id' => $post->id,
         'user_id' => $reactorA->id,
-        'type' => ReactionType::Potenciar,
+        'type' => ReactionType::Endorse,
     ]);
 
     CarbonImmutable::setTestNow(CarbonImmutable::parse('2026-05-04 13:30:00'));
@@ -89,7 +89,7 @@ test('reaction after 1 hour window opens a new coins_received row', function () 
     Reaction::query()->create([
         'post_id' => $post->id,
         'user_id' => $reactorB->id,
-        'type' => ReactionType::Potenciar,
+        'type' => ReactionType::Endorse,
     ]);
 
     $events = ProjectTimelineEvent::query()
@@ -127,7 +127,7 @@ test('potenciar on non-project post does not create timeline event', function ()
     Reaction::query()->create([
         'post_id' => $post->id,
         'user_id' => $reactor->id,
-        'type' => ReactionType::Potenciar,
+        'type' => ReactionType::Endorse,
     ]);
 
     expect(ProjectTimelineEvent::query()->count())->toBe(0);

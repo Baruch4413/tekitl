@@ -1,0 +1,65 @@
+{
+  "include": [
+    "app/**/*.php",
+    "resources/views/**/*.blade.php",
+    "resources/js/**/*.ts",
+    "resources/js/**/*.tsx"
+  ],
+  "exclude": [
+    "**/node_modules/**",
+    "**/vendor/**",
+    "**/storage/**",
+    "**/bootstrap/cache/**",
+    "**/public/build/**",
+    "tests/**",
+    "tools/i18n/fixtures/**",
+    "resources/js/wayfinder/**",
+    "resources/js/lib/i18n.ts",
+    "resources/js/types/**",
+    "resources/js/actions/**",
+    "resources/js/routes/**"
+  ],
+  "userFacingPhpSinks": [
+    "view",
+    "Inertia::render",
+    "inertia",
+    "Mail::send",
+    "Mail::to",
+    "Notification::send",
+    "flash",
+    "session()->flash",
+    "back()->with",
+    "redirect()->with"
+  ],
+  "userFacingPhpMethods": [
+    "subject"
+  ],
+  "userFacingJsxAttrs": [
+    "aria-label",
+    "aria-description",
+    "alt",
+    "title",
+    "placeholder",
+    "label",
+    "description"
+  ],
+  "userFacingJsHelpers": [
+    "toast",
+    "toast.success",
+    "toast.error",
+    "toast.warning",
+    "showDialog",
+    "confirm"
+  ],
+  "translationHelpers": [
+    "t",
+    "tChoice",
+    "__",
+    "trans",
+    "trans_choice",
+    "@lang"
+  ],
+  "allowList": [
+    { "path": "*", "literal": "Tekitl", "note": "Brand name" }
+  ]
+}

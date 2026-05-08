@@ -21,7 +21,7 @@ it('clears the textarea and refreshes the timeline after posting a status update
         ->fill('password', 'password')
         ->press('Log in');
 
-    visit("/proyectos/{$post->id}")
+    visit("/projects/{$post->id}")
         ->click('Actualización')
         ->fill('body', 'shipping the timeline composer')
         ->press('Publicar')

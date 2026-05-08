@@ -28,11 +28,6 @@ enum ProjectStage: string
 
     public function label(): string
     {
-        return match ($this) {
-            self::Planning => 'Planificación',
-            self::InExecution => 'En ejecución',
-            self::Completed => 'Completado',
-            self::Aborted => 'Abortado',
-        };
+        return __('projects.stage.label.'.$this->value);
     }
 }

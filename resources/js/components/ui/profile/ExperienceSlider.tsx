@@ -1,11 +1,12 @@
+import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
 const stops = [
-    { value: 0, label: 'Menos de 1 año' },
-    { value: 1, label: 'Más de un año' },
-    { value: 3, label: 'Más de 3 años' },
-    { value: 5, label: 'Más de 5 años' },
-    { value: 10, label: 'Más de 10 años' },
+    { value: 0, labelKey: 'less_than_one_year' },
+    { value: 1, labelKey: 'more_than_one_year' },
+    { value: 3, labelKey: 'more_than_three_years' },
+    { value: 5, labelKey: 'more_than_five_years' },
+    { value: 10, labelKey: 'more_than_ten_years' },
 ]
 
 interface ExperienceSliderProps {
@@ -38,12 +39,12 @@ export default function ExperienceSlider({ value, onChange }: ExperienceSliderPr
                                 : 'border-gray-300 bg-white dark:border-white/20 dark:bg-gray-900',
                         )}
                     >
-                        <span className="sr-only">{stop.label}</span>
+                        <span className="sr-only">{t(`profile.experience_slider.${stop.labelKey}`)}</span>
                     </button>
                 ))}
             </div>
             <p className="text-center text-sm font-medium text-gray-700 dark:text-gray-300">
-                {stops[activeIndex]?.label ?? stops[0].label}
+                {t(`profile.experience_slider.${(stops[activeIndex] ?? stops[0]).labelKey}`)}
             </p>
         </div>
     )

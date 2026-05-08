@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useCallback } from 'react'
+import { t } from '@/lib/i18n'
 
 interface PlaceResult {
     name: string
@@ -82,8 +83,9 @@ export default function GooglePlacesAutocomplete({
     value,
     onChange,
     onPlaceSelect,
-    placeholder = 'Buscar ubicación...',
+    placeholder,
 }: GooglePlacesAutocompleteProps) {
+    const resolvedPlaceholder = placeholder ?? t('profile.google_places.search_placeholder')
     const inputRef = useRef<HTMLInputElement>(null)
     const autocompleteRef = useRef<ReturnType<typeof window.google.maps.places.Autocomplete> | null>(null)
 
@@ -131,7 +133,7 @@ export default function GooglePlacesAutocomplete({
                 type="text"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                placeholder={placeholder}
+                placeholder={resolvedPlaceholder}
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
             />
         )

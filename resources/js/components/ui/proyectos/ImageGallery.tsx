@@ -1,10 +1,11 @@
-import { useRef, useState, type DragEvent } from 'react'
-import { router } from '@inertiajs/react'
 import { CameraIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { router } from '@inertiajs/react'
+import { useRef, useState, type DragEvent } from 'react'
 import { toast } from 'sonner'
+import { uploadImage, deleteImage, updateImage } from '@/actions/App/Http/Controllers/ProjectController'
 import { Button } from '@/components/ui/button'
 import InlineSaveButton from '@/components/ui/InlineSaveButton'
-import { uploadImage, deleteImage, updateImage } from '@/actions/App/Http/Controllers/ProjectController'
+import { t } from '@/lib/i18n'
 
 interface ProjectImage {
     id: number
@@ -188,7 +189,7 @@ function BentoImageCard({
                                     if (e.key === 'Escape') { setTitle(image.title ?? ''); setEditingTitle(false) }
                                 }}
                                 autoFocus
-                                placeholder="Título de la imagen"
+                                placeholder={t('projects.gallery.image_title_placeholder')}
                                 className="h-9 w-full rounded-xl border border-white/20 bg-white/10 px-3 text-lg font-medium text-white placeholder-white/50 focus:border-indigo-400 focus:outline-none"
                             />
                             <InlineSaveButton onClick={() => saveField('title')} />
@@ -225,7 +226,7 @@ function BentoImageCard({
                                 }}
                                 autoFocus
                                 rows={3}
-                                placeholder="Descripción de la imagen"
+                                placeholder={t('projects.gallery.image_description_placeholder')}
                                 className="w-full resize-none rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-sm text-gray-200 placeholder-white/50 focus:border-indigo-400 focus:outline-none"
                             />
                             <div className="flex justify-end">

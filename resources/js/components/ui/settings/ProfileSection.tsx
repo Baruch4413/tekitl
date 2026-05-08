@@ -1,18 +1,19 @@
 import { usePage } from '@inertiajs/react'
-import type { Auth } from '@/types/auth'
 import AvatarUpload from '@/components/ui/settings/AvatarUpload'
-import SettingsSection from '@/components/ui/settings/SettingsSection'
 import SettingsRow from '@/components/ui/settings/SettingsRow'
+import SettingsSection from '@/components/ui/settings/SettingsSection'
+import { t } from '@/lib/i18n'
+import type { Auth } from '@/types/auth'
 
-export default function PerfilSection() {
+export default function ProfileSection() {
     const { auth } = usePage<{ auth: Auth }>().props
     const user = auth.user
 
     return (
         <div className="space-y-10">
             <SettingsSection
-                title="Foto de perfil"
-                description="Esta imagen será visible públicamente en tu perfil."
+                title={t('settings.perfil.photo.title')}
+                description={t('settings.perfil.photo.description')}
             >
                 <div className="mt-6">
                     <AvatarUpload imageUrl={user.avatar_url ?? null} name={user.name} />
@@ -20,28 +21,28 @@ export default function PerfilSection() {
             </SettingsSection>
 
             <SettingsSection
-                title="Información personal"
-                description="Esta información será visible públicamente en tu perfil."
+                title={t('settings.perfil.personal.title')}
+                description={t('settings.perfil.personal.description')}
             >
                 <dl className="mt-6 divide-y divide-gray-100 border-t border-gray-200 text-sm/6 dark:divide-white/5 dark:border-white/5">
                     <SettingsRow
-                        label="Nombre completo"
+                        label={t('settings.perfil.fields.name')}
                         value={user.name}
                         onEdit={() => {}}
                     />
                     <SettingsRow
-                        label="Correo electrónico"
+                        label={t('settings.perfil.fields.email')}
                         value={user.email}
                         onEdit={() => {}}
                     />
                     <SettingsRow
-                        label="Nombre de usuario"
+                        label={t('settings.perfil.fields.username')}
                         value={`@${user.name.toLowerCase().replace(/\s+/g, '')}`}
                         onEdit={() => {}}
                     />
                     <SettingsRow
-                        label="Descripción"
-                        value="Cuéntanos sobre ti..."
+                        label={t('settings.perfil.fields.description')}
+                        value={t('settings.perfil.fields.description_placeholder')}
                         onEdit={() => {}}
                     />
                 </dl>

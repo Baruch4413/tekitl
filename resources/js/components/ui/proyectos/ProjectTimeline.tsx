@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
 import { router } from '@inertiajs/react'
-import { Button } from '@/components/ui/button'
+import { useEffect, useState } from 'react'
 import { index as fetchTimeline } from '@/actions/App/Http/Controllers/ProjectTimelineController'
+import { Button } from '@/components/ui/button'
 import ProjectTimelineEntry, { type TimelineEntry } from './ProjectTimelineEntry'
 import ProjectTimelinePostUpdate from './ProjectTimelinePostUpdate'
 

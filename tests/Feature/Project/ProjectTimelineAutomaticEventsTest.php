@@ -167,7 +167,7 @@ test('first potenciar reaction creates coins_received row', function () {
     ]);
 
     $this->actingAs($reactor)
-        ->post(route('posts.potenciar', $post))
+        ->post(route('posts.endorse', $post))
         ->assertRedirect();
 
     $event = ProjectTimelineEvent::query()

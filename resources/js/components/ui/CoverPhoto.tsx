@@ -2,6 +2,7 @@ import { router } from '@inertiajs/react'
 import { useCallback, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { uploadCoverPhoto, updateCoverPhotoPosition } from '@/actions/App/Http/Controllers/UserProfileController'
+import { t } from '@/lib/i18n'
 
 interface CoverPhotoProps {
     imageUrl: string | null
@@ -117,7 +118,7 @@ export default function CoverPhoto({ imageUrl, baseUrl, positionY, isOwner }: Co
                             }}
                             className="rounded-full bg-black/50 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm hover:bg-black/70"
                         >
-                            Reposicionar
+                            {t('layout.cover_photo.reposition')}
                         </button>
                     )}
                     <button
@@ -126,7 +127,7 @@ export default function CoverPhoto({ imageUrl, baseUrl, positionY, isOwner }: Co
                         disabled={uploading}
                         className="rounded-full bg-black/50 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm hover:bg-black/70 disabled:opacity-50"
                     >
-                        {uploading ? 'Subiendo...' : 'Editar portada'}
+                        {uploading ? t('layout.cover_photo.uploading') : t('layout.cover_photo.edit_cover')}
                     </button>
                 </div>
             )}
@@ -139,7 +140,7 @@ export default function CoverPhoto({ imageUrl, baseUrl, positionY, isOwner }: Co
                         disabled={saving}
                         className="rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium text-gray-900 backdrop-blur-sm hover:bg-white disabled:opacity-50"
                     >
-                        Cancelar
+                        {t('layout.cover_photo.cancel')}
                     </button>
                     <button
                         type="button"
@@ -147,14 +148,14 @@ export default function CoverPhoto({ imageUrl, baseUrl, positionY, isOwner }: Co
                         disabled={saving}
                         className="rounded-full bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm hover:bg-indigo-500 disabled:opacity-50"
                     >
-                        {saving ? 'Guardando...' : 'Guardar'}
+                        {saving ? t('layout.cover_photo.saving') : t('layout.cover_photo.save')}
                     </button>
                 </div>
             )}
 
             {isOwner && repositioning && (
                 <div className="absolute top-4 left-1/2 z-20 -translate-x-1/2 rounded-full bg-black/50 px-3 py-1.5 text-xs text-white backdrop-blur-sm">
-                    Arrastra para reposicionar
+                    {t('layout.cover_photo.drag_hint')}
                 </div>
             )}
 

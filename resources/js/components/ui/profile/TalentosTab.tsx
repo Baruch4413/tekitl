@@ -1,13 +1,14 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
-import { router } from '@inertiajs/react'
 import { PlusIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/20/solid'
+import { router } from '@inertiajs/react'
+import { useState, useRef, useEffect } from 'react'
 import { toast } from 'sonner'
-import SkillsIcon from '@/components/vector-graphics/SkillsIcon'
+import { store, update, destroy } from '@/actions/App/Http/Controllers/UserTalentController'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog'
 import ExperienceSlider from '@/components/ui/profile/ExperienceSlider'
-import { store, update, destroy } from '@/actions/App/Http/Controllers/UserTalentController'
+import SkillsIcon from '@/components/vector-graphics/SkillsIcon'
+import { t } from '@/lib/i18n'
 
 export interface Talent {
     id: number
@@ -158,7 +159,7 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
                     <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-gray-100 dark:bg-white/5">
                         <SkillsIcon className="size-6 text-gray-400" />
                     </div>
-                    <h3 className="mt-4 text-sm font-semibold text-gray-900 dark:text-white">Sin talentos</h3>
+                    <h3 className="mt-4 text-sm font-semibold text-gray-900 dark:text-white">{t('profile.talentos.empty_state')}</h3>
                     <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         {isOwner ? 'Agrega tus talentos para que otros los conozcan.' : 'Este usuario aún no ha agregado talentos.'}
                     </p>
@@ -242,7 +243,7 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
                                         setShowSuggestions(true)
                                     }}
                                     onFocus={() => setShowSuggestions(true)}
-                                    placeholder="Buscar ocupación..."
+                                    placeholder={t('profile.talentos.search_occupation_placeholder')}
                                     className="block w-full rounded-md bg-white px-3 py-2 text-sm text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
                                 />
                                 {showSuggestions && filteredOccupations.length > 0 && (

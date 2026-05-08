@@ -1,18 +1,19 @@
 'use client'
 
-import { useState } from 'react'
-import { router } from '@inertiajs/react'
 import { CheckIcon, XMarkIcon } from '@heroicons/react/20/solid'
+import { router } from '@inertiajs/react'
+import { useState } from 'react'
 import { toast } from 'sonner'
-import BiographyIcon from '@/components/vector-graphics/BiographyIcon'
-import LocationIcon from '@/components/vector-graphics/LocationIcon'
-import BirthDate from '@/components/vector-graphics/BirthDate'
-import ContactPhone from '@/components/vector-graphics/ContactPhone'
-import ContactEmail from '@/components/vector-graphics/ContactEmail'
-import UserLanguages from '@/components/vector-graphics/UserLanguages'
+import { update } from '@/actions/App/Http/Controllers/UserProfileInfoController'
 import GooglePlacesAutocomplete from '@/components/ui/profile/GooglePlacesAutocomplete'
 import LanguageTagInput from '@/components/ui/profile/LanguageTagInput'
-import { update } from '@/actions/App/Http/Controllers/UserProfileInfoController'
+import BiographyIcon from '@/components/vector-graphics/BiographyIcon'
+import BirthDate from '@/components/vector-graphics/BirthDate'
+import ContactEmail from '@/components/vector-graphics/ContactEmail'
+import ContactPhone from '@/components/vector-graphics/ContactPhone'
+import LocationIcon from '@/components/vector-graphics/LocationIcon'
+import UserLanguages from '@/components/vector-graphics/UserLanguages'
+import { t } from '@/lib/i18n'
 
 interface ProfileInfo {
     bio: string | null
@@ -34,11 +35,10 @@ interface InformacionTabProps {
 
 type EditingField = 'bio' | 'location' | 'birthdate' | 'publicPhone' | 'contactEmail' | 'languages' | null
 
-const placeholder = 'No hay información para mostrar'
-
 const inputClass = 'block w-full rounded-md bg-white px-3 py-2 text-sm text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500'
 
 export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey }: InformacionTabProps) {
+    const placeholder = t('profile.informacion.empty_placeholder')
     const [editingField, setEditingField] = useState<EditingField>(null)
     const [processing, setProcessing] = useState(false)
     const [errors, setErrors] = useState<Record<string, string>>({})
@@ -130,7 +130,7 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                 onClick={() => setEditingField(field)}
                 className="rounded-full bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-700 ring-1 ring-inset ring-gray-200 hover:bg-gray-200 dark:bg-white/5 dark:text-white dark:ring-white/[0.06] dark:hover:bg-white/10"
             >
-                Editar
+                {t('profile.informacion.edit')}
             </button>
         )
     )
@@ -144,7 +144,7 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                 className="inline-flex items-center gap-x-1 rounded-full bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-indigo-500 disabled:opacity-50"
             >
                 <CheckIcon className="size-3.5" />
-                Guardar
+                {t('profile.informacion.save')}
             </button>
             <button
                 type="button"
@@ -152,7 +152,7 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                 className="inline-flex items-center gap-x-1 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-700 ring-1 ring-inset ring-gray-200 hover:bg-gray-200 dark:bg-white/5 dark:text-white dark:ring-white/[0.06] dark:hover:bg-white/10"
             >
                 <XMarkIcon className="size-3.5" />
-                Cancelar
+                {t('profile.informacion.cancel')}
             </button>
         </div>
     )
@@ -169,14 +169,14 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                     <div className="px-6 py-5">
                         {editingField === 'bio' ? (
                             <div>
-                                <dt className="text-sm font-semibold text-gray-900 dark:text-white">Bio</dt>
+                                <dt className="text-sm font-semibold text-gray-900 dark:text-white">{t('profile.informacion.bio')}</dt>
                                 <div className="mt-2">
                                     <textarea
                                         rows={3}
                                         maxLength={500}
                                         value={bio}
                                         onChange={(e) => setBio(e.target.value)}
-                                        placeholder="Cuéntanos sobre ti..."
+                                        placeholder={t('profile.informacion.bio_placeholder')}
                                         className={inputClass}
                                         autoFocus
                                     />
@@ -192,7 +192,7 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                                 <div className="min-w-0 flex flex-row">
                                     <BiographyIcon/>
                                     <div className="flex flex-col ml-2">
-                                        <dt className="text-sm font-semibold text-gray-900 dark:text-white">Bio</dt>
+                                        <dt className="text-sm font-semibold text-gray-900 dark:text-white">{t('profile.informacion.bio')}</dt>
                                         <dd className={`mt-1 whitespace-pre-line text-sm ${profileInfo.bio ? 'text-gray-600 dark:text-gray-400' : 'italic text-gray-400 dark:text-gray-500'}`}>
                                             {profileInfo.bio || placeholder}
                                         </dd>
@@ -207,7 +207,7 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                     <div className="px-6 py-5">
                         {editingField === 'location' ? (
                             <div>
-                                <dt className="text-sm font-semibold text-gray-900 dark:text-white">Ubicación</dt>
+                                <dt className="text-sm font-semibold text-gray-900 dark:text-white">{t('profile.informacion.location')}</dt>
                                 <div className="mt-2">
                                     <GooglePlacesAutocomplete
                                         apiKey={googleMapsApiKey}
@@ -229,7 +229,7 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                                 <div className="min-w-0 flex flex-row">
                                     <LocationIcon/>
                                     <div className="flex flex-col ml-2">
-                                        <dt className="text-sm font-semibold text-gray-900 dark:text-white">Ubicación</dt>
+                                        <dt className="text-sm font-semibold text-gray-900 dark:text-white">{t('profile.informacion.location')}</dt>
                                         <dd className="mt-1">
                                             {displayValue(profileInfo.locationName, placeholder)}
                                         </dd>
@@ -244,7 +244,7 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                     <div className="px-6 py-5">
                         {editingField === 'birthdate' ? (
                             <div>
-                                <dt className="text-sm font-semibold text-gray-900 dark:text-white">Fecha de nacimiento</dt>
+                                <dt className="text-sm font-semibold text-gray-900 dark:text-white">{t('profile.informacion.birthdate')}</dt>
                                 <div className="mt-2">
                                     <input
                                         type="date"
@@ -262,7 +262,7 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                                 <div className="min-w-0 flex flex-row">
                                     <BirthDate/>
                                     <div className="flex flex-col ml-2">
-                                        <dt className="text-sm font-semibold text-gray-900 dark:text-white">Fecha de nacimiento</dt>
+                                        <dt className="text-sm font-semibold text-gray-900 dark:text-white">{t('profile.informacion.birthdate')}</dt>
                                         <dd className="mt-1">
                                             {displayValue(profileInfo.birthdate, placeholder)}
                                         </dd>
@@ -277,13 +277,13 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                     <div className="px-6 py-5">
                         {editingField === 'publicPhone' ? (
                             <div>
-                                <dt className="text-sm font-semibold text-gray-900 dark:text-white">Teléfono público</dt>
+                                <dt className="text-sm font-semibold text-gray-900 dark:text-white">{t('profile.informacion.public_phone')}</dt>
                                 <div className="mt-2">
                                     <input
                                         type="tel"
                                         value={publicPhone}
                                         onChange={(e) => setPublicPhone(e.target.value)}
-                                        placeholder="+52 33 1234 5678"
+                                        placeholder={t('profile.informacion.public_phone_placeholder')}
                                         className={inputClass}
                                         autoFocus
                                     />
@@ -296,7 +296,7 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                                 <div className="min-w-0 flex flex-row">
                                     <ContactPhone/>
                                     <div className="flex flex-col ml-2">
-                                        <dt className="text-sm font-semibold text-gray-900 dark:text-white">Teléfono público</dt>
+                                        <dt className="text-sm font-semibold text-gray-900 dark:text-white">{t('profile.informacion.public_phone')}</dt>
                                         <dd className="mt-1">
                                             {displayValue(profileInfo.publicPhone, placeholder)}
                                         </dd>
@@ -311,13 +311,13 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                     <div className="px-6 py-5">
                         {editingField === 'contactEmail' ? (
                             <div>
-                                <dt className="text-sm font-semibold text-gray-900 dark:text-white">Email de contacto</dt>
+                                <dt className="text-sm font-semibold text-gray-900 dark:text-white">{t('profile.informacion.contact_email')}</dt>
                                 <div className="mt-2">
                                     <input
                                         type="email"
                                         value={contactEmail}
                                         onChange={(e) => setContactEmail(e.target.value)}
-                                        placeholder="contacto@ejemplo.com"
+                                        placeholder={t('profile.informacion.contact_email_placeholder')}
                                         className={inputClass}
                                         autoFocus
                                     />
@@ -330,7 +330,7 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                                 <div className="min-w-0 flex flex-row">
                                     <ContactEmail/>
                                     <div className="flex flex-col ml-2">
-                                        <dt className="text-sm font-semibold text-gray-900 dark:text-white">Email de contacto</dt>
+                                        <dt className="text-sm font-semibold text-gray-900 dark:text-white">{t('profile.informacion.contact_email')}</dt>
                                         <dd className="mt-1">
                                             {displayValue(profileInfo.contactEmail, placeholder)}
                                         </dd>
@@ -345,7 +345,7 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                     <div className="px-6 py-5">
                         {editingField === 'languages' ? (
                             <div>
-                                <dt className="text-sm font-semibold text-gray-900 dark:text-white">Idiomas</dt>
+                                <dt className="text-sm font-semibold text-gray-900 dark:text-white">{t('profile.informacion.languages')}</dt>
                                 <div className="mt-2">
                                     <LanguageTagInput value={languages} onChange={setLanguages} />
                                     {errors.languages && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.languages}</p>}
@@ -357,7 +357,7 @@ export default function InformacionTab({ profileInfo, isOwner, googleMapsApiKey 
                                 <div className="min-w-0 flex flex-row">
                                     <UserLanguages/>
                                     <div className="flex flex-col ml-2">
-                                        <dt className="text-sm font-semibold text-gray-900 dark:text-white">Idiomas</dt>
+                                        <dt className="text-sm font-semibold text-gray-900 dark:text-white">{t('profile.informacion.languages')}</dt>
                                         {profileInfo.languages && profileInfo.languages.length > 0 ? (
                                             <dd className="mt-2 flex flex-wrap gap-1.5">
                                                 {profileInfo.languages.map((lang) => (

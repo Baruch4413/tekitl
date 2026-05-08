@@ -16,7 +16,7 @@ class ReactionObserver
 
     public function created(Reaction $reaction): void
     {
-        if ($reaction->type !== ReactionType::Potenciar) {
+        if ($reaction->type !== ReactionType::Endorse) {
             return;
         }
 

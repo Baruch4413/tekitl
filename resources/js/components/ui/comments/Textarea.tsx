@@ -1,9 +1,5 @@
 'use client'
 
-import { type ChangeEvent, useState } from 'react'
-import { Form, usePage } from '@inertiajs/react'
-import { store } from '@/actions/App/Http/Controllers/PostController'
-import UserAvatar from '@/components/ui/UserAvatar'
 import {
   FaceFrownIcon,
   FaceSmileIcon,
@@ -13,16 +9,21 @@ import {
   PaperClipIcon,
   XMarkIcon,
 } from '@heroicons/react/20/solid'
+import { Form, usePage } from '@inertiajs/react'
 import { ElSelect, ElOptions, ElOption } from '@tailwindplus/elements/react'
+import { type ChangeEvent, useState } from 'react'
+import { store } from '@/actions/App/Http/Controllers/PostController'
+import UserAvatar from '@/components/ui/UserAvatar'
+import { t } from '@/lib/i18n'
 
 const moods = [
-  { name: 'Excited', value: 'excited', icon: FireIcon, iconColor: 'text-white', bgColor: 'bg-red-500' },
-  { name: 'Loved', value: 'loved', icon: HeartIcon, iconColor: 'text-white', bgColor: 'bg-pink-400' },
-  { name: 'Happy', value: 'happy', icon: FaceSmileIcon, iconColor: 'text-white', bgColor: 'bg-green-400' },
-  { name: 'Sad', value: 'sad', icon: FaceFrownIcon, iconColor: 'text-white', bgColor: 'bg-yellow-400' },
-  { name: 'Thumbsy', value: 'thumbsy', icon: HandThumbUpIcon, iconColor: 'text-white', bgColor: 'bg-blue-500' },
+  { nameKey: 'excited', value: 'excited', icon: FireIcon, iconColor: 'text-white', bgColor: 'bg-red-500' },
+  { nameKey: 'loved', value: 'loved', icon: HeartIcon, iconColor: 'text-white', bgColor: 'bg-pink-400' },
+  { nameKey: 'happy', value: 'happy', icon: FaceSmileIcon, iconColor: 'text-white', bgColor: 'bg-green-400' },
+  { nameKey: 'sad', value: 'sad', icon: FaceFrownIcon, iconColor: 'text-white', bgColor: 'bg-yellow-400' },
+  { nameKey: 'thumbsy', value: 'thumbsy', icon: HandThumbUpIcon, iconColor: 'text-white', bgColor: 'bg-blue-500' },
   {
-    name: 'I feel nothing',
+    nameKey: 'none',
     value: '',
     icon: XMarkIcon,
     iconColor: 'text-gray-400 dark:text-gray-500',
@@ -50,13 +51,13 @@ export default function Textarea() {
             <div className="relative">
               <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-white/5 dark:outline-white/10 dark:focus-within:outline-indigo-500">
                 <label htmlFor="body" className="sr-only">
-                  What's on your mind?
+                  {t('projects.comment_textarea.body_placeholder')}
                 </label>
                 <textarea
                   id="body"
                   name="body"
                   rows={3}
-                  placeholder="What's on your mind?"
+                  placeholder={t('projects.comment_textarea.body_placeholder')}
                   className="block w-full resize-none bg-transparent px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 dark:text-white dark:placeholder:text-gray-500"
                   defaultValue={''}
                 />
@@ -81,7 +82,7 @@ export default function Textarea() {
                       className="-m-2.5 flex size-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-white"
                     >
                       <PaperClipIcon aria-hidden="true" className="size-5" />
-                      <span className="sr-only">Attach a file</span>
+                      <span className="sr-only">{t('projects.comment_textarea.a11y.attach_file')}</span>
                     </button>
                   </div>
                   <div className="flex items-center">
@@ -90,7 +91,7 @@ export default function Textarea() {
                       value={selectedValue}
                       onChange={(e: ChangeEvent<HTMLSelectElement>) => setSelectedValue(e.target.value)}
                     >
-                      <label className="sr-only">Your mood</label>
+                      <label className="sr-only">{t('projects.comment_textarea.a11y.your_mood')}</label>
                       <div className="relative">
                         <button
                           type="button"
@@ -100,7 +101,7 @@ export default function Textarea() {
                             {!selected.value ? (
                               <span>
                                 <FaceSmileIcon aria-hidden="true" className="size-5 shrink-0" />
-                                <span className="sr-only">Add your mood</span>
+                                <span className="sr-only">{t('projects.comment_textarea.a11y.add_your_mood')}</span>
                               </span>
                             ) : (
                               <span>
@@ -112,7 +113,7 @@ export default function Textarea() {
                                 >
                                   <selected.icon aria-hidden="true" className="size-5 shrink-0 text-white" />
                                 </span>
-                                <span className="sr-only">{selected.name}</span>
+                                <span className="sr-only">{t(`projects.comment_textarea.moods.${selected.nameKey}`)}</span>
                               </span>
                             )}
                           </span>
@@ -140,7 +141,7 @@ export default function Textarea() {
                                 >
                                   <mood.icon aria-hidden="true" className={classNames(mood.iconColor, 'size-5 shrink-0')} />
                                 </div>
-                                <span className="ml-3 block truncate font-medium">{mood.name}</span>
+                                <span className="ml-3 block truncate font-medium">{t(`projects.comment_textarea.moods.${mood.nameKey}`)}</span>
                               </div>
                             </ElOption>
                           ))}
@@ -155,7 +156,7 @@ export default function Textarea() {
                     disabled={processing}
                     className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
                   >
-                    Post
+                    {t('projects.comment_textarea.submit')}
                   </button>
                 </div>
               </div>

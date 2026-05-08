@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { ElDialog, ElDialogBackdrop, ElDialogPanel } from '@tailwindplus/elements/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { ElDialog, ElDialogBackdrop, ElDialogPanel } from '@tailwindplus/elements/react';
+import { useEffect, useRef } from 'react';
 import WelcomeSidebar from '@/components/ui/WelcomeSidebar';
+import { t } from '@/lib/i18n';
 
 type ShowHideElement = HTMLElement & { show(): void; hide(): void };
 
@@ -51,7 +52,7 @@ export default function MobileSidebar({ open, onClose, currentPage }: MobileSide
                     <ElDialogPanel className="relative mr-16 flex w-full max-w-xs flex-1 transform transition duration-300 ease-in-out data-closed:-translate-x-full">
                         <div className="absolute top-0 left-full flex w-16 justify-center pt-5 transition-opacity duration-300 ease-in-out data-closed:opacity-0">
                             <button type="button" command="close" className="-m-2.5 p-2.5">
-                                <span className="sr-only">Cerrar menú</span>
+                                <span className="sr-only">{t('layout.mobile_sidebar.close_menu')}</span>
                                 <XMarkIcon aria-hidden className="size-6 text-white" />
                             </button>
                         </div>

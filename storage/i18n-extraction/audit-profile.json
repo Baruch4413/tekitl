@@ -1,0 +1,142 @@
+[
+  {
+    "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+    "line": 172,
+    "column": 101,
+    "surface": "jsx-child",
+    "literal": "Bio"
+  },
+  {
+    "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+    "line": 179,
+    "column": 41,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Cuéntanos sobre ti..."
+  },
+  {
+    "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+    "line": 195,
+    "column": 109,
+    "surface": "jsx-child",
+    "literal": "Bio"
+  },
+  {
+    "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+    "line": 210,
+    "column": 101,
+    "surface": "jsx-child",
+    "literal": "Ubicación"
+  },
+  {
+    "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+    "line": 232,
+    "column": 109,
+    "surface": "jsx-child",
+    "literal": "Ubicación"
+  },
+  {
+    "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+    "line": 247,
+    "column": 101,
+    "surface": "jsx-child",
+    "literal": "Fecha de nacimiento"
+  },
+  {
+    "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+    "line": 265,
+    "column": 109,
+    "surface": "jsx-child",
+    "literal": "Fecha de nacimiento"
+  },
+  {
+    "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+    "line": 280,
+    "column": 101,
+    "surface": "jsx-child",
+    "literal": "Teléfono público"
+  },
+  {
+    "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+    "line": 299,
+    "column": 109,
+    "surface": "jsx-child",
+    "literal": "Teléfono público"
+  },
+  {
+    "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+    "line": 314,
+    "column": 101,
+    "surface": "jsx-child",
+    "literal": "Email de contacto"
+  },
+  {
+    "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+    "line": 320,
+    "column": 41,
+    "surface": "jsx-attr:placeholder",
+    "literal": "contacto@ejemplo.com"
+  },
+  {
+    "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+    "line": 333,
+    "column": 109,
+    "surface": "jsx-child",
+    "literal": "Email de contacto"
+  },
+  {
+    "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+    "line": 348,
+    "column": 101,
+    "surface": "jsx-child",
+    "literal": "Idiomas"
+  },
+  {
+    "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+    "line": 360,
+    "column": 109,
+    "surface": "jsx-child",
+    "literal": "Idiomas"
+  },
+  {
+    "path": "resources/js/components/ui/profile/LanguageTagInput.tsx",
+    "line": 86,
+    "column": 25,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Agregar idioma..."
+  },
+  {
+    "path": "resources/js/components/ui/profile/PostsTab.tsx",
+    "line": 70,
+    "column": 98,
+    "surface": "jsx-child",
+    "literal": "Sin publicaciones"
+  },
+  {
+    "path": "resources/js/components/ui/profile/ProfileAvatar.tsx",
+    "line": 74,
+    "column": 92,
+    "surface": "jsx-child",
+    "literal": "Ver"
+  },
+  {
+    "path": "resources/js/components/ui/profile/TalentosTab.tsx",
+    "line": 161,
+    "column": 94,
+    "surface": "jsx-child",
+    "literal": "Sin talentos"
+  },
+  {
+    "path": "resources/js/components/ui/profile/TalentosTab.tsx",
+    "line": 245,
+    "column": 37,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Buscar ocupación..."
+  },
+  {
+    "path": "resources/js/pages/users/show.tsx",
+    "line": 86,
+    "column": 51,
+    "surface": "jsx-child",
+    "literal": "Abrir menú"
+  }
+]

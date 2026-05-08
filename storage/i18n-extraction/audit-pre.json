@@ -1,0 +1,1553 @@
+{
+  "findings": [
+    {
+      "path": "app/Http/Requests/StoreCommentRequest.php",
+      "line": 30,
+      "column": 29,
+      "surface": "request-messages",
+      "literal": "El comentario no puede estar vacío."
+    },
+    {
+      "path": "app/Http/Requests/StoreCommentRequest.php",
+      "line": 31,
+      "column": 27,
+      "surface": "request-messages",
+      "literal": "El comentario debe ser texto."
+    },
+    {
+      "path": "app/Http/Requests/StoreCommentRequest.php",
+      "line": 32,
+      "column": 24,
+      "surface": "request-messages",
+      "literal": "El comentario no puede exceder los 1000 caracteres."
+    },
+    {
+      "path": "resources/js/components/delete-user.tsx",
+      "line": 26,
+      "column": 17,
+      "surface": "jsx-attr:title",
+      "literal": "Delete account"
+    },
+    {
+      "path": "resources/js/components/delete-user.tsx",
+      "line": 27,
+      "column": 17,
+      "surface": "jsx-attr:description",
+      "literal": "Delete your account and all of its resources"
+    },
+    {
+      "path": "resources/js/components/delete-user.tsx",
+      "line": 31,
+      "column": 48,
+      "surface": "jsx-child",
+      "literal": "Warning"
+    },
+    {
+      "path": "resources/js/components/delete-user.tsx",
+      "line": 81,
+      "column": 45,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Password"
+    },
+    {
+      "path": "resources/js/components/examples/bento.tsx",
+      "line": 19,
+      "column": 90,
+      "surface": "jsx-child",
+      "literal": "Releases"
+    },
+    {
+      "path": "resources/js/components/examples/bento.tsx",
+      "line": 20,
+      "column": 102,
+      "surface": "jsx-child",
+      "literal": "Push to deploy"
+    },
+    {
+      "path": "resources/js/components/examples/bento.tsx",
+      "line": 41,
+      "column": 90,
+      "surface": "jsx-child",
+      "literal": "Integrations"
+    },
+    {
+      "path": "resources/js/components/examples/bento.tsx",
+      "line": 64,
+      "column": 90,
+      "surface": "jsx-child",
+      "literal": "Security"
+    },
+    {
+      "path": "resources/js/components/examples/bento.tsx",
+      "line": 87,
+      "column": 90,
+      "surface": "jsx-child",
+      "literal": "Performance"
+    },
+    {
+      "path": "resources/js/components/examples/ComboBox.tsx",
+      "line": 32,
+      "column": 84,
+      "surface": "jsx-child",
+      "literal": "Assigned to"
+    },
+    {
+      "path": "resources/js/components/examples/profile-heading.tsx",
+      "line": 45,
+      "column": 23,
+      "surface": "jsx-child",
+      "literal": "Message"
+    },
+    {
+      "path": "resources/js/components/examples/profile-heading.tsx",
+      "line": 52,
+      "column": 23,
+      "surface": "jsx-child",
+      "literal": "Call"
+    },
+    {
+      "path": "resources/js/components/nav-main.tsx",
+      "line": 17,
+      "column": 32,
+      "surface": "jsx-child",
+      "literal": "Platform"
+    },
+    {
+      "path": "resources/js/components/two-factor-recovery-codes.tsx",
+      "line": 115,
+      "column": 37,
+      "surface": "jsx-attr:aria-label",
+      "literal": "Recovery codes"
+    },
+    {
+      "path": "resources/js/components/two-factor-recovery-codes.tsx",
+      "line": 130,
+      "column": 45,
+      "surface": "jsx-attr:aria-label",
+      "literal": "Loading recovery codes"
+    },
+    {
+      "path": "resources/js/components/ui/breadcrumb.tsx",
+      "line": 8,
+      "column": 15,
+      "surface": "jsx-attr:aria-label",
+      "literal": "breadcrumb"
+    },
+    {
+      "path": "resources/js/components/ui/breadcrumb.tsx",
+      "line": 96,
+      "column": 33,
+      "surface": "jsx-child",
+      "literal": "More"
+    },
+    {
+      "path": "resources/js/components/ui/comments/Textarea.tsx",
+      "line": 59,
+      "column": 19,
+      "surface": "jsx-attr:placeholder",
+      "literal": "What's on your mind?"
+    },
+    {
+      "path": "resources/js/components/ui/comments/Textarea.tsx",
+      "line": 84,
+      "column": 49,
+      "surface": "jsx-child",
+      "literal": "Attach a file"
+    },
+    {
+      "path": "resources/js/components/ui/comments/Textarea.tsx",
+      "line": 93,
+      "column": 50,
+      "surface": "jsx-child",
+      "literal": "Your mood"
+    },
+    {
+      "path": "resources/js/components/ui/comments/Textarea.tsx",
+      "line": 103,
+      "column": 59,
+      "surface": "jsx-child",
+      "literal": "Add your mood"
+    },
+    {
+      "path": "resources/js/components/ui/dialog.tsx",
+      "line": 136,
+      "column": 47,
+      "surface": "jsx-child",
+      "literal": "Close"
+    },
+    {
+      "path": "resources/js/components/ui/feed/CommentForm.tsx",
+      "line": 58,
+      "column": 37,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Escribe un comentario..."
+    },
+    {
+      "path": "resources/js/components/ui/feed/PostActions.tsx",
+      "line": 109,
+      "column": 47,
+      "surface": "jsx-child",
+      "literal": "Crear proyecto"
+    },
+    {
+      "path": "resources/js/components/ui/feed/PostActions.tsx",
+      "line": 118,
+      "column": 47,
+      "surface": "jsx-child",
+      "literal": "Ver proyecto"
+    },
+    {
+      "path": "resources/js/components/ui/LoginModal.tsx",
+      "line": 70,
+      "column": 42,
+      "surface": "jsx-child",
+      "literal": "Inicia sesión"
+    },
+    {
+      "path": "resources/js/components/ui/LoginModal.tsx",
+      "line": 127,
+      "column": 70,
+      "surface": "jsx-child",
+      "literal": "Correo electrónico"
+    },
+    {
+      "path": "resources/js/components/ui/LoginModal.tsx",
+      "line": 135,
+      "column": 45,
+      "surface": "jsx-attr:placeholder",
+      "literal": "correo@ejemplo.com"
+    },
+    {
+      "path": "resources/js/components/ui/LoginModal.tsx",
+      "line": 140,
+      "column": 73,
+      "surface": "jsx-child",
+      "literal": "Contraseña"
+    },
+    {
+      "path": "resources/js/components/ui/LoginModal.tsx",
+      "line": 147,
+      "column": 45,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Contraseña"
+    },
+    {
+      "path": "resources/js/components/ui/LoginModal.tsx",
+      "line": 153,
+      "column": 73,
+      "surface": "jsx-child",
+      "literal": "Recordarme"
+    },
+    {
+      "path": "resources/js/components/ui/LoginModal.tsx",
+      "line": 200,
+      "column": 72,
+      "surface": "jsx-child",
+      "literal": "Nombre"
+    },
+    {
+      "path": "resources/js/components/ui/LoginModal.tsx",
+      "line": 208,
+      "column": 45,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Tu nombre"
+    },
+    {
+      "path": "resources/js/components/ui/LoginModal.tsx",
+      "line": 213,
+      "column": 73,
+      "surface": "jsx-child",
+      "literal": "Correo electrónico"
+    },
+    {
+      "path": "resources/js/components/ui/LoginModal.tsx",
+      "line": 220,
+      "column": 45,
+      "surface": "jsx-attr:placeholder",
+      "literal": "correo@ejemplo.com"
+    },
+    {
+      "path": "resources/js/components/ui/LoginModal.tsx",
+      "line": 225,
+      "column": 76,
+      "surface": "jsx-child",
+      "literal": "Contraseña"
+    },
+    {
+      "path": "resources/js/components/ui/LoginModal.tsx",
+      "line": 232,
+      "column": 45,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Contraseña"
+    },
+    {
+      "path": "resources/js/components/ui/LoginModal.tsx",
+      "line": 237,
+      "column": 89,
+      "surface": "jsx-child",
+      "literal": "Confirmar contraseña"
+    },
+    {
+      "path": "resources/js/components/ui/LoginModal.tsx",
+      "line": 244,
+      "column": 45,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Repite la contraseña"
+    },
+    {
+      "path": "resources/js/components/ui/MobileSidebar.tsx",
+      "line": 54,
+      "column": 59,
+      "surface": "jsx-child",
+      "literal": "Cerrar menú"
+    },
+    {
+      "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+      "line": 172,
+      "column": 101,
+      "surface": "jsx-child",
+      "literal": "Bio"
+    },
+    {
+      "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+      "line": 179,
+      "column": 41,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Cuéntanos sobre ti..."
+    },
+    {
+      "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+      "line": 195,
+      "column": 109,
+      "surface": "jsx-child",
+      "literal": "Bio"
+    },
+    {
+      "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+      "line": 210,
+      "column": 101,
+      "surface": "jsx-child",
+      "literal": "Ubicación"
+    },
+    {
+      "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+      "line": 232,
+      "column": 109,
+      "surface": "jsx-child",
+      "literal": "Ubicación"
+    },
+    {
+      "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+      "line": 247,
+      "column": 101,
+      "surface": "jsx-child",
+      "literal": "Fecha de nacimiento"
+    },
+    {
+      "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+      "line": 265,
+      "column": 109,
+      "surface": "jsx-child",
+      "literal": "Fecha de nacimiento"
+    },
+    {
+      "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+      "line": 280,
+      "column": 101,
+      "surface": "jsx-child",
+      "literal": "Teléfono público"
+    },
+    {
+      "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+      "line": 299,
+      "column": 109,
+      "surface": "jsx-child",
+      "literal": "Teléfono público"
+    },
+    {
+      "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+      "line": 314,
+      "column": 101,
+      "surface": "jsx-child",
+      "literal": "Email de contacto"
+    },
+    {
+      "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+      "line": 320,
+      "column": 41,
+      "surface": "jsx-attr:placeholder",
+      "literal": "contacto@ejemplo.com"
+    },
+    {
+      "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+      "line": 333,
+      "column": 109,
+      "surface": "jsx-child",
+      "literal": "Email de contacto"
+    },
+    {
+      "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+      "line": 348,
+      "column": 101,
+      "surface": "jsx-child",
+      "literal": "Idiomas"
+    },
+    {
+      "path": "resources/js/components/ui/profile/InformacionTab.tsx",
+      "line": 360,
+      "column": 109,
+      "surface": "jsx-child",
+      "literal": "Idiomas"
+    },
+    {
+      "path": "resources/js/components/ui/profile/LanguageTagInput.tsx",
+      "line": 86,
+      "column": 25,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Agregar idioma..."
+    },
+    {
+      "path": "resources/js/components/ui/profile/PostsTab.tsx",
+      "line": 70,
+      "column": 98,
+      "surface": "jsx-child",
+      "literal": "Sin publicaciones"
+    },
+    {
+      "path": "resources/js/components/ui/profile/ProfileAvatar.tsx",
+      "line": 74,
+      "column": 92,
+      "surface": "jsx-child",
+      "literal": "Ver"
+    },
+    {
+      "path": "resources/js/components/ui/profile/TalentosTab.tsx",
+      "line": 161,
+      "column": 94,
+      "surface": "jsx-child",
+      "literal": "Sin talentos"
+    },
+    {
+      "path": "resources/js/components/ui/profile/TalentosTab.tsx",
+      "line": 245,
+      "column": 37,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Buscar ocupación..."
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ImageGallery.tsx",
+      "line": 191,
+      "column": 33,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Título de la imagen"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ImageGallery.tsx",
+      "line": 228,
+      "column": 33,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Descripción de la imagen"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectHeader.tsx",
+      "line": 70,
+      "column": 25,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Título del proyecto"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectHeader.tsx",
+      "line": 131,
+      "column": 29,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Descripción del proyecto"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+      "line": 85,
+      "column": 17,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Título del rol *"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+      "line": 92,
+      "column": 17,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Descripción (opcional)"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+      "line": 100,
+      "column": 87,
+      "surface": "jsx-child",
+      "literal": "Plazas"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+      "line": 111,
+      "column": 87,
+      "surface": "jsx-child",
+      "literal": "Horas estimadas"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+      "line": 170,
+      "column": 34,
+      "surface": "jsx-child",
+      "literal": "Solicitud de voluntariado"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+      "line": 187,
+      "column": 91,
+      "surface": "jsx-child",
+      "literal": "Solicitud pendiente"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+      "line": 304,
+      "column": 93,
+      "surface": "jsx-child",
+      "literal": "Roles buscados"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+      "line": 397,
+      "column": 122,
+      "surface": "jsx-child",
+      "literal": "Miembro ✓"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+      "line": 420,
+      "column": 114,
+      "surface": "jsx-child",
+      "literal": "— pendiente de aprobación"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectTeam.tsx",
+      "line": 22,
+      "column": 81,
+      "surface": "jsx-child",
+      "literal": "Equipo del proyecto"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectTimelineEntry.tsx",
+      "line": 123,
+      "column": 29,
+      "surface": "jsx-child",
+      "literal": "Hito:"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectTimelineEntry.tsx",
+      "line": 129,
+      "column": 29,
+      "surface": "jsx-child",
+      "literal": "Actualización:"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectTimelineEntry.tsx",
+      "line": 145,
+      "column": 75,
+      "surface": "jsx-child",
+      "literal": "a"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectTimelinePostUpdate.tsx",
+      "line": 83,
+      "column": 29,
+      "surface": "jsx-attr:placeholder",
+      "literal": "¿Qué hito alcanzaron?"
+    },
+    {
+      "path": "resources/js/components/ui/proyectos/ProjectTimelinePostUpdate.tsx",
+      "line": 109,
+      "column": 29,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Compartí una actualización con la comunidad…"
+    },
+    {
+      "path": "resources/js/components/ui/settings/AvatarUpload.tsx",
+      "line": 161,
+      "column": 38,
+      "surface": "jsx-child",
+      "literal": "Recortar foto"
+    },
+    {
+      "path": "resources/js/components/ui/settings/AvatarUpload.tsx",
+      "line": 177,
+      "column": 37,
+      "surface": "jsx-attr:alt",
+      "literal": "Recortar"
+    },
+    {
+      "path": "resources/js/components/ui/settings/NotificacionesSection.tsx",
+      "line": 7,
+      "column": 13,
+      "surface": "jsx-attr:title",
+      "literal": "Notificaciones"
+    },
+    {
+      "path": "resources/js/components/ui/settings/NotificacionesSection.tsx",
+      "line": 8,
+      "column": 13,
+      "surface": "jsx-attr:description",
+      "literal": "Elige cómo y cuándo quieres recibir notificaciones."
+    },
+    {
+      "path": "resources/js/components/ui/settings/NotificacionesSection.tsx",
+      "line": 12,
+      "column": 21,
+      "surface": "jsx-attr:label",
+      "literal": "Nuevos seguidores"
+    },
+    {
+      "path": "resources/js/components/ui/settings/NotificacionesSection.tsx",
+      "line": 13,
+      "column": 21,
+      "surface": "jsx-attr:description",
+      "literal": "Recibe una notificación cuando alguien empieza a seguirte."
+    },
+    {
+      "path": "resources/js/components/ui/settings/NotificacionesSection.tsx",
+      "line": 17,
+      "column": 21,
+      "surface": "jsx-attr:label",
+      "literal": "Menciones"
+    },
+    {
+      "path": "resources/js/components/ui/settings/NotificacionesSection.tsx",
+      "line": 18,
+      "column": 21,
+      "surface": "jsx-attr:description",
+      "literal": "Recibe una notificación cuando alguien te menciona en un post."
+    },
+    {
+      "path": "resources/js/components/ui/settings/NotificacionesSection.tsx",
+      "line": 22,
+      "column": 21,
+      "surface": "jsx-attr:label",
+      "literal": "Comentarios"
+    },
+    {
+      "path": "resources/js/components/ui/settings/NotificacionesSection.tsx",
+      "line": 23,
+      "column": 21,
+      "surface": "jsx-attr:description",
+      "literal": "Recibe una notificación cuando alguien comenta en tus posts."
+    },
+    {
+      "path": "resources/js/components/ui/settings/NotificacionesSection.tsx",
+      "line": 27,
+      "column": 21,
+      "surface": "jsx-attr:label",
+      "literal": "Me gusta"
+    },
+    {
+      "path": "resources/js/components/ui/settings/NotificacionesSection.tsx",
+      "line": 28,
+      "column": 21,
+      "surface": "jsx-attr:description",
+      "literal": "Recibe una notificación cuando alguien le da me gusta a tus posts."
+    },
+    {
+      "path": "resources/js/components/ui/settings/NotificacionesSection.tsx",
+      "line": 31,
+      "column": 21,
+      "surface": "jsx-attr:label",
+      "literal": "Actualizaciones de la plataforma"
+    },
+    {
+      "path": "resources/js/components/ui/settings/NotificacionesSection.tsx",
+      "line": 32,
+      "column": 21,
+      "surface": "jsx-attr:description",
+      "literal": "Entérate de nuevas funciones y mejoras de Tekitl."
+    },
+    {
+      "path": "resources/js/components/ui/settings/PerfilSection.tsx",
+      "line": 14,
+      "column": 17,
+      "surface": "jsx-attr:title",
+      "literal": "Foto de perfil"
+    },
+    {
+      "path": "resources/js/components/ui/settings/PerfilSection.tsx",
+      "line": 15,
+      "column": 17,
+      "surface": "jsx-attr:description",
+      "literal": "Esta imagen será visible públicamente en tu perfil."
+    },
+    {
+      "path": "resources/js/components/ui/settings/PerfilSection.tsx",
+      "line": 23,
+      "column": 17,
+      "surface": "jsx-attr:title",
+      "literal": "Información personal"
+    },
+    {
+      "path": "resources/js/components/ui/settings/PerfilSection.tsx",
+      "line": 24,
+      "column": 17,
+      "surface": "jsx-attr:description",
+      "literal": "Esta información será visible públicamente en tu perfil."
+    },
+    {
+      "path": "resources/js/components/ui/settings/PerfilSection.tsx",
+      "line": 28,
+      "column": 25,
+      "surface": "jsx-attr:label",
+      "literal": "Nombre completo"
+    },
+    {
+      "path": "resources/js/components/ui/settings/PerfilSection.tsx",
+      "line": 33,
+      "column": 25,
+      "surface": "jsx-attr:label",
+      "literal": "Correo electrónico"
+    },
+    {
+      "path": "resources/js/components/ui/settings/PerfilSection.tsx",
+      "line": 38,
+      "column": 25,
+      "surface": "jsx-attr:label",
+      "literal": "Nombre de usuario"
+    },
+    {
+      "path": "resources/js/components/ui/settings/PerfilSection.tsx",
+      "line": 43,
+      "column": 25,
+      "surface": "jsx-attr:label",
+      "literal": "Descripción"
+    },
+    {
+      "path": "resources/js/components/ui/settings/PrivacidadSection.tsx",
+      "line": 9,
+      "column": 17,
+      "surface": "jsx-attr:title",
+      "literal": "Visibilidad de la cuenta"
+    },
+    {
+      "path": "resources/js/components/ui/settings/PrivacidadSection.tsx",
+      "line": 10,
+      "column": 17,
+      "surface": "jsx-attr:description",
+      "literal": "Controla quién puede ver tu perfil y tu contenido."
+    },
+    {
+      "path": "resources/js/components/ui/settings/PrivacidadSection.tsx",
+      "line": 14,
+      "column": 25,
+      "surface": "jsx-attr:label",
+      "literal": "Cuenta privada"
+    },
+    {
+      "path": "resources/js/components/ui/settings/PrivacidadSection.tsx",
+      "line": 15,
+      "column": 25,
+      "surface": "jsx-attr:description",
+      "literal": "Solo tus seguidores aprobados podrán ver tus posts."
+    },
+    {
+      "path": "resources/js/components/ui/settings/PrivacidadSection.tsx",
+      "line": 18,
+      "column": 25,
+      "surface": "jsx-attr:label",
+      "literal": "Mostrar correo electrónico en el perfil"
+    },
+    {
+      "path": "resources/js/components/ui/settings/PrivacidadSection.tsx",
+      "line": 19,
+      "column": 25,
+      "surface": "jsx-attr:description",
+      "literal": "Tu correo será visible para otros usuarios."
+    },
+    {
+      "path": "resources/js/components/ui/settings/PrivacidadSection.tsx",
+      "line": 22,
+      "column": 25,
+      "surface": "jsx-attr:label",
+      "literal": "Permitir mensajes directos"
+    },
+    {
+      "path": "resources/js/components/ui/settings/PrivacidadSection.tsx",
+      "line": 23,
+      "column": 25,
+      "surface": "jsx-attr:description",
+      "literal": "Cualquier usuario puede enviarte mensajes directos."
+    },
+    {
+      "path": "resources/js/components/ui/settings/PrivacidadSection.tsx",
+      "line": 30,
+      "column": 17,
+      "surface": "jsx-attr:title",
+      "literal": "Datos y actividad"
+    },
+    {
+      "path": "resources/js/components/ui/settings/PrivacidadSection.tsx",
+      "line": 31,
+      "column": 17,
+      "surface": "jsx-attr:description",
+      "literal": "Gestiona cómo se usan tus datos en la plataforma."
+    },
+    {
+      "path": "resources/js/components/ui/settings/PrivacidadSection.tsx",
+      "line": 35,
+      "column": 25,
+      "surface": "jsx-attr:label",
+      "literal": "Descargar mis datos"
+    },
+    {
+      "path": "resources/js/components/ui/settings/PrivacidadSection.tsx",
+      "line": 41,
+      "column": 25,
+      "surface": "jsx-attr:label",
+      "literal": "Eliminar cuenta"
+    },
+    {
+      "path": "resources/js/components/ui/settings/SeguridadSection.tsx",
+      "line": 8,
+      "column": 17,
+      "surface": "jsx-attr:title",
+      "literal": "Contraseña"
+    },
+    {
+      "path": "resources/js/components/ui/settings/SeguridadSection.tsx",
+      "line": 9,
+      "column": 17,
+      "surface": "jsx-attr:description",
+      "literal": "Actualiza la contraseña asociada a tu cuenta."
+    },
+    {
+      "path": "resources/js/components/ui/settings/SeguridadSection.tsx",
+      "line": 13,
+      "column": 25,
+      "surface": "jsx-attr:label",
+      "literal": "Contraseña"
+    },
+    {
+      "path": "resources/js/components/ui/settings/SeguridadSection.tsx",
+      "line": 22,
+      "column": 17,
+      "surface": "jsx-attr:title",
+      "literal": "Sesiones activas"
+    },
+    {
+      "path": "resources/js/components/ui/settings/SeguridadSection.tsx",
+      "line": 23,
+      "column": 17,
+      "surface": "jsx-attr:description",
+      "literal": "Cierra sesión en todos los demás dispositivos donde hayas iniciado sesión."
+    },
+    {
+      "path": "resources/js/components/ui/sheet.tsx",
+      "line": 145,
+      "column": 47,
+      "surface": "jsx-child",
+      "literal": "Close"
+    },
+    {
+      "path": "resources/js/components/ui/sidebar.tsx",
+      "line": 186,
+      "column": 23,
+      "surface": "jsx-child",
+      "literal": "Sidebar"
+    },
+    {
+      "path": "resources/js/components/ui/sidebar.tsx",
+      "line": 187,
+      "column": 29,
+      "surface": "jsx-child",
+      "literal": "Displays the mobile sidebar."
+    },
+    {
+      "path": "resources/js/components/ui/sidebar.tsx",
+      "line": 273,
+      "column": 33,
+      "surface": "jsx-child",
+      "literal": "Toggle Sidebar"
+    },
+    {
+      "path": "resources/js/components/ui/sidebar.tsx",
+      "line": 285,
+      "column": 7,
+      "surface": "jsx-attr:aria-label",
+      "literal": "Toggle Sidebar"
+    },
+    {
+      "path": "resources/js/components/ui/sidebar.tsx",
+      "line": 288,
+      "column": 7,
+      "surface": "jsx-attr:title",
+      "literal": "Toggle Sidebar"
+    },
+    {
+      "path": "resources/js/components/ui/spinner.tsx",
+      "line": 9,
+      "column": 7,
+      "surface": "jsx-attr:aria-label",
+      "literal": "Loading"
+    },
+    {
+      "path": "resources/js/layouts/constrained-three-column.tsx",
+      "line": 18,
+      "column": 15,
+      "surface": "jsx-attr:alt",
+      "literal": "Your Company"
+    },
+    {
+      "path": "resources/js/layouts/constrained-three-column.tsx",
+      "line": 24,
+      "column": 43,
+      "surface": "jsx-child",
+      "literal": "View notifications"
+    },
+    {
+      "path": "resources/js/layouts/constrained-three-column.tsx",
+      "line": 28,
+      "column": 43,
+      "surface": "jsx-child",
+      "literal": "Your profile"
+    },
+    {
+      "path": "resources/js/layouts/settings/layout.tsx",
+      "line": 48,
+      "column": 17,
+      "surface": "jsx-attr:title",
+      "literal": "Settings"
+    },
+    {
+      "path": "resources/js/layouts/settings/layout.tsx",
+      "line": 49,
+      "column": 17,
+      "surface": "jsx-attr:description",
+      "literal": "Manage your profile and account settings"
+    },
+    {
+      "path": "resources/js/layouts/settings/layout.tsx",
+      "line": 56,
+      "column": 25,
+      "surface": "jsx-attr:aria-label",
+      "literal": "Settings"
+    },
+    {
+      "path": "resources/js/pages/auth/confirm-password.tsx",
+      "line": 13,
+      "column": 13,
+      "surface": "jsx-attr:title",
+      "literal": "Confirm your password"
+    },
+    {
+      "path": "resources/js/pages/auth/confirm-password.tsx",
+      "line": 14,
+      "column": 13,
+      "surface": "jsx-attr:description",
+      "literal": "This is a secure area of the application. Please confirm your password before continuing."
+    },
+    {
+      "path": "resources/js/pages/auth/confirm-password.tsx",
+      "line": 16,
+      "column": 19,
+      "surface": "jsx-attr:title",
+      "literal": "Confirm password"
+    },
+    {
+      "path": "resources/js/pages/auth/confirm-password.tsx",
+      "line": 22,
+      "column": 55,
+      "surface": "jsx-child",
+      "literal": "Password"
+    },
+    {
+      "path": "resources/js/pages/auth/confirm-password.tsx",
+      "line": 27,
+      "column": 33,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Password"
+    },
+    {
+      "path": "resources/js/pages/auth/forgot-password.tsx",
+      "line": 16,
+      "column": 13,
+      "surface": "jsx-attr:title",
+      "literal": "Forgot password"
+    },
+    {
+      "path": "resources/js/pages/auth/forgot-password.tsx",
+      "line": 17,
+      "column": 13,
+      "surface": "jsx-attr:description",
+      "literal": "Enter your email to receive a password reset link"
+    },
+    {
+      "path": "resources/js/pages/auth/forgot-password.tsx",
+      "line": 19,
+      "column": 19,
+      "surface": "jsx-attr:title",
+      "literal": "Forgot password"
+    },
+    {
+      "path": "resources/js/pages/auth/forgot-password.tsx",
+      "line": 32,
+      "column": 56,
+      "surface": "jsx-child",
+      "literal": "Email address"
+    },
+    {
+      "path": "resources/js/pages/auth/forgot-password.tsx",
+      "line": 39,
+      "column": 37,
+      "surface": "jsx-attr:placeholder",
+      "literal": "email@example.com"
+    },
+    {
+      "path": "resources/js/pages/auth/forgot-password.tsx",
+      "line": 62,
+      "column": 27,
+      "surface": "jsx-child",
+      "literal": "Or, return to"
+    },
+    {
+      "path": "resources/js/pages/auth/forgot-password.tsx",
+      "line": 63,
+      "column": 46,
+      "surface": "jsx-child",
+      "literal": "log in"
+    },
+    {
+      "path": "resources/js/pages/auth/login.tsx",
+      "line": 28,
+      "column": 13,
+      "surface": "jsx-attr:title",
+      "literal": "Log in to your account"
+    },
+    {
+      "path": "resources/js/pages/auth/login.tsx",
+      "line": 29,
+      "column": 13,
+      "surface": "jsx-attr:description",
+      "literal": "Enter your email and password below to log in"
+    },
+    {
+      "path": "resources/js/pages/auth/login.tsx",
+      "line": 31,
+      "column": 19,
+      "surface": "jsx-attr:title",
+      "literal": "Log in"
+    },
+    {
+      "path": "resources/js/pages/auth/login.tsx",
+      "line": 42,
+      "column": 56,
+      "surface": "jsx-child",
+      "literal": "Email address"
+    },
+    {
+      "path": "resources/js/pages/auth/login.tsx",
+      "line": 51,
+      "column": 37,
+      "surface": "jsx-attr:placeholder",
+      "literal": "email@example.com"
+    },
+    {
+      "path": "resources/js/pages/auth/login.tsx",
+      "line": 58,
+      "column": 63,
+      "surface": "jsx-child",
+      "literal": "Password"
+    },
+    {
+      "path": "resources/js/pages/auth/login.tsx",
+      "line": 76,
+      "column": 37,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Password"
+    },
+    {
+      "path": "resources/js/pages/auth/login.tsx",
+      "line": 87,
+      "column": 59,
+      "surface": "jsx-child",
+      "literal": "Remember me"
+    },
+    {
+      "path": "resources/js/pages/auth/login.tsx",
+      "line": 106,
+      "column": 96,
+      "surface": "jsx-child",
+      "literal": "Or continue with"
+    },
+    {
+      "path": "resources/js/pages/auth/register.tsx",
+      "line": 15,
+      "column": 13,
+      "surface": "jsx-attr:title",
+      "literal": "Create an account"
+    },
+    {
+      "path": "resources/js/pages/auth/register.tsx",
+      "line": 16,
+      "column": 13,
+      "surface": "jsx-attr:description",
+      "literal": "Enter your details below to create your account"
+    },
+    {
+      "path": "resources/js/pages/auth/register.tsx",
+      "line": 18,
+      "column": 19,
+      "surface": "jsx-attr:title",
+      "literal": "Register"
+    },
+    {
+      "path": "resources/js/pages/auth/register.tsx",
+      "line": 29,
+      "column": 55,
+      "surface": "jsx-child",
+      "literal": "Name"
+    },
+    {
+      "path": "resources/js/pages/auth/register.tsx",
+      "line": 38,
+      "column": 37,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Full name"
+    },
+    {
+      "path": "resources/js/pages/auth/register.tsx",
+      "line": 47,
+      "column": 56,
+      "surface": "jsx-child",
+      "literal": "Email address"
+    },
+    {
+      "path": "resources/js/pages/auth/register.tsx",
+      "line": 55,
+      "column": 37,
+      "surface": "jsx-attr:placeholder",
+      "literal": "email@example.com"
+    },
+    {
+      "path": "resources/js/pages/auth/register.tsx",
+      "line": 61,
+      "column": 59,
+      "surface": "jsx-child",
+      "literal": "Password"
+    },
+    {
+      "path": "resources/js/pages/auth/register.tsx",
+      "line": 69,
+      "column": 37,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Password"
+    },
+    {
+      "path": "resources/js/pages/auth/register.tsx",
+      "line": 85,
+      "column": 37,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Confirm password"
+    },
+    {
+      "path": "resources/js/pages/auth/reset-password.tsx",
+      "line": 18,
+      "column": 13,
+      "surface": "jsx-attr:title",
+      "literal": "Reset password"
+    },
+    {
+      "path": "resources/js/pages/auth/reset-password.tsx",
+      "line": 19,
+      "column": 13,
+      "surface": "jsx-attr:description",
+      "literal": "Please enter your new password below"
+    },
+    {
+      "path": "resources/js/pages/auth/reset-password.tsx",
+      "line": 21,
+      "column": 19,
+      "surface": "jsx-attr:title",
+      "literal": "Reset password"
+    },
+    {
+      "path": "resources/js/pages/auth/reset-password.tsx",
+      "line": 31,
+      "column": 52,
+      "surface": "jsx-child",
+      "literal": "Email"
+    },
+    {
+      "path": "resources/js/pages/auth/reset-password.tsx",
+      "line": 48,
+      "column": 55,
+      "surface": "jsx-child",
+      "literal": "Password"
+    },
+    {
+      "path": "resources/js/pages/auth/reset-password.tsx",
+      "line": 56,
+      "column": 33,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Password"
+    },
+    {
+      "path": "resources/js/pages/auth/reset-password.tsx",
+      "line": 71,
+      "column": 33,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Confirm password"
+    },
+    {
+      "path": "resources/js/pages/auth/two-factor-challenge.tsx",
+      "line": 53,
+      "column": 19,
+      "surface": "jsx-attr:title",
+      "literal": "Two-Factor Authentication"
+    },
+    {
+      "path": "resources/js/pages/auth/two-factor-challenge.tsx",
+      "line": 69,
+      "column": 41,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Enter recovery code"
+    },
+    {
+      "path": "resources/js/pages/auth/two-factor-challenge.tsx",
+      "line": 114,
+      "column": 39,
+      "surface": "jsx-child",
+      "literal": "or you can"
+    },
+    {
+      "path": "resources/js/pages/auth/verify-email.tsx",
+      "line": 13,
+      "column": 13,
+      "surface": "jsx-attr:title",
+      "literal": "Verify email"
+    },
+    {
+      "path": "resources/js/pages/auth/verify-email.tsx",
+      "line": 14,
+      "column": 13,
+      "surface": "jsx-attr:description",
+      "literal": "Please verify your email address by clicking on the link we just emailed to you."
+    },
+    {
+      "path": "resources/js/pages/auth/verify-email.tsx",
+      "line": 16,
+      "column": 19,
+      "surface": "jsx-attr:title",
+      "literal": "Email verification"
+    },
+    {
+      "path": "resources/js/pages/configuracion.tsx",
+      "line": 36,
+      "column": 51,
+      "surface": "jsx-child",
+      "literal": "Abrir menú"
+    },
+    {
+      "path": "resources/js/pages/configuracion.tsx",
+      "line": 40,
+      "column": 91,
+      "surface": "jsx-child",
+      "literal": "Configuración"
+    },
+    {
+      "path": "resources/js/pages/configuracion.tsx",
+      "line": 46,
+      "column": 85,
+      "surface": "jsx-child",
+      "literal": "Configuración"
+    },
+    {
+      "path": "resources/js/pages/configuracion.tsx",
+      "line": 50,
+      "column": 41,
+      "surface": "jsx-child",
+      "literal": "Configuración de la cuenta"
+    },
+    {
+      "path": "resources/js/pages/dashboard.tsx",
+      "line": 17,
+      "column": 19,
+      "surface": "jsx-attr:title",
+      "literal": "Dashboard"
+    },
+    {
+      "path": "resources/js/pages/proyectos/show.tsx",
+      "line": 124,
+      "column": 51,
+      "surface": "jsx-child",
+      "literal": "Abrir menú"
+    },
+    {
+      "path": "resources/js/pages/proyectos/show.tsx",
+      "line": 128,
+      "column": 91,
+      "surface": "jsx-child",
+      "literal": "Proyecto"
+    },
+    {
+      "path": "resources/js/pages/proyectos/show.tsx",
+      "line": 176,
+      "column": 93,
+      "surface": "jsx-child",
+      "literal": "Actividad del proyecto"
+    },
+    {
+      "path": "resources/js/pages/proyectos/show.tsx",
+      "line": 187,
+      "column": 93,
+      "surface": "jsx-child",
+      "literal": "Comentarios"
+    },
+    {
+      "path": "resources/js/pages/settings/appearance.tsx",
+      "line": 19,
+      "column": 19,
+      "surface": "jsx-attr:title",
+      "literal": "Appearance settings"
+    },
+    {
+      "path": "resources/js/pages/settings/appearance.tsx",
+      "line": 21,
+      "column": 37,
+      "surface": "jsx-child",
+      "literal": "Appearance Settings"
+    },
+    {
+      "path": "resources/js/pages/settings/appearance.tsx",
+      "line": 27,
+      "column": 25,
+      "surface": "jsx-attr:title",
+      "literal": "Appearance settings"
+    },
+    {
+      "path": "resources/js/pages/settings/appearance.tsx",
+      "line": 28,
+      "column": 25,
+      "surface": "jsx-attr:description",
+      "literal": "Update your account's appearance settings"
+    },
+    {
+      "path": "resources/js/pages/settings/password.tsx",
+      "line": 27,
+      "column": 19,
+      "surface": "jsx-attr:title",
+      "literal": "Password settings"
+    },
+    {
+      "path": "resources/js/pages/settings/password.tsx",
+      "line": 29,
+      "column": 37,
+      "surface": "jsx-child",
+      "literal": "Password Settings"
+    },
+    {
+      "path": "resources/js/pages/settings/password.tsx",
+      "line": 35,
+      "column": 25,
+      "surface": "jsx-attr:title",
+      "literal": "Update password"
+    },
+    {
+      "path": "resources/js/pages/settings/password.tsx",
+      "line": 36,
+      "column": 25,
+      "surface": "jsx-attr:description",
+      "literal": "Ensure your account is using a long, random password to stay secure"
+    },
+    {
+      "path": "resources/js/pages/settings/password.tsx",
+      "line": 75,
+      "column": 41,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Current password"
+    },
+    {
+      "path": "resources/js/pages/settings/password.tsx",
+      "line": 95,
+      "column": 41,
+      "surface": "jsx-attr:placeholder",
+      "literal": "New password"
+    },
+    {
+      "path": "resources/js/pages/settings/password.tsx",
+      "line": 112,
+      "column": 41,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Confirm password"
+    },
+    {
+      "path": "resources/js/pages/settings/profile.tsx",
+      "line": 34,
+      "column": 19,
+      "surface": "jsx-attr:title",
+      "literal": "Profile settings"
+    },
+    {
+      "path": "resources/js/pages/settings/profile.tsx",
+      "line": 36,
+      "column": 37,
+      "surface": "jsx-child",
+      "literal": "Profile Settings"
+    },
+    {
+      "path": "resources/js/pages/settings/profile.tsx",
+      "line": 42,
+      "column": 25,
+      "surface": "jsx-attr:title",
+      "literal": "Profile information"
+    },
+    {
+      "path": "resources/js/pages/settings/profile.tsx",
+      "line": 43,
+      "column": 25,
+      "surface": "jsx-attr:description",
+      "literal": "Update your name and email address"
+    },
+    {
+      "path": "resources/js/pages/settings/profile.tsx",
+      "line": 61,
+      "column": 59,
+      "surface": "jsx-child",
+      "literal": "Name"
+    },
+    {
+      "path": "resources/js/pages/settings/profile.tsx",
+      "line": 70,
+      "column": 41,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Full name"
+    },
+    {
+      "path": "resources/js/pages/settings/profile.tsx",
+      "line": 80,
+      "column": 60,
+      "surface": "jsx-child",
+      "literal": "Email address"
+    },
+    {
+      "path": "resources/js/pages/settings/profile.tsx",
+      "line": 90,
+      "column": 41,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Email address"
+    },
+    {
+      "path": "resources/js/pages/settings/two-factor.tsx",
+      "line": 45,
+      "column": 19,
+      "surface": "jsx-attr:title",
+      "literal": "Two-Factor Authentication"
+    },
+    {
+      "path": "resources/js/pages/settings/two-factor.tsx",
+      "line": 47,
+      "column": 37,
+      "surface": "jsx-child",
+      "literal": "Two-Factor Authentication Settings"
+    },
+    {
+      "path": "resources/js/pages/settings/two-factor.tsx",
+      "line": 53,
+      "column": 25,
+      "surface": "jsx-attr:title",
+      "literal": "Two-Factor Authentication"
+    },
+    {
+      "path": "resources/js/pages/settings/two-factor.tsx",
+      "line": 54,
+      "column": 25,
+      "surface": "jsx-attr:description",
+      "literal": "Manage your two-factor authentication settings"
+    },
+    {
+      "path": "resources/js/pages/settings/two-factor.tsx",
+      "line": 58,
+      "column": 54,
+      "surface": "jsx-child",
+      "literal": "Enabled"
+    },
+    {
+      "path": "resources/js/pages/settings/two-factor.tsx",
+      "line": 88,
+      "column": 58,
+      "surface": "jsx-child",
+      "literal": "Disabled"
+    },
+    {
+      "path": "resources/js/pages/users/show.tsx",
+      "line": 86,
+      "column": 51,
+      "surface": "jsx-child",
+      "literal": "Abrir menú"
+    },
+    {
+      "path": "resources/js/pages/welcome.tsx",
+      "line": 110,
+      "column": 51,
+      "surface": "jsx-child",
+      "literal": "Abrir menú"
+    },
+    {
+      "path": "resources/js/pages/welcome.tsx",
+      "line": 114,
+      "column": 91,
+      "surface": "jsx-child",
+      "literal": "Inicio"
+    },
+    {
+      "path": "resources/js/pages/welcome.tsx",
+      "line": 120,
+      "column": 85,
+      "surface": "jsx-child",
+      "literal": "Inicio"
+    },
+    {
+      "path": "resources/js/pages/welcome.tsx",
+      "line": 163,
+      "column": 29,
+      "surface": "jsx-attr:placeholder",
+      "literal": "Buscar"
+    },
+    {
+      "path": "resources/js/pages/welcome.tsx",
+      "line": 172,
+      "column": 91,
+      "surface": "jsx-child",
+      "literal": "Tendencias"
+    },
+    {
+      "path": "resources/js/pages/welcome.tsx",
+      "line": 201,
+      "column": 91,
+      "surface": "jsx-child",
+      "literal": "A quién seguir"
+    },
+    {
+      "path": "resources/js/pages/welcome.tsx",
+      "line": 248,
+      "column": 77,
+      "surface": "jsx-child",
+      "literal": "© 2026 Tekitl · Privacidad · Términos"
+    },
+    {
+      "path": "resources/views/auth/popup-callback.blade.php",
+      "line": 10,
+      "column": 1,
+      "surface": "blade-text",
+      "literal": "Autenticación exitosa"
+    },
+    {
+      "path": "resources/views/auth/popup-callback.blade.php",
+      "line": 17,
+      "column": 1,
+      "surface": "blade-text",
+      "literal": "Autenticación exitosa. Puedes cerrar esta ventana."
+    }
+  ],
+  "total": 221,
+  "config": "tools/i18n/audit.config.json"
+}
