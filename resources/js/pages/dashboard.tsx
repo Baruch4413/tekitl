@@ -5,14 +5,14 @@ import { t } from '@/lib/i18n';
 import { dashboard } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard().url,
-    },
-];
-
 export default function Dashboard() {
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t('projects.dashboard.title'),
+            href: dashboard().url,
+        },
+    ];
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={t('projects.dashboard.title')} />

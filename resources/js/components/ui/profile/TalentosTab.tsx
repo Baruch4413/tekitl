@@ -18,17 +18,17 @@ export interface Talent {
 }
 
 const confidenceLevels = [
-    { value: 'aprendiz', label: 'Aprendiz', color: 'bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-400/10 dark:text-amber-400 dark:ring-amber-400/20' },
-    { value: 'autosuficiente', label: 'Autosuficiente', color: 'bg-blue-50 text-blue-700 ring-blue-600/20 dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/20' },
-    { value: 'maestro', label: 'Maestro', color: 'bg-emerald-50 text-emerald-700 ring-emerald-600/20 dark:bg-emerald-400/10 dark:text-emerald-400 dark:ring-emerald-400/20' },
+    { value: 'aprendiz', color: 'bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-400/10 dark:text-amber-400 dark:ring-amber-400/20' },
+    { value: 'autosuficiente', color: 'bg-blue-50 text-blue-700 ring-blue-600/20 dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/20' },
+    { value: 'maestro', color: 'bg-emerald-50 text-emerald-700 ring-emerald-600/20 dark:bg-emerald-400/10 dark:text-emerald-400 dark:ring-emerald-400/20' },
 ]
 
-const experienceLabels: Record<number, string> = {
-    0: 'Menos de 1 año',
-    1: 'Más de un año',
-    3: 'Más de 3 años',
-    5: 'Más de 5 años',
-    10: 'Más de 10 años',
+const experienceKeys: Record<number, string> = {
+    0: 'projects.experience_slider.less_than_one_year',
+    1: 'projects.experience_slider.more_than_one_year',
+    3: 'projects.experience_slider.more_than_three_years',
+    5: 'projects.experience_slider.more_than_five_years',
+    10: 'projects.experience_slider.more_than_ten_years',
 }
 
 interface TalentosTabProps {
@@ -206,11 +206,13 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
                                     )}
                                 </div>
                                 <p className="mt-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                                    {experienceLabels[talent.experienceYears] ?? ''}
+                                    {experienceKeys[talent.experienceYears]
+                                        ? t(experienceKeys[talent.experienceYears])
+                                        : ''}
                                 </p>
                                 {level && (
                                     <span className={`mt-3 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${level.color}`}>
-                                        {level.label}
+                                        {t(`profile.talentos.confidence.${level.value}`)}
                                     </span>
                                 )}
                             </div>
@@ -285,7 +287,7 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
                                                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10'
                                         }`}
                                     >
-                                        {level.label}
+                                        {t(`profile.talentos.confidence.${level.value}`)}
                                     </button>
                                 ))}
                             </div>

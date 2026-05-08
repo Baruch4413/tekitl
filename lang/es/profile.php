@@ -57,5 +57,10 @@ return [
     'talentos' => [
         'empty_state' => 'Sin talentos',
         'search_occupation_placeholder' => 'Buscar ocupación...',
+        'confidence' => [
+            'aprendiz' => 'Aprendiz',
+            'autosuficiente' => 'Autosuficiente',
+            'maestro' => 'Maestro',
+        ],
     ],
 ];

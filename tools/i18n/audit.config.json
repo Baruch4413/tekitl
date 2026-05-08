@@ -13,6 +13,7 @@
     "**/public/build/**",
     "tests/**",
     "tools/i18n/fixtures/**",
+    "resources/js/components/examples/**",
     "resources/js/wayfinder/**",
     "resources/js/lib/i18n.ts",
     "resources/js/types/**",
@@ -32,7 +33,11 @@
     "redirect()->with"
   ],
   "userFacingPhpMethods": [
-    "subject"
+    "subject",
+    "line",
+    "greeting",
+    "action",
+    "salutation"
   ],
   "userFacingJsxAttrs": [
     "aria-label",
@@ -42,6 +47,18 @@
     "placeholder",
     "label",
     "description"
+  ],
+  "userFacingJsObjectKeys": [
+    "label",
+    "title",
+    "placeholder",
+    "description",
+    "heading",
+    "cta",
+    "subtitle",
+    "tooltip",
+    "helperText",
+    "errorMessage"
   ],
   "userFacingJsHelpers": [
     "toast",

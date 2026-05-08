@@ -1,20 +1,146 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
-
-    'failed' => 'Las credenciales ingresadas no coinciden con nuestros registros.',
-    'password' => 'La contraseña proporcionada es incorrecta.',
-    'throttle' => 'Demasiados intentos de inicio de sesión. Por favor intenta de nuevo en :seconds segundos.',
-
+    'ui' => [
+        'shared' => [
+            'email_label' => '',
+            'email_placeholder' => '',
+            'password_label' => '',
+            'password_placeholder' => '',
+        ],
+        'login' => [
+            'title' => '',
+            'description' => '',
+            'head_title' => '',
+            'email_label' => '',
+            'email_placeholder' => '',
+            'password_label' => '',
+            'password_placeholder' => '',
+            'remember_label' => '',
+            'or_continue_with' => '',
+            'forgot_password' => '',
+            'submit' => '',
+            'continue_google' => '',
+            'no_account_prompt' => '',
+            'sign_up' => '',
+        ],
+        'register' => [
+            'title' => '',
+            'description' => '',
+            'head_title' => '',
+            'name_label' => '',
+            'name_placeholder' => '',
+            'email_label' => '',
+            'email_placeholder' => '',
+            'password_label' => '',
+            'password_placeholder' => '',
+            'password_confirmation_label' => '',
+            'password_confirmation_placeholder' => '',
+            'submit' => '',
+            'have_account_prompt' => '',
+            'log_in' => '',
+        ],
+        'forgot_password' => [
+            'title' => '',
+            'description' => '',
+            'head_title' => '',
+            'email_label' => '',
+            'email_placeholder' => '',
+            'or_return_to' => '',
+            'log_in' => '',
+            'submit' => '',
+        ],
+        'reset_password' => [
+            'title' => '',
+            'description' => '',
+            'head_title' => '',
+            'email_label' => '',
+            'password_label' => '',
+            'password_placeholder' => '',
+            'password_confirmation_label' => '',
+            'password_confirmation_placeholder' => '',
+            'submit' => '',
+        ],
+        'confirm_password' => [
+            'title' => '',
+            'description' => '',
+            'head_title' => '',
+            'password_label' => '',
+            'password_placeholder' => '',
+            'submit' => '',
+        ],
+        'two_factor_challenge' => [
+            'head_title' => '',
+            'recovery_code_placeholder' => '',
+            'or_you_can' => '',
+            'auth_title' => '',
+            'auth_description' => '',
+            'recovery_title' => '',
+            'recovery_description' => '',
+            'toggle_to_recovery' => '',
+            'toggle_to_auth' => '',
+            'continue' => '',
+        ],
+        'verify_email' => [
+            'title' => '',
+            'description' => '',
+            'head_title' => '',
+            'link_sent' => '',
+            'resend' => '',
+            'log_out' => '',
+        ],
+        'two_factor_recovery_codes' => [
+            'a11y' => [
+                'recovery_codes' => '',
+                'loading_recovery_codes' => '',
+            ],
+            'title' => '',
+            'description' => '',
+            'hide' => '',
+            'view' => '',
+            'codes_button_suffix' => '',
+            'regenerate' => '',
+            'usage_warning_prefix' => '',
+            'usage_warning_suffix' => '',
+        ],
+        'two_factor_setup_modal' => [
+            'enabled_title' => '',
+            'enabled_description' => '',
+            'close' => '',
+            'verify_title' => '',
+            'verify_description' => '',
+            'continue' => '',
+            'enable_title' => '',
+            'enable_description' => '',
+            'manual_code_separator' => '',
+            'back' => '',
+            'confirm' => '',
+        ],
+        'login_modal' => [
+            'title' => '',
+            'description' => '',
+            'continue_email' => '',
+            'continue_google' => '',
+            'log_in' => '',
+            'credentials_description' => '',
+            'no_account_prompt' => '',
+            'sign_up' => '',
+            'register_title' => '',
+            'register_description' => '',
+            'create_account' => '',
+            'have_account_prompt' => '',
+            'sign_in' => '',
+            'name_label' => '',
+            'name_placeholder' => '',
+            'remember_label' => '',
+            'password_confirmation_label' => '',
+            'password_confirmation_placeholder' => '',
+        ],
+        'popup_callback' => [
+            'page_title' => '',
+            'success_message' => '',
+        ],
+    ],
 ];

@@ -175,25 +175,34 @@ function scanPhp(rel, source, config, findings) {
         }
     }
 
-    // ->subject('...')
-    const subjectRe = /->subject\(\s*(['"])((?:\\.|(?!\1).)*?)\1\s*\)/g
+    // ->method('...') for configured user-facing PHP methods
+    const phpMethods = config.userFacingPhpMethods ?? []
     let m
-    while ((m = subjectRe.exec(source)) !== null) {
-        const literal = m[2]
-        if (isAllowed(config.allowList ?? [], rel, literal)) continue
-        const { line, column } = lineColForOffset(source, m.index)
-        findings.push({
-            path: rel,
-            line,
-            column,
-            surface: 'mailer-subject',
-            literal,
-        })
+    for (const method of phpMethods) {
+        const methodRe = new RegExp(
+            `->${escapeRegex(method)}\\(\\s*(['"])((?:\\\\.|(?!\\1).)*?)\\1\\s*\\)`,
+            'g',
+        )
+        while ((m = methodRe.exec(source)) !== null) {
+            const literal = m[2]
+            if (looksLikeTranslationKey(literal)) continue
+            if (isAllowed(config.allowList ?? [], rel, literal)) continue
+            const { line, column } = lineColForOffset(source, m.index)
+            findings.push({
+                path: rel,
+                line,
+                column,
+                surface: `php-method:${method}`,
+                literal,
+            })
+        }
     }
 
     // FormRequest messages() return arrays
     const messagesRe = /public\s+function\s+messages\s*\(\s*\)\s*[^{]*\{([\s\S]*?)\n\s*\}/g
-    while ((m = messagesRe.exec(source)) !== null) {
+    let mm
+    while ((mm = messagesRe.exec(source)) !== null) {
+        const m = mm
         const body = m[1]
         const bodyOffset = m.index + m[0].indexOf(body)
         const arrowRe = /=>\s*(['"])((?:\\.|(?!\1).)*?)\1/g
@@ -369,7 +378,7 @@ function scanJsx(rel, source, config, findings) {
         })
     }
 
-    // 2. JSX attribute literals
+    // 2a. JSX attribute literals (string-quoted form): attr="literal"
     for (const attr of attrs) {
         const re = new RegExp(
             `(?<![A-Za-z0-9_-])${escapeRegex(attr)}=(["'])((?:\\\\.|(?!\\1).)*?)\\1`,
@@ -391,8 +400,64 @@ function scanJsx(rel, source, config, findings) {
         }
     }
 
+    // 2b. JSX attribute literals (expression form): attr={"literal"} / attr={'x'} / attr={`x`}
+    for (const attr of attrs) {
+        const re = new RegExp(
+            `(?<![A-Za-z0-9_-])${escapeRegex(attr)}=\\{\\s*(["'\`])((?:\\\\.|(?!\\1).)*?)\\1\\s*\\}`,
+            'g',
+        )
+        while ((m = re.exec(source)) !== null) {
+            const literal = m[2]
+            if (!literal || !hasUserFacingChars(literal)) continue
+            if (looksLikeTranslationKey(literal)) continue
+            if (isAllowed(allowList, rel, literal)) continue
+            const { line, column } = lineColForOffset(source, m.index)
+            findings.push({
+                path: rel,
+                line,
+                column,
+                surface: `jsx-attr-expr:${attr}`,
+                literal,
+            })
+        }
+    }
+
     // 3. Helper calls: helper("literal", …)
     scanJsHelperCalls(rel, source, helpers, allowList, findings)
+
+    // 4. Object-literal property values for configured keys.
+    //    Catches data fixtures / config arrays where literals never reach a
+    //    JSX prop directly: { label: 'Posts', description: 'Hola' }.
+    scanJsObjectKeys(rel, source, config.userFacingJsObjectKeys ?? [], allowList, findings)
+}
+
+function scanJsObjectKeys(rel, source, keys, allowList, findings) {
+    if (keys.length === 0) return
+    const keyAlt = keys.map(escapeRegex).join('|')
+    // Match: <word-boundary>key:<spaces>'literal' OR "literal" OR `literal`
+    // Leading negative lookbehind blocks identifiers like `subLabel:` and
+    // type annotations (`label?: string` doesn't quote, won't match anyway).
+    const re = new RegExp(
+        `(?<![A-Za-z0-9_$])(${keyAlt})\\s*:\\s*(["'\`])((?:\\\\.|(?!\\2).)*?)\\2`,
+        'g',
+    )
+    let m
+    while ((m = re.exec(source)) !== null) {
+        const key = m[1]
+        const literal = m[3]
+        if (!literal || !hasUserFacingChars(literal)) continue
+        if (looksLikeTranslationKey(literal)) continue
+        if (looksLikeJsExpression(literal)) continue
+        if (isAllowed(allowList, rel, literal)) continue
+        const { line, column } = lineColForOffset(source, m.index)
+        findings.push({
+            path: rel,
+            line,
+            column,
+            surface: `js-object-key:${key}`,
+            literal,
+        })
+    }
 }
 
 function scanJsHelperCalls(rel, source, helpers, allowList, findings) {

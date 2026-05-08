@@ -33,6 +33,7 @@ return [
     'stage' => [
         'unknown_target' => 'La etapa solicitada no existe.',
         'illegal_transition' => 'Esta transición no está permitida desde el estado actual.',
+        'aria_label' => 'Etapa del proyecto: :stage',
         'label' => [
             'planning' => 'Planificación',
             'in_execution' => 'En ejecución',
