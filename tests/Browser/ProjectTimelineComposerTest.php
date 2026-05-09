@@ -19,7 +19,7 @@ it('clears the textarea and refreshes the timeline after posting a status update
     visit('/login')
         ->fill('email', 'composer-test@example.com')
         ->fill('password', 'password')
-        ->press('Log in');
+        ->press('Iniciar sesión');
 
     visit("/projects/{$post->id}")
         ->click('Actualización')
