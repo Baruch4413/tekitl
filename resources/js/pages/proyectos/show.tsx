@@ -25,6 +25,7 @@ import ProjectTimeline from '@/components/ui/proyectos/ProjectTimeline';
 import { type TimelineEntry } from '@/components/ui/proyectos/ProjectTimelineEntry';
 import WelcomeSidebar from '@/components/ui/WelcomeSidebar';
 import { t } from '@/lib/i18n';
+import { cn } from '@/lib/utils';
 
 interface ProjectImage {
     id: number;
@@ -80,6 +81,8 @@ interface ProyectoShowProps {
     timeline: TimelineData;
 }
 
+type TabId = 'equipo' | 'actividad' | 'comentarios';
+
 export default function ProyectoShow({
     project,
     post,
@@ -91,6 +94,7 @@ export default function ProyectoShow({
     const isAuthenticated = !!auth?.user;
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState<TabId>('equipo');
     const [commentsList, setCommentsList] = useState<Comment[] | null>(null);
     const [commentsLoading, setCommentsLoading] = useState(false);
 
@@ -113,11 +117,19 @@ export default function ProyectoShow({
     };
 
     useEffect(() => {
-        loadComments().catch(() => {
-            setCommentsLoading(false);
-            setCommentsList([]);
-        });
-    }, []);
+        if (activeTab === 'comentarios') {
+            loadComments().catch(() => {
+                setCommentsLoading(false);
+                setCommentsList([]);
+            });
+        }
+    }, [activeTab]);
+
+    const tabs: { id: TabId; labelKey: string }[] = [
+        { id: 'equipo', labelKey: 'projects.show.tabs.equipo' },
+        { id: 'actividad', labelKey: 'projects.show.tabs.actividad' },
+        { id: 'comentarios', labelKey: 'projects.show.tabs.comentarios' },
+    ];
 
     return (
         <div className="min-h-screen bg-white dark:bg-gray-950">
@@ -171,71 +183,96 @@ export default function ProyectoShow({
                         isOwner={isOwner}
                         projectId={project.id}
                     />
+                </div>
 
-                    {/* Progress (with stage transition actions for owner) */}
-                    <div className="mt-6">
-                        <CrowdfundingProgress
-                            coins={post.coins}
-                            roles={project.roles}
-                        >
-                            {isOwner &&
-                                project.allowedTransitions.length > 0 && (
-                                    <ProjectStageActions
-                                        projectId={project.id}
-                                        allowedTransitions={
-                                            project.allowedTransitions
-                                        }
-                                    />
-                                )}
-                        </CrowdfundingProgress>
-                    </div>
+                {/* Tab navigation */}
+                <div className="border-b border-gray-200 dark:border-white/10">
+                    <nav className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+                        <ul role="list" className="-mb-px flex gap-x-6">
+                            {tabs.map((tab) => (
+                                <li key={tab.id}>
+                                    <button
+                                        type="button"
+                                        onClick={() => setActiveTab(tab.id)}
+                                        className={cn(
+                                            tab.id === activeTab
+                                                ? 'border-indigo-600 text-indigo-600 dark:border-indigo-500 dark:text-indigo-400'
+                                                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-200',
+                                            'border-b-2 px-1 py-3 text-sm font-semibold whitespace-nowrap transition-colors',
+                                        )}
+                                    >
+                                        {t(tab.labelKey)}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                </div>
 
-                    {/* Roles */}
-                    <ProjectRoles
-                        projectId={project.id}
-                        projectStage={project.stage}
-                        roles={project.roles}
-                        isOwner={isOwner}
-                        isAuthenticated={isAuthenticated}
-                        currentUserApplication={currentUserApplication}
-                    />
+                <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6 lg:px-8">
+                    {/* Tab: Equipo */}
+                    {activeTab === 'equipo' && (
+                        <div className="space-y-6">
+                            {/* Progress (with stage transition actions for owner) */}
+                            <CrowdfundingProgress
+                                coins={post.coins}
+                                roles={project.roles}
+                            >
+                                {isOwner &&
+                                    project.allowedTransitions.length > 0 && (
+                                        <ProjectStageActions
+                                            projectId={project.id}
+                                            allowedTransitions={
+                                                project.allowedTransitions
+                                            }
+                                        />
+                                    )}
+                            </CrowdfundingProgress>
 
-                    {/* Team */}
-                    <ProjectTeam roles={project.roles} />
+                            {/* Roles buscados */}
+                            <ProjectRoles
+                                projectId={project.id}
+                                projectStage={project.stage}
+                                roles={project.roles}
+                                isOwner={isOwner}
+                                isAuthenticated={isAuthenticated}
+                                currentUserApplication={currentUserApplication}
+                            />
 
-                    {/* Timeline */}
-                    <div className="mt-6 border-t border-gray-200 pt-6 dark:border-white/10">
-                        <h2 className="text-sm font-semibold text-gray-900 dark:text-white">
-                            {t('projects.show.activity')}
-                        </h2>
-                        <ProjectTimeline
-                            projectId={project.id}
-                            initialEntries={timeline.entries}
-                            initialNextCursor={timeline.nextCursor}
-                            isOwner={isOwner}
-                        />
-                    </div>
+                            {/* Equipo del proyecto */}
+                            <ProjectTeam roles={project.roles} />
+                        </div>
+                    )}
 
-                    {/* Comments */}
-                    <div className="mt-6 border-t border-gray-200 pt-6 dark:border-white/10">
-                        <h2 className="text-sm font-semibold text-gray-900 dark:text-white">
-                            {t('projects.show.comments')}
-                        </h2>
-                        {commentsLoading ? (
-                            <div className="mt-4 space-y-3">
-                                <div className="h-4 w-3/4 animate-pulse rounded bg-gray-200 dark:bg-white/10" />
-                                <div className="h-4 w-1/2 animate-pulse rounded bg-gray-200 dark:bg-white/10" />
-                            </div>
-                        ) : commentsList !== null ? (
-                            <div className="mt-4">
+                    {/* Tab: Actividad */}
+                    {activeTab === 'actividad' && (
+                        <div>
+                            <ProjectTimeline
+                                projectId={project.id}
+                                initialEntries={timeline.entries}
+                                initialNextCursor={timeline.nextCursor}
+                                isOwner={isOwner}
+                            />
+                        </div>
+                    )}
+
+                    {/* Tab: Comentarios */}
+                    {activeTab === 'comentarios' && (
+                        <div>
+                            {commentsLoading ? (
+                                <div className="mt-4 space-y-3">
+                                    <div className="h-4 w-3/4 animate-pulse rounded bg-gray-200 dark:bg-white/10" />
+                                    <div className="h-4 w-1/2 animate-pulse rounded bg-gray-200 dark:bg-white/10" />
+                                </div>
+                            ) : commentsList !== null ? (
                                 <PostComments
                                     storeUrl={projectStore.url(project.id)}
                                     comments={commentsList}
                                     onCommentAdded={refreshComments}
                                 />
-                            </div>
-                        ) : null}
-                    </div>
+                            ) : null}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

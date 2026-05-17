@@ -8,6 +8,11 @@ return [
         'title' => '',
         'activity' => '',
         'comments' => '',
+        'tabs' => [
+            'equipo' => 'Team',
+            'actividad' => 'Activity',
+            'comentarios' => 'Comments',
+        ],
     ],
     'dashboard' => [
         'title' => '',
