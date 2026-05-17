@@ -1,10 +1,10 @@
-import { useState } from 'react'
 import { Link } from '@inertiajs/react'
+import { useState } from 'react'
+import { postIndex as fetchComments, postStore } from '@/actions/App/Http/Controllers/CommentController'
+import { show as userProfile } from '@/actions/App/Http/Controllers/UserProfileController'
 import PostActions from '@/components/ui/feed/PostActions'
 import PostComments, { type Comment } from '@/components/ui/feed/PostComments'
 import UserAvatar from '@/components/ui/UserAvatar'
-import { postIndex as fetchComments, postStore } from '@/actions/App/Http/Controllers/CommentController'
-import { show as userProfile } from '@/actions/App/Http/Controllers/UserProfileController'
 
 export interface Post {
     id: number
@@ -20,20 +20,20 @@ export interface Post {
     comments: number
     coins: number
     isLiked: boolean
-    isPoweredByCurrentUser: boolean
+    isEndorsedByCurrentUser: boolean
     hasProject?: boolean
     isOwner?: boolean
 }
 
 interface FeedPostProps {
     post: Post
-    processingAction: 'potenciar' | 'comments' | 'like' | 'share' | null
+    processingAction: 'endorse' | 'comments' | 'like' | 'share' | null
     onToggleLike: (id: number) => void
-    onPotenciar: (id: number) => void
+    onEndorse: (id: number) => void
     onSetProcessing: (id: number, action: string | null) => void
 }
 
-export default function FeedPost({ post, processingAction, onToggleLike, onPotenciar, onSetProcessing }: FeedPostProps) {
+export default function FeedPost({ post, processingAction, onToggleLike, onEndorse, onSetProcessing }: FeedPostProps) {
     const [commentsOpen, setCommentsOpen] = useState(false)
     const [commentsList, setCommentsList] = useState<Comment[] | null>(null)
 
@@ -84,12 +84,12 @@ export default function FeedPost({ post, processingAction, onToggleLike, onPoten
                         comments={post.comments}
                         coins={post.coins}
                         isLiked={post.isLiked}
-                        isPoweredByCurrentUser={post.isPoweredByCurrentUser}
+                        isEndorsedByCurrentUser={post.isEndorsedByCurrentUser}
                         processingAction={processingAction}
                         commentsOpen={commentsOpen}
                         onToggleLike={onToggleLike}
                         onToggleComments={handleToggleComments}
-                        onPotenciar={onPotenciar}
+                        onEndorse={onEndorse}
                         hasProject={post.hasProject}
                         isOwner={post.isOwner}
                     />

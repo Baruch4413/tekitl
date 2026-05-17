@@ -27,9 +27,9 @@ class StoreCommentRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'body.required' => 'El comentario no puede estar vacío.',
-            'body.string' => 'El comentario debe ser texto.',
-            'body.max' => 'El comentario no puede exceder los 1000 caracteres.',
+            'body.required' => __('projects.comment_form.body_required'),
+            'body.string' => __('projects.comment_form.body_string'),
+            'body.max' => __('projects.comment_form.body_max'),
         ];
     }
 }

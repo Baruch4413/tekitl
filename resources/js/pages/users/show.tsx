@@ -1,75 +1,102 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { usePage } from '@inertiajs/react'
-import { Bars3Icon, CalendarDaysIcon } from '@heroicons/react/20/solid'
-import CoinIcon from '@/components/vector-graphics/CoinIcon'
-import SkillsIcon from '@/components/vector-graphics/SkillsIcon'
-import CommentsIcon from '@/components/vector-graphics/CommentsIcon'
-import InfoIcon from '@/components/vector-graphics/InfoIcon'
-import { formatCount } from '@/lib/utils'
-import { cn } from '@/lib/utils'
-import CoverPhoto from '@/components/ui/CoverPhoto'
-import MobileSidebar from '@/components/ui/MobileSidebar'
-import WelcomeSidebar from '@/components/ui/WelcomeSidebar'
-import ProfileAvatar from '@/components/ui/profile/ProfileAvatar'
-import PostsTab from '@/components/ui/profile/PostsTab'
-import TalentosTab, { type Talent } from '@/components/ui/profile/TalentosTab'
-import InformacionTab from '@/components/ui/profile/InformacionTab'
-import type { Post } from '@/components/ui/feed/FeedPost'
+import { Bars3Icon, CalendarDaysIcon } from '@heroicons/react/20/solid';
+import { usePage } from '@inertiajs/react';
+import { useState } from 'react';
+import CoverPhoto from '@/components/ui/CoverPhoto';
+import type { Post } from '@/components/ui/feed/FeedPost';
+import MobileSidebar from '@/components/ui/MobileSidebar';
+import InformacionTab from '@/components/ui/profile/InformacionTab';
+import PostsTab from '@/components/ui/profile/PostsTab';
+import ProfileAvatar from '@/components/ui/profile/ProfileAvatar';
+import TalentosTab, { type Talent } from '@/components/ui/profile/TalentosTab';
+import WelcomeSidebar from '@/components/ui/WelcomeSidebar';
+import CoinIcon from '@/components/vector-graphics/CoinIcon';
+import CommentsIcon from '@/components/vector-graphics/CommentsIcon';
+import InfoIcon from '@/components/vector-graphics/InfoIcon';
+import SkillsIcon from '@/components/vector-graphics/SkillsIcon';
+import { t } from '@/lib/i18n';
+import { formatCount } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 interface ProfileUser {
-    id: number
-    name: string
-    avatarUrl: string | null
-    avatarBaseUrl: string | null
-    avatarOriginalUrl: string | null
-    coverPhotoUrl: string | null
-    coverPhotoBaseUrl: string | null
-    coverPhotoPositionY: number
-    createdAt: string
-    postsCount: number
-    coins: number
-    bio: string | null
-    locationName: string | null
-    locationPlaceId: string | null
-    locationLat: number | null
-    locationLng: number | null
-    birthdate: string | null
-    publicPhone: string | null
-    contactEmail: string | null
-    languages: string[] | null
+    id: number;
+    name: string;
+    avatarUrl: string | null;
+    avatarBaseUrl: string | null;
+    avatarOriginalUrl: string | null;
+    coverPhotoUrl: string | null;
+    coverPhotoBaseUrl: string | null;
+    coverPhotoPositionY: number;
+    createdAt: string;
+    postsCount: number;
+    coins: number;
+    bio: string | null;
+    locationName: string | null;
+    locationPlaceId: string | null;
+    locationLat: number | null;
+    locationLng: number | null;
+    birthdate: string | null;
+    publicPhone: string | null;
+    contactEmail: string | null;
+    languages: string[] | null;
 }
 
 interface PaginatedPosts {
-    data: Post[]
+    data: Post[];
 }
 
-type Tab = 'posts' | 'talentos' | 'informacion'
+type Tab = 'posts' | 'talentos' | 'informacion';
 
-const tabs: { id: Tab; label: string; icon: React.FC<React.SVGProps<SVGSVGElement>> }[] = [
-    { id: 'posts', label: 'Posts', icon: (props) => <CommentsIcon {...props} /> },
-    { id: 'talentos', label: 'Talentos', icon: (props) => <SkillsIcon {...props} /> },
-    { id: 'informacion', label: 'Información', icon: (props) => <InfoIcon {...props} /> },
-]
+const tabs: {
+    id: Tab;
+    labelKey: string;
+    icon: React.FC<React.SVGProps<SVGSVGElement>>;
+}[] = [
+    {
+        id: 'posts',
+        labelKey: 'profile.show.tabs.posts',
+        icon: (props) => <CommentsIcon {...props} />,
+    },
+    {
+        id: 'talentos',
+        labelKey: 'profile.show.tabs.talentos',
+        icon: (props) => <SkillsIcon {...props} />,
+    },
+    {
+        id: 'informacion',
+        labelKey: 'profile.show.tabs.informacion',
+        icon: (props) => <InfoIcon {...props} />,
+    },
+];
 
 interface UserShowProps {
-    profileUser: ProfileUser
-    posts: PaginatedPosts
-    talents: Talent[]
-    occupations?: string[]
-    googleMapsApiKey: string | null
+    profileUser: ProfileUser;
+    posts: PaginatedPosts;
+    talents: Talent[];
+    occupations?: string[];
+    googleMapsApiKey: string | null;
 }
 
-export default function UserShow({ profileUser, posts, talents, occupations, googleMapsApiKey }: UserShowProps) {
-    const { auth } = usePage<{ auth: { user?: { id: number } } }>().props
-    const isOwner = auth.user?.id === profileUser.id
-    const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [activeTab, setActiveTab] = useState<Tab>('posts')
+export default function UserShow({
+    profileUser,
+    posts,
+    talents,
+    occupations,
+    googleMapsApiKey,
+}: UserShowProps) {
+    const { auth } = usePage<{ auth: { user?: { id: number } } }>().props;
+    const isOwner = auth.user?.id === profileUser.id;
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState<Tab>('posts');
 
     return (
         <div className="min-h-screen bg-white dark:bg-gray-950">
-            <MobileSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} currentPage="home" />
+            <MobileSidebar
+                open={sidebarOpen}
+                onClose={() => setSidebarOpen(false)}
+                currentPage="home"
+            />
 
             <div className="hidden xl:fixed xl:inset-y-0 xl:left-0 xl:z-50 xl:flex xl:w-72 xl:flex-col">
                 <WelcomeSidebar />
@@ -77,17 +104,21 @@ export default function UserShow({ profileUser, posts, talents, occupations, goo
 
             <div className="xl:pl-72">
                 {/* Mobile top bar */}
-                <div className="sticky top-0 z-40 flex h-14 items-center gap-x-4 border-b border-gray-200 bg-white/80 px-4 backdrop-blur-sm dark:border-white/5 dark:bg-gray-950/80 xl:hidden">
+                <div className="sticky top-0 z-40 flex h-14 items-center gap-x-4 border-b border-gray-200 bg-white/80 px-4 backdrop-blur-sm xl:hidden dark:border-white/5 dark:bg-gray-950/80">
                     <button
                         type="button"
                         onClick={() => setSidebarOpen(true)}
                         className="-m-2.5 p-2.5 text-gray-700 dark:text-gray-300"
                     >
-                        <span className="sr-only">Abrir menú</span>
+                        <span className="sr-only">
+                            {t('profile.show.a11y.open_menu')}
+                        </span>
                         <Bars3Icon aria-hidden className="size-5" />
                     </button>
                     <div className="flex-1 text-center">
-                        <h1 className="text-base font-bold text-gray-900 dark:text-white">{profileUser.name}</h1>
+                        <h1 className="text-base font-bold text-gray-900 dark:text-white">
+                            {profileUser.name}
+                        </h1>
                     </div>
                 </div>
 
@@ -112,7 +143,9 @@ export default function UserShow({ profileUser, posts, talents, occupations, goo
                             </div>
                             <div className="mt-6 sm:flex sm:min-w-0 sm:flex-1 sm:items-center sm:justify-end sm:pb-1">
                                 <div className="mt-6 min-w-0 flex-1">
-                                    <h1 className="truncate text-2xl font-bold text-gray-900 dark:text-white">{profileUser.name}</h1>
+                                    <h1 className="truncate text-2xl font-bold text-gray-900 dark:text-white">
+                                        {profileUser.name}
+                                    </h1>
                                 </div>
                             </div>
                         </div>
@@ -120,13 +153,20 @@ export default function UserShow({ profileUser, posts, talents, occupations, goo
                         <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-500 dark:text-gray-400">
                             <span className="flex items-center gap-x-1.5">
                                 <CalendarDaysIcon className="size-4" />
-                                Miembro desde {profileUser.createdAt}
+                                {t('profile.show.member_since')}{' '}
+                                {profileUser.createdAt}
                             </span>
                             <span className="flex items-center gap-x-1.5">
                                 <CoinIcon className="size-4" />
-                                {formatCount(profileUser.coins)} coins
+                                {formatCount(profileUser.coins)}{' '}
+                                {t('profile.show.coins')}
                             </span>
-                            <span>{profileUser.postsCount} {profileUser.postsCount === 1 ? 'post' : 'posts'}</span>
+                            <span>
+                                {profileUser.postsCount}{' '}
+                                {profileUser.postsCount === 1
+                                    ? t('profile.show.post_singular')
+                                    : t('profile.show.post_plural')}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -144,11 +184,14 @@ export default function UserShow({ profileUser, posts, talents, occupations, goo
                                             tab.id === activeTab
                                                 ? 'border-indigo-600 text-indigo-600 dark:border-indigo-500 dark:text-indigo-400'
                                                 : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-200',
-                                            'flex items-center gap-x-2 whitespace-nowrap border-b-2 px-1 py-3 text-sm font-semibold transition-colors',
+                                            'flex items-center gap-x-2 border-b-2 px-1 py-3 text-sm font-semibold whitespace-nowrap transition-colors',
                                         )}
                                     >
-                                        <tab.icon aria-hidden className="size-4 shrink-0" />
-                                        {tab.label}
+                                        <tab.icon
+                                            aria-hidden
+                                            className="size-4 shrink-0"
+                                        />
+                                        {t(tab.labelKey)}
                                     </button>
                                 </li>
                             ))}
@@ -160,7 +203,11 @@ export default function UserShow({ profileUser, posts, talents, occupations, goo
                 <div className="mx-auto max-w-5xl">
                     {activeTab === 'posts' && <PostsTab posts={posts} />}
                     {activeTab === 'talentos' && (
-                        <TalentosTab talents={talents} occupations={occupations} isOwner={isOwner} />
+                        <TalentosTab
+                            talents={talents}
+                            occupations={occupations}
+                            isOwner={isOwner}
+                        />
                     )}
                     {activeTab === 'informacion' && (
                         <InformacionTab
@@ -182,5 +229,5 @@ export default function UserShow({ profileUser, posts, talents, occupations, goo
                 </div>
             </div>
         </div>
-    )
+    );
 }

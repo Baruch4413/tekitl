@@ -1,0 +1,436 @@
+[
+  {
+    "path": "resources/js/components/two-factor-recovery-codes.tsx",
+    "line": 115,
+    "column": 37,
+    "surface": "jsx-attr:aria-label",
+    "literal": "Recovery codes"
+  },
+  {
+    "path": "resources/js/components/two-factor-recovery-codes.tsx",
+    "line": 130,
+    "column": 45,
+    "surface": "jsx-attr:aria-label",
+    "literal": "Loading recovery codes"
+  },
+  {
+    "path": "resources/js/components/ui/LoginModal.tsx",
+    "line": 70,
+    "column": 42,
+    "surface": "jsx-child",
+    "literal": "Inicia sesión"
+  },
+  {
+    "path": "resources/js/components/ui/LoginModal.tsx",
+    "line": 127,
+    "column": 70,
+    "surface": "jsx-child",
+    "literal": "Correo electrónico"
+  },
+  {
+    "path": "resources/js/components/ui/LoginModal.tsx",
+    "line": 135,
+    "column": 45,
+    "surface": "jsx-attr:placeholder",
+    "literal": "correo@ejemplo.com"
+  },
+  {
+    "path": "resources/js/components/ui/LoginModal.tsx",
+    "line": 140,
+    "column": 73,
+    "surface": "jsx-child",
+    "literal": "Contraseña"
+  },
+  {
+    "path": "resources/js/components/ui/LoginModal.tsx",
+    "line": 147,
+    "column": 45,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Contraseña"
+  },
+  {
+    "path": "resources/js/components/ui/LoginModal.tsx",
+    "line": 153,
+    "column": 73,
+    "surface": "jsx-child",
+    "literal": "Recordarme"
+  },
+  {
+    "path": "resources/js/components/ui/LoginModal.tsx",
+    "line": 200,
+    "column": 72,
+    "surface": "jsx-child",
+    "literal": "Nombre"
+  },
+  {
+    "path": "resources/js/components/ui/LoginModal.tsx",
+    "line": 208,
+    "column": 45,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Tu nombre"
+  },
+  {
+    "path": "resources/js/components/ui/LoginModal.tsx",
+    "line": 213,
+    "column": 73,
+    "surface": "jsx-child",
+    "literal": "Correo electrónico"
+  },
+  {
+    "path": "resources/js/components/ui/LoginModal.tsx",
+    "line": 220,
+    "column": 45,
+    "surface": "jsx-attr:placeholder",
+    "literal": "correo@ejemplo.com"
+  },
+  {
+    "path": "resources/js/components/ui/LoginModal.tsx",
+    "line": 225,
+    "column": 76,
+    "surface": "jsx-child",
+    "literal": "Contraseña"
+  },
+  {
+    "path": "resources/js/components/ui/LoginModal.tsx",
+    "line": 232,
+    "column": 45,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Contraseña"
+  },
+  {
+    "path": "resources/js/components/ui/LoginModal.tsx",
+    "line": 237,
+    "column": 89,
+    "surface": "jsx-child",
+    "literal": "Confirmar contraseña"
+  },
+  {
+    "path": "resources/js/components/ui/LoginModal.tsx",
+    "line": 244,
+    "column": 45,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Repite la contraseña"
+  },
+  {
+    "path": "resources/js/pages/auth/confirm-password.tsx",
+    "line": 13,
+    "column": 13,
+    "surface": "jsx-attr:title",
+    "literal": "Confirm your password"
+  },
+  {
+    "path": "resources/js/pages/auth/confirm-password.tsx",
+    "line": 14,
+    "column": 13,
+    "surface": "jsx-attr:description",
+    "literal": "This is a secure area of the application. Please confirm your password before continuing."
+  },
+  {
+    "path": "resources/js/pages/auth/confirm-password.tsx",
+    "line": 16,
+    "column": 19,
+    "surface": "jsx-attr:title",
+    "literal": "Confirm password"
+  },
+  {
+    "path": "resources/js/pages/auth/confirm-password.tsx",
+    "line": 22,
+    "column": 55,
+    "surface": "jsx-child",
+    "literal": "Password"
+  },
+  {
+    "path": "resources/js/pages/auth/confirm-password.tsx",
+    "line": 27,
+    "column": 33,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Password"
+  },
+  {
+    "path": "resources/js/pages/auth/forgot-password.tsx",
+    "line": 16,
+    "column": 13,
+    "surface": "jsx-attr:title",
+    "literal": "Forgot password"
+  },
+  {
+    "path": "resources/js/pages/auth/forgot-password.tsx",
+    "line": 17,
+    "column": 13,
+    "surface": "jsx-attr:description",
+    "literal": "Enter your email to receive a password reset link"
+  },
+  {
+    "path": "resources/js/pages/auth/forgot-password.tsx",
+    "line": 19,
+    "column": 19,
+    "surface": "jsx-attr:title",
+    "literal": "Forgot password"
+  },
+  {
+    "path": "resources/js/pages/auth/forgot-password.tsx",
+    "line": 32,
+    "column": 56,
+    "surface": "jsx-child",
+    "literal": "Email address"
+  },
+  {
+    "path": "resources/js/pages/auth/forgot-password.tsx",
+    "line": 39,
+    "column": 37,
+    "surface": "jsx-attr:placeholder",
+    "literal": "email@example.com"
+  },
+  {
+    "path": "resources/js/pages/auth/forgot-password.tsx",
+    "line": 62,
+    "column": 27,
+    "surface": "jsx-child",
+    "literal": "Or, return to"
+  },
+  {
+    "path": "resources/js/pages/auth/forgot-password.tsx",
+    "line": 63,
+    "column": 46,
+    "surface": "jsx-child",
+    "literal": "log in"
+  },
+  {
+    "path": "resources/js/pages/auth/login.tsx",
+    "line": 28,
+    "column": 13,
+    "surface": "jsx-attr:title",
+    "literal": "Log in to your account"
+  },
+  {
+    "path": "resources/js/pages/auth/login.tsx",
+    "line": 29,
+    "column": 13,
+    "surface": "jsx-attr:description",
+    "literal": "Enter your email and password below to log in"
+  },
+  {
+    "path": "resources/js/pages/auth/login.tsx",
+    "line": 31,
+    "column": 19,
+    "surface": "jsx-attr:title",
+    "literal": "Log in"
+  },
+  {
+    "path": "resources/js/pages/auth/login.tsx",
+    "line": 42,
+    "column": 56,
+    "surface": "jsx-child",
+    "literal": "Email address"
+  },
+  {
+    "path": "resources/js/pages/auth/login.tsx",
+    "line": 51,
+    "column": 37,
+    "surface": "jsx-attr:placeholder",
+    "literal": "email@example.com"
+  },
+  {
+    "path": "resources/js/pages/auth/login.tsx",
+    "line": 58,
+    "column": 63,
+    "surface": "jsx-child",
+    "literal": "Password"
+  },
+  {
+    "path": "resources/js/pages/auth/login.tsx",
+    "line": 76,
+    "column": 37,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Password"
+  },
+  {
+    "path": "resources/js/pages/auth/login.tsx",
+    "line": 87,
+    "column": 59,
+    "surface": "jsx-child",
+    "literal": "Remember me"
+  },
+  {
+    "path": "resources/js/pages/auth/login.tsx",
+    "line": 106,
+    "column": 96,
+    "surface": "jsx-child",
+    "literal": "Or continue with"
+  },
+  {
+    "path": "resources/js/pages/auth/register.tsx",
+    "line": 15,
+    "column": 13,
+    "surface": "jsx-attr:title",
+    "literal": "Create an account"
+  },
+  {
+    "path": "resources/js/pages/auth/register.tsx",
+    "line": 16,
+    "column": 13,
+    "surface": "jsx-attr:description",
+    "literal": "Enter your details below to create your account"
+  },
+  {
+    "path": "resources/js/pages/auth/register.tsx",
+    "line": 18,
+    "column": 19,
+    "surface": "jsx-attr:title",
+    "literal": "Register"
+  },
+  {
+    "path": "resources/js/pages/auth/register.tsx",
+    "line": 29,
+    "column": 55,
+    "surface": "jsx-child",
+    "literal": "Name"
+  },
+  {
+    "path": "resources/js/pages/auth/register.tsx",
+    "line": 38,
+    "column": 37,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Full name"
+  },
+  {
+    "path": "resources/js/pages/auth/register.tsx",
+    "line": 47,
+    "column": 56,
+    "surface": "jsx-child",
+    "literal": "Email address"
+  },
+  {
+    "path": "resources/js/pages/auth/register.tsx",
+    "line": 55,
+    "column": 37,
+    "surface": "jsx-attr:placeholder",
+    "literal": "email@example.com"
+  },
+  {
+    "path": "resources/js/pages/auth/register.tsx",
+    "line": 61,
+    "column": 59,
+    "surface": "jsx-child",
+    "literal": "Password"
+  },
+  {
+    "path": "resources/js/pages/auth/register.tsx",
+    "line": 69,
+    "column": 37,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Password"
+  },
+  {
+    "path": "resources/js/pages/auth/register.tsx",
+    "line": 85,
+    "column": 37,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Confirm password"
+  },
+  {
+    "path": "resources/js/pages/auth/reset-password.tsx",
+    "line": 18,
+    "column": 13,
+    "surface": "jsx-attr:title",
+    "literal": "Reset password"
+  },
+  {
+    "path": "resources/js/pages/auth/reset-password.tsx",
+    "line": 19,
+    "column": 13,
+    "surface": "jsx-attr:description",
+    "literal": "Please enter your new password below"
+  },
+  {
+    "path": "resources/js/pages/auth/reset-password.tsx",
+    "line": 21,
+    "column": 19,
+    "surface": "jsx-attr:title",
+    "literal": "Reset password"
+  },
+  {
+    "path": "resources/js/pages/auth/reset-password.tsx",
+    "line": 31,
+    "column": 52,
+    "surface": "jsx-child",
+    "literal": "Email"
+  },
+  {
+    "path": "resources/js/pages/auth/reset-password.tsx",
+    "line": 48,
+    "column": 55,
+    "surface": "jsx-child",
+    "literal": "Password"
+  },
+  {
+    "path": "resources/js/pages/auth/reset-password.tsx",
+    "line": 56,
+    "column": 33,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Password"
+  },
+  {
+    "path": "resources/js/pages/auth/reset-password.tsx",
+    "line": 71,
+    "column": 33,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Confirm password"
+  },
+  {
+    "path": "resources/js/pages/auth/two-factor-challenge.tsx",
+    "line": 53,
+    "column": 19,
+    "surface": "jsx-attr:title",
+    "literal": "Two-Factor Authentication"
+  },
+  {
+    "path": "resources/js/pages/auth/two-factor-challenge.tsx",
+    "line": 69,
+    "column": 41,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Enter recovery code"
+  },
+  {
+    "path": "resources/js/pages/auth/two-factor-challenge.tsx",
+    "line": 114,
+    "column": 39,
+    "surface": "jsx-child",
+    "literal": "or you can"
+  },
+  {
+    "path": "resources/js/pages/auth/verify-email.tsx",
+    "line": 13,
+    "column": 13,
+    "surface": "jsx-attr:title",
+    "literal": "Verify email"
+  },
+  {
+    "path": "resources/js/pages/auth/verify-email.tsx",
+    "line": 14,
+    "column": 13,
+    "surface": "jsx-attr:description",
+    "literal": "Please verify your email address by clicking on the link we just emailed to you."
+  },
+  {
+    "path": "resources/js/pages/auth/verify-email.tsx",
+    "line": 16,
+    "column": 19,
+    "surface": "jsx-attr:title",
+    "literal": "Email verification"
+  },
+  {
+    "path": "resources/views/auth/popup-callback.blade.php",
+    "line": 10,
+    "column": 1,
+    "surface": "blade-text",
+    "literal": "Autenticación exitosa"
+  },
+  {
+    "path": "resources/views/auth/popup-callback.blade.php",
+    "line": 17,
+    "column": 1,
+    "surface": "blade-text",
+    "literal": "Autenticación exitosa. Puedes cerrar esta ventana."
+  }
+]

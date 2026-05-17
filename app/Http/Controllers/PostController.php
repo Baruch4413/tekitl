@@ -23,7 +23,7 @@ class PostController extends Controller
             ])
             ->when($userId, fn ($query) => $query
                 ->withExists(['reactions as is_liked' => fn ($q) => $q->where('user_id', $userId)->where('type', ReactionType::Like)])
-                ->withExists(['reactions as is_powered_by_current_user' => fn ($q) => $q->where('user_id', $userId)->where('type', ReactionType::Potenciar)])
+                ->withExists(['reactions as is_endorsed_by_current_user' => fn ($q) => $q->where('user_id', $userId)->where('type', ReactionType::Endorse)])
             )
             ->latest()
             ->cursorPaginate(15);
@@ -37,7 +37,7 @@ class PostController extends Controller
             'coins' => $post->coins,
             'likes' => $post->likes_count,
             'isLiked' => (bool) $post->is_liked,
-            'isPoweredByCurrentUser' => (bool) $post->is_powered_by_current_user,
+            'isEndorsedByCurrentUser' => (bool) $post->is_endorsed_by_current_user,
             'comments' => $post->comments_count,
             'hasProject' => $post->project !== null,
             'isOwner' => $userId && $userId === $post->user_id,
@@ -55,13 +55,13 @@ class PostController extends Controller
         return back();
     }
 
-    public function potenciar(Post $post): RedirectResponse
+    public function endorse(Post $post): RedirectResponse
     {
         $post->increment('coins', 10);
 
         $post->reactions()->firstOrCreate([
             'user_id' => Auth::id(),
-            'type' => ReactionType::Potenciar,
+            'type' => ReactionType::Endorse,
         ]);
 
         return back();

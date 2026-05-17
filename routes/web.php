@@ -23,31 +23,31 @@ Route::post('/posts', [PostController::class, 'store'])->middleware('auth')->nam
 Route::get('/posts/{post}/comments', [CommentController::class, 'postIndex'])->name('comments.index');
 Route::post('/posts/{post}/comments', [CommentController::class, 'postStore'])->middleware('auth')->name('comments.store');
 
-Route::post('/posts/{post}/potenciar', [PostController::class, 'potenciar'])->middleware('auth')->name('posts.potenciar');
+Route::post('/posts/{post}/endorse', [PostController::class, 'endorse'])->middleware('auth')->name('posts.endorse');
 
 Route::post('/posts/{post}/like', [PostController::class, 'toggleLike'])->middleware('auth')->name('posts.like');
 
-Route::get('/proyectos/{post}', [ProjectController::class, 'show'])->name('proyectos.show');
-Route::patch('/proyectos/{project}', [ProjectController::class, 'update'])->middleware('auth')->name('proyectos.update');
-Route::post('/proyectos/{project}/images', [ProjectController::class, 'uploadImage'])->middleware('auth')->name('proyectos.images.upload');
-Route::patch('/proyectos/{project}/images/{image}', [ProjectController::class, 'updateImage'])->middleware('auth')->name('proyectos.images.update');
-Route::delete('/proyectos/{project}/images/{image}', [ProjectController::class, 'deleteImage'])->middleware('auth')->name('proyectos.images.delete');
-Route::post('/proyectos/{project}/roles', [ProjectRoleController::class, 'store'])->middleware('auth')->name('proyectos.roles.store');
-Route::patch('/proyectos/{project}/roles/{role}', [ProjectRoleController::class, 'update'])->middleware('auth')->name('proyectos.roles.update');
-Route::delete('/proyectos/{project}/roles/{role}', [ProjectRoleController::class, 'destroy'])->middleware('auth')->name('proyectos.roles.destroy');
+Route::get('/projects/{post}', [ProjectController::class, 'show'])->name('proyectos.show');
+Route::patch('/projects/{project}', [ProjectController::class, 'update'])->middleware('auth')->name('proyectos.update');
+Route::post('/projects/{project}/images', [ProjectController::class, 'uploadImage'])->middleware('auth')->name('proyectos.images.upload');
+Route::patch('/projects/{project}/images/{image}', [ProjectController::class, 'updateImage'])->middleware('auth')->name('proyectos.images.update');
+Route::delete('/projects/{project}/images/{image}', [ProjectController::class, 'deleteImage'])->middleware('auth')->name('proyectos.images.delete');
+Route::post('/projects/{project}/roles', [ProjectRoleController::class, 'store'])->middleware('auth')->name('proyectos.roles.store');
+Route::patch('/projects/{project}/roles/{role}', [ProjectRoleController::class, 'update'])->middleware('auth')->name('proyectos.roles.update');
+Route::delete('/projects/{project}/roles/{role}', [ProjectRoleController::class, 'destroy'])->middleware('auth')->name('proyectos.roles.destroy');
 
-Route::post('/proyectos/{project}/stage', [ProjectStageController::class, 'store'])->middleware('auth')->name('proyectos.stage.store');
+Route::post('/projects/{project}/stage', [ProjectStageController::class, 'store'])->middleware('auth')->name('proyectos.stage.store');
 
-Route::get('/proyectos/{project}/timeline', [ProjectTimelineController::class, 'index'])->name('proyectos.timeline.index');
-Route::post('/proyectos/{project}/timeline/milestones', [ProjectTimelineController::class, 'storeMilestone'])->middleware('auth')->name('proyectos.timeline.milestones.store');
-Route::post('/proyectos/{project}/timeline/status-updates', [ProjectTimelineController::class, 'storeStatusUpdate'])->middleware('auth')->name('proyectos.timeline.status-updates.store');
+Route::get('/projects/{project}/timeline', [ProjectTimelineController::class, 'index'])->name('proyectos.timeline.index');
+Route::post('/projects/{project}/timeline/milestones', [ProjectTimelineController::class, 'storeMilestone'])->middleware('auth')->name('proyectos.timeline.milestones.store');
+Route::post('/projects/{project}/timeline/status-updates', [ProjectTimelineController::class, 'storeStatusUpdate'])->middleware('auth')->name('proyectos.timeline.status-updates.store');
 
-Route::post('/proyectos/{project}/roles/{role}/volunteers', [ProjectVolunteerController::class, 'store'])->middleware('auth')->name('proyectos.volunteers.store');
-Route::patch('/proyectos/{project}/volunteers/{volunteer}', [ProjectVolunteerController::class, 'update'])->middleware('auth')->name('proyectos.volunteers.update');
-Route::delete('/proyectos/{project}/volunteers/{volunteer}', [ProjectVolunteerController::class, 'destroy'])->middleware('auth')->name('proyectos.volunteers.destroy');
+Route::post('/projects/{project}/roles/{role}/volunteers', [ProjectVolunteerController::class, 'store'])->middleware('auth')->name('proyectos.volunteers.store');
+Route::patch('/projects/{project}/volunteers/{volunteer}', [ProjectVolunteerController::class, 'update'])->middleware('auth')->name('proyectos.volunteers.update');
+Route::delete('/projects/{project}/volunteers/{volunteer}', [ProjectVolunteerController::class, 'destroy'])->middleware('auth')->name('proyectos.volunteers.destroy');
 
-Route::get('/proyectos/{project}/comments', [CommentController::class, 'projectIndex'])->name('proyectos.comments.index');
-Route::post('/proyectos/{project}/comments', [CommentController::class, 'projectStore'])->middleware('auth')->name('proyectos.comments.store');
+Route::get('/projects/{project}/comments', [CommentController::class, 'projectIndex'])->name('proyectos.comments.index');
+Route::post('/projects/{project}/comments', [CommentController::class, 'projectStore'])->middleware('auth')->name('proyectos.comments.store');
 
 Route::get('/users/{user}', [UserProfileController::class, 'show'])->name('users.show');
 Route::post('/users/cover-photo', [UserProfileController::class, 'uploadCoverPhoto'])->middleware('auth')->name('users.cover-photo.upload');

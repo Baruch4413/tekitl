@@ -2,10 +2,10 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <title>Autenticación exitosa</title>
+    <title>@lang('auth.ui.popup_callback.page_title')</title>
 </head>
 <body>
-    <p>Autenticación exitosa. Puedes cerrar esta ventana.</p>
+    <p>@lang('auth.ui.popup_callback.success_message')</p>
     <script>
         if (window.opener) {
             window.opener.postMessage({ type: 'auth-success' }, {!! json_encode(config('app.url')) !!});

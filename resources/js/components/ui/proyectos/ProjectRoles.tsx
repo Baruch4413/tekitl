@@ -1,10 +1,8 @@
-import { useState } from 'react'
-import { router } from '@inertiajs/react'
 import { PencilIcon, TrashIcon, PlusIcon, XMarkIcon, CheckIcon, ExclamationTriangleIcon } from '@heroicons/react/20/solid'
 import { UserGroupIcon } from '@heroicons/react/24/outline'
+import { router } from '@inertiajs/react'
+import { useState } from 'react'
 import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import {
     store as storeRole,
     update as updateRole,
@@ -15,6 +13,9 @@ import {
     update as reviewVolunteer,
     destroy as removeVolunteer,
 } from '@/actions/App/Http/Controllers/ProjectVolunteerController'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { t } from '@/lib/i18n'
 
 export interface Volunteer {
     id: number
@@ -82,14 +83,14 @@ function RoleForm({
         <div className="space-y-2 rounded-xl border border-indigo-200 bg-indigo-50/50 p-3 dark:border-indigo-500/20 dark:bg-indigo-500/5">
             <input
                 type="text"
-                placeholder="Título del rol *"
+                placeholder={t('projects.roles.title_placeholder')}
                 value={form.title}
                 onChange={(e) => set('title', e.target.value)}
                 autoFocus
                 className="w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder-white/30"
             />
             <textarea
-                placeholder="Descripción (opcional)"
+                placeholder={t('projects.roles.description_placeholder')}
                 value={form.description}
                 onChange={(e) => set('description', e.target.value)}
                 rows={2}
@@ -97,7 +98,7 @@ function RoleForm({
             />
             <div className="flex gap-x-2">
                 <div className="flex-1">
-                    <label className="block text-xs text-gray-500 dark:text-gray-400">Plazas</label>
+                    <label className="block text-xs text-gray-500 dark:text-gray-400">{t('projects.roles.slots')}</label>
                     <input
                         type="number"
                         min={1}
@@ -108,7 +109,7 @@ function RoleForm({
                     />
                 </div>
                 <div className="flex-1">
-                    <label className="block text-xs text-gray-500 dark:text-gray-400">Horas estimadas</label>
+                    <label className="block text-xs text-gray-500 dark:text-gray-400">{t('projects.roles.hours_estimated')}</label>
                     <input
                         type="number"
                         min={1}
@@ -167,7 +168,7 @@ function ApplicantReviewModal({
         <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Solicitud de voluntariado</DialogTitle>
+                    <DialogTitle>{t('projects.roles.application_dialog_title')}</DialogTitle>
                     <DialogDescription>
                         Revisión para el rol: <span className="font-medium text-gray-900 dark:text-white">{roleName}</span>
                     </DialogDescription>
@@ -184,7 +185,7 @@ function ApplicantReviewModal({
                             )}
                             <div>
                                 <p className="font-medium text-gray-900 dark:text-white">{applicant.name}</p>
-                                <p className="text-sm text-amber-600 dark:text-amber-400">Solicitud pendiente</p>
+                                <p className="text-sm text-amber-600 dark:text-amber-400">{t('projects.roles.pending_application')}</p>
                             </div>
                         </div>
                         <div className="flex gap-x-3 pt-2">
@@ -301,7 +302,7 @@ export default function ProjectRoles({
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-x-2">
                         <UserGroupIcon className="size-5 text-gray-500 dark:text-gray-400" />
-                        <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Roles buscados</h3>
+                        <h3 className="text-sm font-semibold text-gray-900 dark:text-white">{t('projects.roles.looking_for_roles')}</h3>
                     </div>
                     {isOwner && !adding && (
                         <button
@@ -394,7 +395,7 @@ export default function ProjectRoles({
                                             )}
 
                                             {currentUserApplication?.roleId === role.id && currentUserApplication.status === 'active' && (
-                                                <span className="text-xs font-medium text-green-600 dark:text-green-400">Miembro ✓</span>
+                                                <span className="text-xs font-medium text-green-600 dark:text-green-400">{t('projects.roles.member')}</span>
                                             )}
                                         </div>
                                     </div>
@@ -417,7 +418,7 @@ export default function ProjectRoles({
                                                         </div>
                                                     )}
                                                     <span className="text-xs text-gray-700 dark:text-gray-300">{applicant.name}</span>
-                                                    <span className="text-xs text-amber-600 dark:text-amber-400">— pendiente de aprobación</span>
+                                                    <span className="text-xs text-amber-600 dark:text-amber-400">{t('projects.roles.pending_approval_suffix')}</span>
                                                 </button>
                                             ))}
                                         </div>

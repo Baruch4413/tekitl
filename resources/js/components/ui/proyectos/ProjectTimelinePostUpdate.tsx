@@ -5,6 +5,7 @@ import {
     storeStatusUpdate,
 } from '@/actions/App/Http/Controllers/ProjectTimelineController'
 import { Button } from '@/components/ui/button'
+import { t } from '@/lib/i18n'
 
 interface ProjectTimelinePostUpdateProps {
     projectId: number
@@ -80,7 +81,7 @@ export default function ProjectTimelinePostUpdate({
                             type="text"
                             name="title"
                             maxLength={MILESTONE_LIMIT}
-                            placeholder="¿Qué hito alcanzaron?"
+                            placeholder={t('projects.timeline_post_update.milestone_placeholder')}
                             value={milestoneForm.data.title}
                             onChange={(e) => milestoneForm.setData('title', e.target.value)}
                             className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-gray-500"
@@ -106,7 +107,7 @@ export default function ProjectTimelinePostUpdate({
                             name="body"
                             maxLength={STATUS_LIMIT}
                             rows={4}
-                            placeholder="Compartí una actualización con la comunidad…"
+                            placeholder={t('projects.timeline_post_update.status_placeholder')}
                             value={statusForm.data.body}
                             onChange={(e) => statusForm.setData('body', e.target.value)}
                             className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-gray-500"

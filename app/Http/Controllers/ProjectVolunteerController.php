@@ -18,7 +18,7 @@ class ProjectVolunteerController extends Controller
         abort_if(
             ! in_array($project->stage, [ProjectStage::Planning, ProjectStage::InExecution], true),
             403,
-            'No se aceptan postulaciones en este momento.',
+            __('projects.volunteers.applications_closed'),
         );
 
         $role->volunteers()->create([

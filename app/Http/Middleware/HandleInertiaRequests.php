@@ -2,11 +2,17 @@
 
 namespace App\Http\Middleware;
 
+use App\Support\I18n\TranslationLoader;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
 {
+    public function __construct(protected TranslationLoader $translationLoader)
+    {
+        //
+    }
+
     /**
      * The root template that's loaded on the first page visit.
      *
@@ -47,6 +53,8 @@ class HandleInertiaRequests extends Middleware
                 'error' => $request->session()->get('error'),
                 'loginRequired' => $request->session()->get('loginRequired'),
             ],
+            'locale' => fn (): string => app()->getLocale(),
+            'translations' => fn (): array => $this->translationLoader->load(app()->getLocale()),
         ];
     }
 }

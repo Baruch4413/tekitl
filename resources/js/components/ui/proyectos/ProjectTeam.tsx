@@ -1,4 +1,5 @@
 import { type ProjectRole, type Volunteer } from '@/components/ui/proyectos/ProjectRoles'
+import { t } from '@/lib/i18n'
 
 interface TeamMember extends Volunteer {
     roleTitle: string
@@ -19,7 +20,7 @@ export default function ProjectTeam({ roles }: ProjectTeamProps) {
 
     return (
         <div className="mt-6 rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-white/5">
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Equipo del proyecto</h3>
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white">{t('projects.team.title')}</h3>
             <ul
                 role="list"
                 className="mt-4 grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4 md:grid-cols-5"

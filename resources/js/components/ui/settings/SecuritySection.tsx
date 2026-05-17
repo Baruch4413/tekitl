@@ -1,26 +1,27 @@
-import SettingsSection from '@/components/ui/settings/SettingsSection'
 import SettingsRow from '@/components/ui/settings/SettingsRow'
+import SettingsSection from '@/components/ui/settings/SettingsSection'
+import { t } from '@/lib/i18n'
 
-export default function SeguridadSection() {
+export default function SecuritySection() {
     return (
         <div className="space-y-10">
             <SettingsSection
-                title="Contraseña"
-                description="Actualiza la contraseña asociada a tu cuenta."
+                title={t('settings.seguridad.password.title')}
+                description={t('settings.seguridad.password.description')}
             >
                 <dl className="mt-6 divide-y divide-gray-100 border-t border-gray-200 text-sm/6 dark:divide-white/5 dark:border-white/5">
                     <SettingsRow
-                        label="Contraseña"
+                        label={t('settings.seguridad.password.label')}
                         value="••••••••"
                         onEdit={() => {}}
-                        editLabel="Cambiar"
+                        editLabel={t('settings.seguridad.password.edit_label')}
                     />
                 </dl>
             </SettingsSection>
 
             <SettingsSection
-                title="Sesiones activas"
-                description="Cierra sesión en todos los demás dispositivos donde hayas iniciado sesión."
+                title={t('settings.seguridad.sessions.title')}
+                description={t('settings.seguridad.sessions.description')}
             >
                 <dl className="mt-6 divide-y divide-gray-100 border-t border-gray-200 text-sm/6 dark:divide-white/5 dark:border-white/5">
                     <div className="py-6">
@@ -28,7 +29,7 @@ export default function SeguridadSection() {
                             type="button"
                             className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 dark:bg-red-500 dark:shadow-none dark:hover:bg-red-400"
                         >
-                            Cerrar otras sesiones
+                            {t('settings.seguridad.sessions.logout_button')}
                         </button>
                     </div>
                 </dl>

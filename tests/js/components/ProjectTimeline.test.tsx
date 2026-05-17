@@ -13,6 +13,24 @@ vi.mock('@inertiajs/react', () => ({
         processing: false,
         errors: {},
     }),
+    usePage: () => ({
+        props: {
+            locale: 'es',
+            translations: {
+                projects: {
+                    timeline_entry: {
+                        milestone: 'Hito:',
+                        status_update: 'Actualización:',
+                        stage_transition_separator: 'a',
+                    },
+                    timeline_post_update: {
+                        milestone_placeholder: '¿Qué hito alcanzaron?',
+                        status_placeholder: 'Compartí una actualización con la comunidad…',
+                    },
+                },
+            },
+        },
+    }),
 }))
 
 const makeEntry = (id: number, body: string): TimelineEntry => ({

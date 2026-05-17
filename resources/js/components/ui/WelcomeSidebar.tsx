@@ -1,4 +1,3 @@
-import { Link, usePage } from '@inertiajs/react'
 import {
     HomeIcon,
     BellIcon,
@@ -9,6 +8,8 @@ import {
     MagnifyingGlassIcon,
 } from '@heroicons/react/24/outline'
 import { PlusIcon } from '@heroicons/react/24/outline'
+import { Link, usePage } from '@inertiajs/react'
+import { t } from '@/lib/i18n'
 import { home, configuracion } from '@/routes/index'
 import type { Auth } from '@/types/auth'
 
@@ -33,13 +34,13 @@ export default function WelcomeSidebar({ currentPage = 'home' }: WelcomeSidebarP
     const user = auth?.user
 
     const navigation = [
-        { id: 'home' as CurrentPage, name: 'Inicio', href: home(), icon: HomeIcon },
-        { id: null, name: 'Explorar', href: '#', icon: MagnifyingGlassIcon },
-        { id: null, name: 'Notificaciones', href: '#', icon: BellIcon },
-        { id: null, name: 'Mensajes', href: '#', icon: EnvelopeIcon },
-        { id: null, name: 'Guardados', href: '#', icon: BookmarkIcon },
-        { id: null, name: 'Perfil', href: '#', icon: UserIcon },
-        { id: 'configuracion' as CurrentPage, name: 'Configuración', href: configuracion(), icon: Cog6ToothIcon },
+        { id: 'home' as CurrentPage, name: t('layout.welcome_sidebar.home'), href: home(), icon: HomeIcon },
+        { id: null, name: t('layout.welcome_sidebar.explore'), href: '#', icon: MagnifyingGlassIcon },
+        { id: null, name: t('layout.welcome_sidebar.notifications'), href: '#', icon: BellIcon },
+        { id: null, name: t('layout.welcome_sidebar.messages'), href: '#', icon: EnvelopeIcon },
+        { id: null, name: t('layout.welcome_sidebar.bookmarks'), href: '#', icon: BookmarkIcon },
+        { id: null, name: t('layout.welcome_sidebar.profile'), href: '#', icon: UserIcon },
+        { id: 'configuracion' as CurrentPage, name: t('layout.welcome_sidebar.settings'), href: configuracion(), icon: Cog6ToothIcon },
     ]
 
     return (
@@ -90,7 +91,7 @@ export default function WelcomeSidebar({ currentPage = 'home' }: WelcomeSidebarP
 
                 <div className="mt-4 border-t border-gray-100 pt-4 dark:border-white/5">
                     <p className="px-3 text-xs font-semibold tracking-wider text-gray-400 uppercase dark:text-gray-500">
-                        Comunidades
+                        {t('layout.welcome_sidebar.communities')}
                     </p>
                     <ul role="list" className="mt-2 space-y-1">
                         {communities.map((c) => (
@@ -120,7 +121,7 @@ export default function WelcomeSidebar({ currentPage = 'home' }: WelcomeSidebarP
                         className="flex w-full items-center justify-center gap-x-2 rounded-full bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-xs transition-colors hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                         <PlusIcon className="size-5" />
-                        Nuevo post
+                        {t('layout.welcome_sidebar.new_post')}
                     </button>
                 </div>
 
@@ -151,7 +152,7 @@ export default function WelcomeSidebar({ currentPage = 'home' }: WelcomeSidebarP
                             href="/auth/login"
                             className="flex items-center gap-x-3 rounded-full px-3 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/5"
                         >
-                            Iniciar sesión
+                            {t('layout.welcome_sidebar.log_in')}
                         </Link>
                     )}
                 </div>

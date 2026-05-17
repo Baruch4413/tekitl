@@ -1,13 +1,14 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
-import { router } from '@inertiajs/react'
 import { PlusIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/20/solid'
+import { router } from '@inertiajs/react'
+import { useState, useRef, useEffect } from 'react'
 import { toast } from 'sonner'
-import SkillsIcon from '@/components/vector-graphics/SkillsIcon'
+import { store, update, destroy } from '@/actions/App/Http/Controllers/UserTalentController'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog'
 import ExperienceSlider from '@/components/ui/profile/ExperienceSlider'
-import { store, update, destroy } from '@/actions/App/Http/Controllers/UserTalentController'
+import SkillsIcon from '@/components/vector-graphics/SkillsIcon'
+import { t } from '@/lib/i18n'
 
 export interface Talent {
     id: number
@@ -17,17 +18,17 @@ export interface Talent {
 }
 
 const confidenceLevels = [
-    { value: 'aprendiz', label: 'Aprendiz', color: 'bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-400/10 dark:text-amber-400 dark:ring-amber-400/20' },
-    { value: 'autosuficiente', label: 'Autosuficiente', color: 'bg-blue-50 text-blue-700 ring-blue-600/20 dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/20' },
-    { value: 'maestro', label: 'Maestro', color: 'bg-emerald-50 text-emerald-700 ring-emerald-600/20 dark:bg-emerald-400/10 dark:text-emerald-400 dark:ring-emerald-400/20' },
+    { value: 'aprendiz', color: 'bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-400/10 dark:text-amber-400 dark:ring-amber-400/20' },
+    { value: 'autosuficiente', color: 'bg-blue-50 text-blue-700 ring-blue-600/20 dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/20' },
+    { value: 'maestro', color: 'bg-emerald-50 text-emerald-700 ring-emerald-600/20 dark:bg-emerald-400/10 dark:text-emerald-400 dark:ring-emerald-400/20' },
 ]
 
-const experienceLabels: Record<number, string> = {
-    0: 'Menos de 1 año',
-    1: 'Más de un año',
-    3: 'Más de 3 años',
-    5: 'Más de 5 años',
-    10: 'Más de 10 años',
+const experienceKeys: Record<number, string> = {
+    0: 'projects.experience_slider.less_than_one_year',
+    1: 'projects.experience_slider.more_than_one_year',
+    3: 'projects.experience_slider.more_than_three_years',
+    5: 'projects.experience_slider.more_than_five_years',
+    10: 'projects.experience_slider.more_than_ten_years',
 }
 
 interface TalentosTabProps {
@@ -158,7 +159,7 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
                     <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-gray-100 dark:bg-white/5">
                         <SkillsIcon className="size-6 text-gray-400" />
                     </div>
-                    <h3 className="mt-4 text-sm font-semibold text-gray-900 dark:text-white">Sin talentos</h3>
+                    <h3 className="mt-4 text-sm font-semibold text-gray-900 dark:text-white">{t('profile.talentos.empty_state')}</h3>
                     <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         {isOwner ? 'Agrega tus talentos para que otros los conozcan.' : 'Este usuario aún no ha agregado talentos.'}
                     </p>
@@ -205,11 +206,13 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
                                     )}
                                 </div>
                                 <p className="mt-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                                    {experienceLabels[talent.experienceYears] ?? ''}
+                                    {experienceKeys[talent.experienceYears]
+                                        ? t(experienceKeys[talent.experienceYears])
+                                        : ''}
                                 </p>
                                 {level && (
                                     <span className={`mt-3 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${level.color}`}>
-                                        {level.label}
+                                        {t(`profile.talentos.confidence.${level.value}`)}
                                     </span>
                                 )}
                             </div>
@@ -242,7 +245,7 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
                                         setShowSuggestions(true)
                                     }}
                                     onFocus={() => setShowSuggestions(true)}
-                                    placeholder="Buscar ocupación..."
+                                    placeholder={t('profile.talentos.search_occupation_placeholder')}
                                     className="block w-full rounded-md bg-white px-3 py-2 text-sm text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
                                 />
                                 {showSuggestions && filteredOccupations.length > 0 && (
@@ -284,7 +287,7 @@ export default function TalentosTab({ talents, occupations, isOwner }: TalentosT
                                                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10'
                                         }`}
                                     >
-                                        {level.label}
+                                        {t(`profile.talentos.confidence.${level.value}`)}
                                     </button>
                                 ))}
                             </div>

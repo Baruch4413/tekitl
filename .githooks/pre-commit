@@ -1,41 +1,83 @@
 #!/usr/bin/env bash
 # Tekitl pre-commit hook
-# Blocks commits whose staged JS/TS changes fail ESLint. Honors Constitution
-# (Principle VI Code Hygiene + Development Workflow lint gate).
+# Blocks commits whose staged JS/TS changes fail ESLint and whose staged
+# user-facing files contain hard-coded literals (i18n audit). Honors
+# Constitution (Principle VI Code Hygiene + Development Workflow lint gate).
 #
 # Activated automatically by the `prepare` npm script which sets
 # `git config core.hooksPath .githooks` after dependency install.
 
 set -euo pipefail
 
+# ---- Stage 1: ESLint on staged JS/TS ------------------------------------
+
 # Collect staged JS/TS files (Added, Copied, Modified, Renamed).
 mapfile -t staged < <(git diff --cached --name-only --diff-filter=ACMR \
     -- '*.js' '*.jsx' '*.ts' '*.tsx' '*.cjs' '*.mjs')
 
-if [ "${#staged[@]}" -eq 0 ]; then
-    exit 0
+if [ "${#staged[@]}" -gt 0 ]; then
+    # Reject partially staged JS/TS files: ESLint reads the working tree, so
+    # linting partially staged content would produce a false pass or fail and
+    # undermine the staged-content gate. Force the developer to stage the full
+    # file (or stash unstaged hunks) so the lint result matches what is committed.
+    if ! git diff --quiet -- "${staged[@]}"; then
+        echo "[pre-commit] ERROR: partially staged JS/TS files detected." >&2
+        echo "[pre-commit] Stage full files (or stash unstaged hunks) before commit." >&2
+        exit 1
+    fi
+
+    echo "[pre-commit] Running ESLint on ${#staged[@]} staged file(s)..."
+
+    # `--` terminates option parsing so a filename starting with `-` cannot be
+    # misread as an ESLint flag.
+    if command -v bun >/dev/null 2>&1; then
+        bun x eslint --no-warn-ignored -- "${staged[@]}"
+    elif command -v npx >/dev/null 2>&1; then
+        npx --no-install eslint --no-warn-ignored -- "${staged[@]}"
+    else
+        echo "[pre-commit] ERROR: neither 'bun' nor 'npx' found in PATH." >&2
+        echo "[pre-commit] Install Bun or Node.js and run 'bun install' (or 'npm install')." >&2
+        exit 1
+    fi
 fi
 
-# Reject partially staged JS/TS files: ESLint reads the working tree, so
-# linting partially staged content would produce a false pass or fail and
-# undermine the staged-content gate. Force the developer to stage the full
-# file (or stash unstaged hunks) so the lint result matches what is committed.
-if ! git diff --quiet -- "${staged[@]}"; then
-    echo "[pre-commit] ERROR: partially staged JS/TS files detected." >&2
-    echo "[pre-commit] Stage full files (or stash unstaged hunks) before commit." >&2
-    exit 1
-fi
+# ---- Stage 2: i18n audit on staged user-facing files --------------------
+# Contract: specs/002-i18n-spanish-baseline/contracts/audit-cli.md
+#   § "Pre-commit Hook Integration"
 
-echo "[pre-commit] Running ESLint on ${#staged[@]} staged file(s)..."
+mapfile -t i18n_staged < <(git diff --cached --name-only --diff-filter=ACMR \
+    -- '*.php' '*.blade.php' '*.tsx' '*.ts' '*.jsx' '*.js')
 
-# `--` terminates option parsing so a filename starting with `-` cannot be
-# misread as an ESLint flag.
-if command -v bun >/dev/null 2>&1; then
-    bun x eslint --no-warn-ignored -- "${staged[@]}"
-elif command -v npx >/dev/null 2>&1; then
-    npx --no-install eslint --no-warn-ignored -- "${staged[@]}"
-else
-    echo "[pre-commit] ERROR: neither 'bun' nor 'npx' found in PATH." >&2
-    echo "[pre-commit] Install Bun or Node.js and run 'bun install' (or 'npm install')." >&2
-    exit 1
+# Drop paths the audit config excludes (tests, fixtures, vendored bundles, the
+# i18n helper itself). Keeping these in sync with `tools/i18n/audit.config.json`
+# is intentional: the hook is a thin staged-subset gate over the same audit
+# binary, and explicit positional paths bypass the binary's glob-level exclude.
+i18n_filtered=()
+for staged_path in "${i18n_staged[@]}"; do
+    case "$staged_path" in
+        tests/*|tools/i18n/fixtures/*|node_modules/*|vendor/*|storage/*|bootstrap/cache/*|public/build/*) ;;
+        resources/js/components/examples/*|resources/js/wayfinder/*|resources/js/types/*) ;;
+        resources/js/actions/*|resources/js/routes/*|resources/js/lib/i18n.ts) ;;
+        *) i18n_filtered+=("$staged_path") ;;
+    esac
+done
+
+if [ "${#i18n_filtered[@]}" -gt 0 ]; then
+    if ! git diff --quiet -- "${i18n_filtered[@]}"; then
+        echo "[pre-commit] ERROR: partially staged user-facing files detected." >&2
+        echo "[pre-commit] Stage full files (or stash unstaged hunks) before commit." >&2
+        exit 1
+    fi
+
+    echo "[pre-commit] Running i18n audit on ${#i18n_filtered[@]} staged file(s)..."
+
+    if command -v bun >/dev/null 2>&1; then
+        bun run i18n:audit -- "${i18n_filtered[@]}"
+    elif command -v node >/dev/null 2>&1; then
+        node tools/i18n/audit.mjs -- "${i18n_filtered[@]}"
+    else
+        echo "[pre-commit] ERROR: neither 'bun' nor 'node' found in PATH." >&2
+        echo "[pre-commit] Install Bun or Node.js to run the i18n audit." >&2
+        exit 1
+    fi
 fi

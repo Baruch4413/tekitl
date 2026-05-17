@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
 import { Form, router } from '@inertiajs/react'
 import { ArrowLeftIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import InputError from '@/components/input-error'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Spinner } from '@/components/ui/spinner'
+import { t } from '@/lib/i18n'
 import { redirect as googleRedirect } from '@/routes/auth/google'
 import { store as loginStore } from '@/routes/login'
 import { store as registerStore } from '@/routes/register'
@@ -67,9 +68,9 @@ export default function LoginModal() {
                 {view === 'choose' && (
                     <>
                         <DialogHeader>
-                            <DialogTitle>Inicia sesión</DialogTitle>
+                            <DialogTitle>{t('auth.ui.login_modal.title')}</DialogTitle>
                             <DialogDescription>
-                                Necesitas iniciar sesión para realizar esta acción.
+                                {t('auth.ui.login_modal.description')}
                             </DialogDescription>
                         </DialogHeader>
                         <div className="grid gap-3">
@@ -81,7 +82,7 @@ export default function LoginModal() {
                                     <rect width="20" height="16" x="2" y="4" rx="2" />
                                     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                                 </svg>
-                                Continuar con correo y contraseña
+                                {t('auth.ui.login_modal.continue_email')}
                             </Button>
                             <Button
                                 className="w-full"
@@ -93,7 +94,7 @@ export default function LoginModal() {
                                         fill="currentColor"
                                     />
                                 </svg>
-                                Continuar con Google
+                                {t('auth.ui.login_modal.continue_google')}
                             </Button>
                         </div>
                     </>
@@ -110,10 +111,10 @@ export default function LoginModal() {
                                 >
                                     <ArrowLeftIcon className="size-4" />
                                 </Button>
-                                Iniciar sesión
+                                {t('auth.ui.login_modal.log_in')}
                             </DialogTitle>
                             <DialogDescription>
-                                Ingresa tu correo y contraseña para continuar.
+                                {t('auth.ui.login_modal.credentials_description')}
                             </DialogDescription>
                         </DialogHeader>
                         <Form
@@ -124,7 +125,7 @@ export default function LoginModal() {
                             {({ processing, errors }) => (
                                 <>
                                     <div className="grid gap-2">
-                                        <Label htmlFor="login-email">Correo electrónico</Label>
+                                        <Label htmlFor="login-email">{t('auth.ui.shared.email_label')}</Label>
                                         <Input
                                             id="login-email"
                                             type="email"
@@ -132,38 +133,38 @@ export default function LoginModal() {
                                             required
                                             autoFocus
                                             autoComplete="email"
-                                            placeholder="correo@ejemplo.com"
+                                            placeholder={t('auth.ui.shared.email_placeholder')}
                                         />
                                         <InputError message={errors.email} />
                                     </div>
                                     <div className="grid gap-2">
-                                        <Label htmlFor="login-password">Contraseña</Label>
+                                        <Label htmlFor="login-password">{t('auth.ui.shared.password_label')}</Label>
                                         <Input
                                             id="login-password"
                                             type="password"
                                             name="password"
                                             required
                                             autoComplete="current-password"
-                                            placeholder="Contraseña"
+                                            placeholder={t('auth.ui.shared.password_placeholder')}
                                         />
                                         <InputError message={errors.password} />
                                     </div>
                                     <div className="flex items-center gap-x-3">
                                         <Checkbox id="login-remember" name="remember" />
-                                        <Label htmlFor="login-remember">Recordarme</Label>
+                                        <Label htmlFor="login-remember">{t('auth.ui.login_modal.remember_label')}</Label>
                                     </div>
                                     <Button type="submit" className="w-full" disabled={processing}>
                                         {processing && <Spinner />}
-                                        Iniciar sesión
+                                        {t('auth.ui.login_modal.log_in')}
                                     </Button>
                                     <p className="text-center text-sm text-gray-500 dark:text-gray-400">
-                                        ¿No tienes cuenta?{' '}
+                                        {t('auth.ui.login_modal.no_account_prompt')}{' '}
                                         <button
                                             type="button"
                                             onClick={() => setView('register')}
                                             className="font-medium text-indigo-600 hover:underline dark:text-indigo-400"
                                         >
-                                            Regístrate
+                                            {t('auth.ui.login_modal.sign_up')}
                                         </button>
                                     </p>
                                 </>
@@ -183,10 +184,10 @@ export default function LoginModal() {
                                 >
                                     <ArrowLeftIcon className="size-4" />
                                 </Button>
-                                Crear cuenta
+                                {t('auth.ui.login_modal.register_title')}
                             </DialogTitle>
                             <DialogDescription>
-                                Completa los datos para registrarte.
+                                {t('auth.ui.login_modal.register_description')}
                             </DialogDescription>
                         </DialogHeader>
                         <Form
@@ -197,7 +198,7 @@ export default function LoginModal() {
                             {({ processing, errors }) => (
                                 <>
                                     <div className="grid gap-2">
-                                        <Label htmlFor="register-name">Nombre</Label>
+                                        <Label htmlFor="register-name">{t('auth.ui.login_modal.name_label')}</Label>
                                         <Input
                                             id="register-name"
                                             type="text"
@@ -205,58 +206,58 @@ export default function LoginModal() {
                                             required
                                             autoFocus
                                             autoComplete="name"
-                                            placeholder="Tu nombre"
+                                            placeholder={t('auth.ui.login_modal.name_placeholder')}
                                         />
                                         <InputError message={errors.name} />
                                     </div>
                                     <div className="grid gap-2">
-                                        <Label htmlFor="register-email">Correo electrónico</Label>
+                                        <Label htmlFor="register-email">{t('auth.ui.shared.email_label')}</Label>
                                         <Input
                                             id="register-email"
                                             type="email"
                                             name="email"
                                             required
                                             autoComplete="email"
-                                            placeholder="correo@ejemplo.com"
+                                            placeholder={t('auth.ui.shared.email_placeholder')}
                                         />
                                         <InputError message={errors.email} />
                                     </div>
                                     <div className="grid gap-2">
-                                        <Label htmlFor="register-password">Contraseña</Label>
+                                        <Label htmlFor="register-password">{t('auth.ui.shared.password_label')}</Label>
                                         <Input
                                             id="register-password"
                                             type="password"
                                             name="password"
                                             required
                                             autoComplete="new-password"
-                                            placeholder="Contraseña"
+                                            placeholder={t('auth.ui.shared.password_placeholder')}
                                         />
                                         <InputError message={errors.password} />
                                     </div>
                                     <div className="grid gap-2">
-                                        <Label htmlFor="register-password-confirmation">Confirmar contraseña</Label>
+                                        <Label htmlFor="register-password-confirmation">{t('auth.ui.login_modal.password_confirmation_label')}</Label>
                                         <Input
                                             id="register-password-confirmation"
                                             type="password"
                                             name="password_confirmation"
                                             required
                                             autoComplete="new-password"
-                                            placeholder="Repite la contraseña"
+                                            placeholder={t('auth.ui.login_modal.password_confirmation_placeholder')}
                                         />
                                         <InputError message={errors.password_confirmation} />
                                     </div>
                                     <Button type="submit" className="w-full" disabled={processing}>
                                         {processing && <Spinner />}
-                                        Crear cuenta
+                                        {t('auth.ui.login_modal.create_account')}
                                     </Button>
                                     <p className="text-center text-sm text-gray-500 dark:text-gray-400">
-                                        ¿Ya tienes cuenta?{' '}
+                                        {t('auth.ui.login_modal.have_account_prompt')}{' '}
                                         <button
                                             type="button"
                                             onClick={() => setView('credentials')}
                                             className="font-medium text-indigo-600 hover:underline dark:text-indigo-400"
                                         >
-                                            Inicia sesión
+                                            {t('auth.ui.login_modal.sign_in')}
                                         </button>
                                     </p>
                                 </>

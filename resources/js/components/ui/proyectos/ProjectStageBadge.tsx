@@ -1,3 +1,4 @@
+import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
 export type ProjectStageValue = 'planning' | 'in_execution' | 'completed' | 'aborted'
@@ -18,7 +19,7 @@ const stageStyles: Record<ProjectStageValue, string> = {
 export default function ProjectStageBadge({ stage, stageLabel, className }: ProjectStageBadgeProps) {
     return (
         <span
-            aria-label={`Etapa del proyecto: ${stageLabel}`}
+            aria-label={t('projects.stage.aria_label', { stage: stageLabel })}
             className={cn(
                 'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset',
                 stageStyles[stage],

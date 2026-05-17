@@ -6,6 +6,7 @@ import { show as userProfile } from '@/actions/App/Http/Controllers/UserProfileC
 import InlineSaveButton from '@/components/ui/InlineSaveButton'
 import ProjectStageBadge, { type ProjectStageValue } from '@/components/ui/proyectos/ProjectStageBadge'
 import UserAvatar from '@/components/ui/UserAvatar'
+import { t } from '@/lib/i18n'
 
 interface ProjectHeaderProps {
     projectId: number
@@ -67,7 +68,7 @@ export default function ProjectHeader({ projectId, title, description, user, dat
                         }}
                         autoFocus
                         className="h-9 w-full rounded-xl border border-gray-300 px-3 text-2xl font-bold text-gray-900 focus:border-indigo-500 focus:outline-none dark:border-white/10 dark:bg-white/5 dark:text-white"
-                        placeholder="Título del proyecto"
+                        placeholder={t('projects.header.title_placeholder')}
                     />
                     <InlineSaveButton onClick={() => saveField('title')} />
                 </div>
@@ -128,7 +129,7 @@ export default function ProjectHeader({ projectId, title, description, user, dat
                             autoFocus
                             rows={4}
                             className="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-indigo-500 focus:outline-none dark:border-white/10 dark:bg-white/5 dark:text-gray-200"
-                            placeholder="Descripción del proyecto"
+                            placeholder={t('projects.header.description_placeholder')}
                         />
                         <div className="flex justify-end">
                             <InlineSaveButton onClick={() => saveField('description')} />

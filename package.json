@@ -11,7 +11,10 @@
         "lint": "eslint . --fix",
         "prepare": "git config --local core.hooksPath .githooks || echo \"[prepare] WARNING: could not set core.hooksPath=.githooks; activate it manually with 'git config --local core.hooksPath .githooks'.\"",
         "test:js": "vitest run",
-        "types": "tsc --noEmit"
+        "types": "tsc --noEmit",
+        "i18n:audit": "node tools/i18n/audit.mjs",
+        "i18n:scaffold-en": "php artisan i18n:scaffold-en",
+        "i18n:report": "php artisan i18n:report"
     },
     "devDependencies": {
         "@eslint/js": "^9.19.0",

@@ -4,20 +4,21 @@ import {
     BellIcon,
     ShieldCheckIcon,
 } from '@heroicons/react/24/outline'
+import { t } from '@/lib/i18n'
 
 export type SettingsSection = 'perfil' | 'seguridad' | 'notificaciones' | 'privacidad'
 
 interface NavItem {
     id: SettingsSection
-    label: string
+    labelKey: string
     icon: React.FC<React.SVGProps<SVGSVGElement>>
 }
 
 const navItems: NavItem[] = [
-    { id: 'perfil', label: 'Perfil', icon: UserCircleIcon },
-    { id: 'seguridad', label: 'Seguridad', icon: FingerPrintIcon },
-    { id: 'notificaciones', label: 'Notificaciones', icon: BellIcon },
-    { id: 'privacidad', label: 'Privacidad', icon: ShieldCheckIcon },
+    { id: 'perfil', labelKey: 'settings.nav.perfil', icon: UserCircleIcon },
+    { id: 'seguridad', labelKey: 'settings.nav.seguridad', icon: FingerPrintIcon },
+    { id: 'notificaciones', labelKey: 'settings.nav.notificaciones', icon: BellIcon },
+    { id: 'privacidad', labelKey: 'settings.nav.privacidad', icon: ShieldCheckIcon },
 ]
 
 function classNames(...classes: (string | false | null | undefined)[]) {
@@ -47,7 +48,7 @@ export default function SettingsNav({ activeSection, onSectionChange }: Settings
                                 )}
                             >
                                 <item.icon aria-hidden className="size-4 shrink-0" />
-                                {item.label}
+                                {t(item.labelKey)}
                             </button>
                         </li>
                     ))}

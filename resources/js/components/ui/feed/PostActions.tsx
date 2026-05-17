@@ -6,9 +6,10 @@ import {
 } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid'
 import { Link } from '@inertiajs/react'
-import CoinIcon from '@/components/vector-graphics/CoinIcon'
-import { formatCount } from '@/lib/utils'
 import { show as showProject } from '@/actions/App/Http/Controllers/ProjectController'
+import CoinIcon from '@/components/vector-graphics/CoinIcon'
+import { t } from '@/lib/i18n'
+import { formatCount } from '@/lib/utils'
 
 function classNames(...classes: (string | false | null | undefined)[]) {
     return classes.filter(Boolean).join(' ')
@@ -16,7 +17,7 @@ function classNames(...classes: (string | false | null | undefined)[]) {
 
 const actionBase = 'group flex items-center gap-x-1.5 transition-all active:scale-95 disabled:pointer-events-none disabled:opacity-50'
 
-type ProcessingAction = 'potenciar' | 'comments' | 'like' | 'share' | null
+type ProcessingAction = 'endorse' | 'comments' | 'like' | 'share' | null
 
 interface PostActionsProps {
     postId: number
@@ -24,12 +25,12 @@ interface PostActionsProps {
     comments: number
     coins: number
     isLiked: boolean
-    isPoweredByCurrentUser: boolean
+    isEndorsedByCurrentUser: boolean
     processingAction: ProcessingAction
     commentsOpen: boolean
     onToggleLike: (id: number) => void
     onToggleComments: () => void
-    onPotenciar: (id: number) => void
+    onEndorse: (id: number) => void
     hasProject?: boolean
     isOwner?: boolean
 }
@@ -40,23 +41,23 @@ export default function PostActions({
     comments,
     coins,
     isLiked,
-    isPoweredByCurrentUser,
+    isEndorsedByCurrentUser,
     processingAction,
     commentsOpen,
     onToggleLike,
     onToggleComments,
-    onPotenciar,
+    onEndorse,
     hasProject,
     isOwner,
 }: PostActionsProps) {
     return (
         <div className="mt-3 flex items-center gap-x-5">
             <button
-                onClick={() => onPotenciar(postId)}
-                disabled={processingAction === 'potenciar'}
+                onClick={() => onEndorse(postId)}
+                disabled={processingAction === 'endorse'}
                 className={classNames(
                     actionBase,
-                    isPoweredByCurrentUser
+                    isEndorsedByCurrentUser
                         ? 'text-amber-500 dark:text-amber-400'
                         : 'text-gray-400 hover:text-amber-500 dark:hover:text-amber-400',
                 )}
@@ -106,7 +107,7 @@ export default function PostActions({
                     className={classNames(actionBase, 'text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400')}
                 >
                     <RocketLaunchIcon className="size-4 transition-transform group-hover:scale-110" />
-                    <span className="text-xs">Crear proyecto</span>
+                    <span className="text-xs">{t('projects.post_actions.create_project')}</span>
                 </Link>
             )}
             {hasProject && (
@@ -115,7 +116,7 @@ export default function PostActions({
                     className={classNames(actionBase, 'text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300')}
                 >
                     <RocketLaunchIcon className="size-4 transition-transform group-hover:scale-110" />
-                    <span className="text-xs">Ver proyecto</span>
+                    <span className="text-xs">{t('projects.post_actions.view_project')}</span>
                 </Link>
             )}
         </div>

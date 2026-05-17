@@ -1,3 +1,5 @@
+import { t } from '@/lib/i18n'
+
 interface SettingsRowProps {
     label: string
     value: string
@@ -5,7 +7,8 @@ interface SettingsRowProps {
     editLabel?: string
 }
 
-export default function SettingsRow({ label, value, onEdit, editLabel = 'Actualizar' }: SettingsRowProps) {
+export default function SettingsRow({ label, value, onEdit, editLabel }: SettingsRowProps) {
+    const resolvedEditLabel = editLabel ?? t('settings.row.edit_default')
     return (
         <div className="py-6 sm:flex">
             <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6 dark:text-white">{label}</dt>
@@ -17,7 +20,7 @@ export default function SettingsRow({ label, value, onEdit, editLabel = 'Actuali
                         onClick={onEdit}
                         className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
                     >
-                        {editLabel}
+                        {resolvedEditLabel}
                     </button>
                 )}
             </dd>

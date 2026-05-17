@@ -34,9 +34,15 @@ createInertiaApp({
 
         root.render(
             <StrictMode>
-                <App {...props} />
-                <LoginModal />
-                <Toaster position="bottom-right" richColors />
+                <App {...props}>
+                    {({ Component, key, props: pageProps }) => (
+                        <>
+                            <Component key={key} {...pageProps} />
+                            <LoginModal />
+                            <Toaster position="bottom-right" richColors />
+                        </>
+                    )}
+                </App>
             </StrictMode>,
         );
     },

@@ -1,10 +1,11 @@
-import { useCallback, useRef, useState } from 'react'
-import { router } from '@inertiajs/react'
 import { CameraIcon, EyeIcon } from '@heroicons/react/20/solid'
+import { router } from '@inertiajs/react'
+import { useCallback, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { updateAvatar } from '@/actions/App/Http/Controllers/Settings/ProfileController'
-import UserAvatar from '@/components/ui/UserAvatar'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
+import UserAvatar from '@/components/ui/UserAvatar'
+import { t } from '@/lib/i18n'
 
 interface ProfileAvatarProps {
     name: string
@@ -57,7 +58,7 @@ export default function ProfileAvatar({ name, imageUrl, baseUrl, originalUrl, is
                         >
                             <CameraIcon className="size-5" />
                             <span className="mt-0.5 text-[10px] font-medium leading-tight">
-                                {uploading ? 'Subiendo...' : 'Actualizar'}
+                                {uploading ? t('profile.avatar.uploading') : t('profile.avatar.update')}
                             </span>
                         </button>
 
@@ -71,7 +72,7 @@ export default function ProfileAvatar({ name, imageUrl, baseUrl, originalUrl, is
                             className="absolute inset-x-0 bottom-0 flex h-1/2 cursor-pointer flex-col items-center justify-center bg-black/50 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
                         >
                             <EyeIcon className="size-5" />
-                            <span className="mt-0.5 text-[10px] font-medium leading-tight">Ver</span>
+                            <span className="mt-0.5 text-[10px] font-medium leading-tight">{t('profile.avatar.view')}</span>
                         </button>
                     </div>
                 )}

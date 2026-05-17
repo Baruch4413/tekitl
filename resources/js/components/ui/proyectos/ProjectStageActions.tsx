@@ -1,6 +1,7 @@
-import { useState } from 'react'
 import { router } from '@inertiajs/react'
+import { useState } from 'react'
 import { toast } from 'sonner'
+import { store as transitionStage } from '@/actions/App/Http/Controllers/ProjectStageController'
 import { Button } from '@/components/ui/button'
 import {
     Dialog,
@@ -10,7 +11,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog'
-import { store as transitionStage } from '@/actions/App/Http/Controllers/ProjectStageController'
 import type { ProjectStageValue } from './ProjectStageBadge'
 
 export interface AllowedTransition {

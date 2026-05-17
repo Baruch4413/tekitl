@@ -34,13 +34,13 @@ class TransitionProjectStageRequest extends FormRequest
                     $target = ProjectStage::tryFrom(is_string($value) ? $value : '');
 
                     if ($target === null) {
-                        $fail('La etapa solicitada no existe.');
+                        $fail(__('projects.stage.unknown_target'));
 
                         return;
                     }
 
                     if (! $project->canTransitionTo($target)) {
-                        $fail('Esta transición no está permitida desde el estado actual.');
+                        $fail(__('projects.stage.illegal_transition'));
                     }
                 },
             ],

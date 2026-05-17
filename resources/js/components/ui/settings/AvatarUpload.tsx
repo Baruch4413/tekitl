@@ -3,6 +3,7 @@ import { useCallback, useRef, useState } from 'react';
 import ReactCrop, { type Crop, centerCrop, makeAspectCrop } from 'react-image-crop';
 import { toast } from 'sonner';
 import 'react-image-crop/dist/ReactCrop.css';
+import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -12,7 +13,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
+import { t } from '@/lib/i18n';
 
 interface AvatarUploadProps {
     imageUrl?: string | null;
@@ -140,10 +141,10 @@ export default function AvatarUpload({ imageUrl, name }: AvatarUploadProps) {
                         onClick={handleFileSelect}
                         className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs inset-ring-1 inset-ring-gray-300 hover:bg-gray-50 dark:bg-white/10 dark:text-white dark:shadow-none dark:inset-ring-white/5 dark:hover:bg-white/20"
                     >
-                        Cambiar foto
+                        {t('settings.avatar_upload.change_photo')}
                     </button>
                     <p className="mt-2 text-xs/5 text-gray-500 dark:text-gray-400">
-                        JPG, GIF o PNG. 4MB max.
+                        {t('settings.avatar_upload.help_text')}
                     </p>
                 </div>
                 <input
@@ -158,9 +159,9 @@ export default function AvatarUpload({ imageUrl, name }: AvatarUploadProps) {
             <Dialog open={open} onOpenChange={(v) => !uploading && !v && handleCancel()}>
                 <DialogContent className="sm:max-w-md">
                     <DialogHeader>
-                        <DialogTitle>Recortar foto</DialogTitle>
+                        <DialogTitle>{t('settings.avatar_upload.crop_dialog.title')}</DialogTitle>
                         <DialogDescription>
-                            Ajusta el recorte de tu foto de perfil.
+                            {t('settings.avatar_upload.crop_dialog.description')}
                         </DialogDescription>
                     </DialogHeader>
 
@@ -174,7 +175,7 @@ export default function AvatarUpload({ imageUrl, name }: AvatarUploadProps) {
                             >
                                 <img
                                     ref={imgRef}
-                                    alt="Recortar"
+                                    alt={t('settings.avatar_upload.a11y.crop_image_alt')}
                                     src={imgSrc}
                                     onLoad={handleImageLoad}
                                     className="max-h-[60vh]"
@@ -185,10 +186,10 @@ export default function AvatarUpload({ imageUrl, name }: AvatarUploadProps) {
 
                     <DialogFooter>
                         <Button type="button" variant="outline" onClick={handleCancel} disabled={uploading}>
-                            Cancelar
+                            {t('settings.avatar_upload.cancel')}
                         </Button>
                         <Button type="button" onClick={handleSave} disabled={uploading}>
-                            {uploading ? 'Guardando...' : 'Guardar'}
+                            {uploading ? t('settings.avatar_upload.saving') : t('settings.avatar_upload.save')}
                         </Button>
                     </DialogFooter>
                 </DialogContent>

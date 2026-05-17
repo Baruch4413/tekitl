@@ -1,0 +1,289 @@
+[
+  {
+    "path": "app/Http/Requests/StoreCommentRequest.php",
+    "line": 30,
+    "column": 29,
+    "surface": "request-messages",
+    "literal": "El comentario no puede estar vacío."
+  },
+  {
+    "path": "app/Http/Requests/StoreCommentRequest.php",
+    "line": 31,
+    "column": 27,
+    "surface": "request-messages",
+    "literal": "El comentario debe ser texto."
+  },
+  {
+    "path": "app/Http/Requests/StoreCommentRequest.php",
+    "line": 32,
+    "column": 24,
+    "surface": "request-messages",
+    "literal": "El comentario no puede exceder los 1000 caracteres."
+  },
+  {
+    "path": "resources/js/components/ui/comments/Textarea.tsx",
+    "line": 59,
+    "column": 19,
+    "surface": "jsx-attr:placeholder",
+    "literal": "What's on your mind?"
+  },
+  {
+    "path": "resources/js/components/ui/comments/Textarea.tsx",
+    "line": 84,
+    "column": 49,
+    "surface": "jsx-child",
+    "literal": "Attach a file"
+  },
+  {
+    "path": "resources/js/components/ui/comments/Textarea.tsx",
+    "line": 93,
+    "column": 50,
+    "surface": "jsx-child",
+    "literal": "Your mood"
+  },
+  {
+    "path": "resources/js/components/ui/comments/Textarea.tsx",
+    "line": 103,
+    "column": 59,
+    "surface": "jsx-child",
+    "literal": "Add your mood"
+  },
+  {
+    "path": "resources/js/components/ui/feed/CommentForm.tsx",
+    "line": 58,
+    "column": 37,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Escribe un comentario..."
+  },
+  {
+    "path": "resources/js/components/ui/feed/PostActions.tsx",
+    "line": 109,
+    "column": 47,
+    "surface": "jsx-child",
+    "literal": "Crear proyecto"
+  },
+  {
+    "path": "resources/js/components/ui/feed/PostActions.tsx",
+    "line": 118,
+    "column": 47,
+    "surface": "jsx-child",
+    "literal": "Ver proyecto"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ImageGallery.tsx",
+    "line": 191,
+    "column": 33,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Título de la imagen"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ImageGallery.tsx",
+    "line": 228,
+    "column": 33,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Descripción de la imagen"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectHeader.tsx",
+    "line": 70,
+    "column": 25,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Título del proyecto"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectHeader.tsx",
+    "line": 131,
+    "column": 29,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Descripción del proyecto"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+    "line": 85,
+    "column": 17,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Título del rol *"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+    "line": 92,
+    "column": 17,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Descripción (opcional)"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+    "line": 100,
+    "column": 87,
+    "surface": "jsx-child",
+    "literal": "Plazas"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+    "line": 111,
+    "column": 87,
+    "surface": "jsx-child",
+    "literal": "Horas estimadas"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+    "line": 170,
+    "column": 34,
+    "surface": "jsx-child",
+    "literal": "Solicitud de voluntariado"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+    "line": 187,
+    "column": 91,
+    "surface": "jsx-child",
+    "literal": "Solicitud pendiente"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+    "line": 304,
+    "column": 93,
+    "surface": "jsx-child",
+    "literal": "Roles buscados"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+    "line": 397,
+    "column": 122,
+    "surface": "jsx-child",
+    "literal": "Miembro ✓"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectRoles.tsx",
+    "line": 420,
+    "column": 114,
+    "surface": "jsx-child",
+    "literal": "— pendiente de aprobación"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectTeam.tsx",
+    "line": 22,
+    "column": 81,
+    "surface": "jsx-child",
+    "literal": "Equipo del proyecto"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectTimelineEntry.tsx",
+    "line": 123,
+    "column": 29,
+    "surface": "jsx-child",
+    "literal": "Hito:"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectTimelineEntry.tsx",
+    "line": 129,
+    "column": 29,
+    "surface": "jsx-child",
+    "literal": "Actualización:"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectTimelineEntry.tsx",
+    "line": 145,
+    "column": 75,
+    "surface": "jsx-child",
+    "literal": "a"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectTimelinePostUpdate.tsx",
+    "line": 83,
+    "column": 29,
+    "surface": "jsx-attr:placeholder",
+    "literal": "¿Qué hito alcanzaron?"
+  },
+  {
+    "path": "resources/js/components/ui/proyectos/ProjectTimelinePostUpdate.tsx",
+    "line": 109,
+    "column": 29,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Compartí una actualización con la comunidad…"
+  },
+  {
+    "path": "resources/js/pages/dashboard.tsx",
+    "line": 17,
+    "column": 19,
+    "surface": "jsx-attr:title",
+    "literal": "Dashboard"
+  },
+  {
+    "path": "resources/js/pages/proyectos/show.tsx",
+    "line": 124,
+    "column": 51,
+    "surface": "jsx-child",
+    "literal": "Abrir menú"
+  },
+  {
+    "path": "resources/js/pages/proyectos/show.tsx",
+    "line": 128,
+    "column": 91,
+    "surface": "jsx-child",
+    "literal": "Proyecto"
+  },
+  {
+    "path": "resources/js/pages/proyectos/show.tsx",
+    "line": 176,
+    "column": 93,
+    "surface": "jsx-child",
+    "literal": "Actividad del proyecto"
+  },
+  {
+    "path": "resources/js/pages/proyectos/show.tsx",
+    "line": 187,
+    "column": 93,
+    "surface": "jsx-child",
+    "literal": "Comentarios"
+  },
+  {
+    "path": "resources/js/pages/welcome.tsx",
+    "line": 110,
+    "column": 51,
+    "surface": "jsx-child",
+    "literal": "Abrir menú"
+  },
+  {
+    "path": "resources/js/pages/welcome.tsx",
+    "line": 114,
+    "column": 91,
+    "surface": "jsx-child",
+    "literal": "Inicio"
+  },
+  {
+    "path": "resources/js/pages/welcome.tsx",
+    "line": 120,
+    "column": 85,
+    "surface": "jsx-child",
+    "literal": "Inicio"
+  },
+  {
+    "path": "resources/js/pages/welcome.tsx",
+    "line": 163,
+    "column": 29,
+    "surface": "jsx-attr:placeholder",
+    "literal": "Buscar"
+  },
+  {
+    "path": "resources/js/pages/welcome.tsx",
+    "line": 172,
+    "column": 91,
+    "surface": "jsx-child",
+    "literal": "Tendencias"
+  },
+  {
+    "path": "resources/js/pages/welcome.tsx",
+    "line": 201,
+    "column": 91,
+    "surface": "jsx-child",
+    "literal": "A quién seguir"
+  },
+  {
+    "path": "resources/js/pages/welcome.tsx",
+    "line": 248,
+    "column": 77,
+    "surface": "jsx-child",
+    "literal": "© 2026 Tekitl · Privacidad · Términos"
+  }
+]
