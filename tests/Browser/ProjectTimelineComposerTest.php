@@ -22,6 +22,7 @@ it('clears the textarea and refreshes the timeline after posting a status update
         ->press('Iniciar sesión');
 
     visit("/projects/{$post->id}")
+        ->click('Actividad')
         ->click('Actualización')
         ->fill('body', 'shipping the timeline composer')
         ->press('Publicar')
