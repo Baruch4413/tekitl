@@ -20,7 +20,6 @@ import ProjectStageActions, {
     type AllowedTransition,
 } from '@/components/ui/proyectos/ProjectStageActions';
 import { type ProjectStageValue } from '@/components/ui/proyectos/ProjectStageBadge';
-import ProjectTeam from '@/components/ui/proyectos/ProjectTeam';
 import ProjectTimeline from '@/components/ui/proyectos/ProjectTimeline';
 import { type TimelineEntry } from '@/components/ui/proyectos/ProjectTimelineEntry';
 import WelcomeSidebar from '@/components/ui/WelcomeSidebar';
@@ -239,8 +238,6 @@ export default function ProyectoShow({
                                 currentUserApplication={currentUserApplication}
                             />
 
-                            {/* Equipo del proyecto */}
-                            <ProjectTeam roles={project.roles} />
                         </div>
                     )}
 
